@@ -1,0 +1,1 @@
+Each of these folders are named for the location they need to be placed in the Baldur's Gate 3 toolkit Data folder. When you do so, replace the name of each one with: `WW_TransmogrificationLite_8b3a27a9-d140-2d08-6aae-aea20029bcbf`

@@ -1,0 +1,8 @@
+new entry "Shout_WW_TL_RefundRage"
+type "SpellData"
+data "SpellType" "Shout"
+data "SpellProperties" "RestoreResource(Rage,1,0); RestoreResource(BonusActionPoint,1,0);"
+data "DisplayName" "h31b31946gee52g4e24g5f8bg58b165981afd;1"
+data "Description" "hc6917569g44e8gefa4g9a27g17207ce48d7a;1"
+data "SpellFlags" "ImmediateCast"
+

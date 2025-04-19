@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<stats stat_object_definition_id="3e76b74c-a5ae-4268-944a-aa9c31e2185e">
+  <stat_objects>
+    <stat_object color="#FF556B2F" is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="5c8aadd6-2b65-406e-a8b5-d1aabd525bbd" />
+        <field name="Name" type="NameTableFieldDefinition" value="ORIGINAL EQUIPMENT PASSIVES" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="381e82fe-e4c4-482a-86c8-4b6ffccc3b9d" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_CE_PlaneWalker_Evasion" />
+        <field name="DisplayName" type="TranslatedStringTableFieldDefinition" handle="hd451abc9g2acdg61c4ge743gf1f094e3c1f6" version="1" />
+        <field name="Description" type="TranslatedStringTableFieldDefinition" handle="h17053dd8gcb0fg5873g34f6gaaebe0bcf4d5" version="2" />
+        <field name="Properties" type="EnumerationListTableFieldDefinition" value="Highlighted" enumeration_type_name="PassiveFlags" version="1" />
+        <field name="StatsFunctorContext" type="EnumerationListTableFieldDefinition" value="OnAttacked" enumeration_type_name="StatsFunctorContext" version="1" />
+        <field name="Conditions" type="StringTableFieldDefinition" value="Enemy() and IsMeleeAttack() and not IsMiss()" />
+        <field name="StatsFunctors" type="FunctorsTableFieldDefinition" value="ApplyStatus(WW_CE_PLANE_WALKERS_EVASION_UNLOCK, 100, 1)" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="26ed3465-dbea-4c98-af61-8cd74fefbd82" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_CE_PlaneWalker_ExoticMaterial" />
+        <field name="DisplayName" type="TranslatedStringTableFieldDefinition" handle="h75ed8a50gd88dgbe7dg6561g922e50967611" version="1" />
+        <field name="Description" type="TranslatedStringTableFieldDefinition" handle="hb75536d3gd3fcg1587g25ddgf6cccf3923b6" version="1" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="c4e237b3-5e57-410e-a45f-d8bd43855cd7" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_CE_PlaneWalker_LightenedPack_Display" />
+        <field name="DisplayName" type="TranslatedStringTableFieldDefinition" handle="hc7a5b066g1d66g5c7cg48fcg8a63e155c573" version="1" />
+        <field name="Description" type="TranslatedStringTableFieldDefinition" handle="hfd39fafbg0ec5g4405g359fgab4491233a3c" version="2" />
+      </fields>
+    </stat_object>
+  </stat_objects>
+</stats>

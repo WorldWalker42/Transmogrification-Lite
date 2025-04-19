@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<stats stat_object_definition_id="c045520a-c4bc-4b3a-a5d8-61667e0a1cc4">
+  <stat_objects>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="Name" type="NameTableFieldDefinition" value="New_Stat_0" />
+        <field name="UUID" type="IdTableFieldDefinition" value="f3652e28-828e-46c1-8b04-8715370d67cc" />
+        <field name="Identifier" type="FixedStringTableFieldDefinition" value="CE_Tag_WW_TL_TRANSMOGRIFIED_False" />
+        <field name="DisplayName" type="TranslatedStringTableFieldDefinition" handle="hcbb031ceg958cg6029g71deg3f6d86e95046" version="2" />
+        <field name="ErrorDescriptionType" type="EnumerationTableFieldDefinition" value="ErrorName" enumeration_type_name="ErrorDescriptionType" version="1" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="Name" type="NameTableFieldDefinition" value="New_Stat_1" />
+        <field name="UUID" type="IdTableFieldDefinition" value="633ca8c5-e23f-4eee-9346-d1907e1f2a29" />
+        <field name="Identifier" type="FixedStringTableFieldDefinition" value="CE_Tag_WW_TL_TRANSMOGRIFIED_True" />
+        <field name="DisplayName" type="TranslatedStringTableFieldDefinition" handle="h536ca8b9gb54dg7cdbg26adg870de34d6de2" version="2" />
+        <field name="ErrorDescriptionType" type="EnumerationTableFieldDefinition" value="ErrorName" enumeration_type_name="ErrorDescriptionType" version="1" />
+      </fields>
+    </stat_object>
+  </stat_objects>
+</stats>

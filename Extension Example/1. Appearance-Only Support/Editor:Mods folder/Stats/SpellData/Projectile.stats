@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<stats stat_object_definition_id="67731907-4ad8-4be6-9326-d6f5b982140e">
+  <stat_objects>
+    <stat_object color="#FF556B2F" is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="48d5a829-469b-4459-a758-7452951e2880" />
+        <field name="Name" type="NameTableFieldDefinition" value="ORIGINAL EQUIPMENT SPELLS" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="41235760-1e6e-4416-879d-04f9f5fc4631" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_CE_Fly" />
+        <field name="Using" type="BaseClassTableFieldDefinition" value="21a440e2-13ce-4b12-b7a3-5847137807b2" />
+        <field name="Cooldown" type="EnumerationTableFieldDefinition" value="OncePerShortRestPerItem" enumeration_type_name="CooldownType" version="1" />
+      </fields>
+    </stat_object>
+  </stat_objects>
+</stats>

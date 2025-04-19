@@ -1,0 +1,116 @@
+function WW_TL_AbilityGreaterThan(firstAbility, secondAbility, entity)
+    entity = entity or context.Source
+    return ConditionResult(WW_TL_AbilityValue(firstAbility, entity) > WW_TL_AbilityValue(secondAbility, entity))
+end
+
+function WW_TL_AbilityValue(ability, entity)
+    if ability == "Strength" then
+        return entity.Strength
+    elseif ability == "Dexterity" then
+        return entity.Dexterity
+    elseif ability == "Constitution" then
+        return entity.Constitution
+    elseif ability == "Intelligence" then
+        return entity.Intelligence
+    elseif ability == "Wisdom" then
+        return entity.Wisdom
+    elseif ability == "Charisma" then
+        return entity.Charisma
+    else
+        return 0
+    end
+end
+
+function WW_TL_ModifierEqualsTo(ability, value, entity)
+    entity = entity or context.Source
+    if ability == "Strength" then
+        return ConditionResult(GetModifier(entity.Strength) == value)
+    elseif ability == "Dexterity" then
+        return ConditionResult(GetModifier(entity.Dexterity) == value)
+    elseif ability == "Constitution" then
+        return ConditionResult(GetModifier(entity.Constitution) == value)
+    elseif ability == "Intelligence" then
+        return ConditionResult(GetModifier(entity.Intelligence) == value)
+    elseif ability == "Wisdom" then
+        return ConditionResult(GetModifier(entity.Wisdom) == value)
+    elseif ability == "Charisma" then
+        return ConditionResult(GetModifier(entity.Charisma) == value)
+    else
+        return ConditionResult(false)
+    end
+end
+
+function WW_TL_ModifierEqualsOrGreaterThan(ability, value, entity)
+    entity = entity or context.Source
+    if ability == "Strength" then
+        return ConditionResult(GetModifier(entity.Strength) >= value)
+    elseif ability == "Dexterity" then
+        return ConditionResult(GetModifier(entity.Dexterity) >= value)
+    elseif ability == "Constitution" then
+        return ConditionResult(GetModifier(entity.Constitution) >= value)
+    elseif ability == "Intelligence" then
+        return ConditionResult(GetModifier(entity.Intelligence) >= value)
+    elseif ability == "Wisdom" then
+        return ConditionResult(GetModifier(entity.Wisdom) >= value)
+    elseif ability == "Charisma" then
+        return ConditionResult(GetModifier(entity.Charisma) >= value)
+    else
+        return ConditionResult(false)
+    end
+end
+
+function WW_TL_MonkACOverride_Literal(entity)
+    entity = entity or context.Source
+    if HasPassive('UnarmoredDefense_Monk', entity).Result and not HasShieldEquipped(entity).Result then
+        return ConditionResult(true)
+    end
+    return Tagged('WW_TL_MONK_AC_OVERRIDE', entity).Result
+end
+
+function WW_TL_BarbarianACOverride_Literal(entity)
+    entity = entity or context.Source
+    if HasPassive('UnarmouredDefence_Barbarian', entity).Result then
+        return ConditionResult(true)
+    end
+    return Tagged('WW_TL_BARB_AC_OVERRIDE', entity).Result
+end
+
+function WW_TL_MonkACOverride(entity)
+    entity = entity or context.Source
+    if WW_TL_MonkACOverride_Literal(entity) then
+        if WW_TL_BarbarianACOverride_Literal(entity) then
+            return ~WW_TL_AbilityGreaterThan('Constitution', 'Wisdom', entity)
+        else
+            return ConditionResult(true)
+        end
+    end
+    return ConditionResult(false)
+end
+
+function WW_TL_BarbarianACOverride(entity)
+    entity = entity or context.Source
+    if WW_TL_BarbarianACOverride_Literal(entity) then
+        if WW_TL_MonkACOverride_Literal(entity) then
+            return WW_TL_AbilityGreaterThan('Constitution', 'Wisdom', entity)
+        else
+            return ConditionResult(true)
+        end
+    end
+    return ConditionResult(false)
+end
+
+function WW_TL_ACFormulaOverriden(entity)
+    entity = entity or context.Source
+    if HasAnyStatus({'BARKSKIN','MAGE_ARMOR','ALCH_ELIXIR_BARKSKIN','WYR_DRIBBLES_BARKSKIN','MAG_SELUNITE_MAGE_ARMOR','MAG_BARKSKIN'}, {}, {}, entity).Result then
+        return ConditionResult(true)
+    end
+    return Tagged('WW_TL_CUSTOM_AC_OVERRIDE', entity) | WW_TL_BarbarianACOverride_Literal(entity) | WW_TL_MonkACOverride_Literal(entity) | HasPassive('DraconicResilience', entity)
+end
+
+function WW_TL_IsPerformanceStatus()
+    return (StatusId('PERFORM_NEGATIVE') | StatusId('PERFORM_POSITIVE') | StatusId('PERFORM_POSITIVE_THEPOWER') | StatusId('PERFORM_POSITIVE_STARGAZING') | StatusId('PERFORM_POSITIVE_BARDDANCE') | StatusId('PERFORM_POSITIVE_DOS2_1') | StatusId('PERFORM_POSITIVE_DOS2_2') | StatusId('PERFORM_POSITIVE_DOS2_3') | StatusId('EPI_DIVINE_BARD_PERFORM'))
+end
+
+function WW_TL_IsArmorBehaviourStatus()
+    return (StatusId('WW_TL_ARMOR_BEHAVIOUR_CLOTHES') | StatusId('WW_TL_ARMOR_BEHAVIOUR_LIGHT') | StatusId('WW_TL_ARMOR_BEHAVIOUR_MEDIUM') | StatusId('WW_TL_ARMOR_BEHAVIOUR_MEDIUM_DIS') | StatusId('WW_TL_ARMOR_BEHAVIOUR_HEAVY'))
+end

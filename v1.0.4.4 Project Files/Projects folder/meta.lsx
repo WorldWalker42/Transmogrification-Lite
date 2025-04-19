@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<save>
+    <version major="4" minor="7" revision="1" build="3"/>
+    <region id="MetaData">
+        <node id="root">
+            <attribute id="GameProject" type="LSString" value=""/>
+            <attribute id="Module" type="LSString" value="8b3a27a9-d140-2d08-6aae-aea20029bcbf"/>
+            <attribute id="Name" type="LSString" value="WW_TransmogrificationLite"/>
+            <attribute id="UUID" type="LSString" value="bedc5185-768d-e616-c1bd-fafad05754ed"/>
+            <children>
+                <node id="Categories"/>
+            </children>
+        </node>
+    </region>
+</save>

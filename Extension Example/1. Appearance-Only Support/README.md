@@ -1,0 +1,1 @@
+Each of these folders are named for the location they need to be placed in the Baldur's Gate 3 toolkit Data folder. When you do so, replace the name of each one with: `WW_CompatibilityExample_c4f7541a-36b5-1354-f8d9-e7fd62c517bf`

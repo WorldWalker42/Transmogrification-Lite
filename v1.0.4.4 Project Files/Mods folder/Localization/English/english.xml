@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<contentList xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <content contentuid="h601c081bg4c0egc4b7gbeb1g36fb87db0e63" version="3">Chain Shirt</content>
+  <content contentuid="h8ebd1afcgcf1cg43d3g305bg51f6bd62289b" version="4">Githyanki Half Plate</content>
+  <content contentuid="h813c2904g9034gac5eg1145g9d7ea887d7cf" version="1">Transmogrify</content>
+  <content contentuid="h097d6632g2c07g194eg2000g57471426cdaf" version="1">Transmogrified</content>
+  <content contentuid="h0d294566g2f50g906bgfa5agdcb97ce1c9c7" version="1">Transmogrify: Take Appearance</content>
+  <content contentuid="haedc5258gb219g80e5gaa7fg887bfa7c9595" version="2">Alter your current equipment to look like the target item.</content>
+  <content contentuid="h10535eb6g6cc6g34a0g9289g87161a4007e6" version="1">Transmogrify: Take Stats</content>
+  <content contentuid="hfaef227eg1615g279fgdd2bg23f8e14def28" version="2">Alter your current equipment to have the stats of the target item.</content>
+  <content contentuid="h2a447175g288dg924fged75g7530d2c34003" version="1">Light Armour</content>
+  <content contentuid="hd9bf1527g4053g5e1bgeac6g814908933065" version="1">This transmogrified item is considered to be light armour.</content>
+  <content contentuid="hbe7d366dg9343g018cg31b1gd91ec35bf20b" version="1">Medium Armour</content>
+  <content contentuid="h58d5f2d2g76e5g6356gdccfg66111d69b5a7" version="1">This transmogrified item is considered to be medium armour.</content>
+  <content contentuid="hae659246gbbd9gfa58g9aebg4212dfc12fb7" version="1">Heavy Armour</content>
+  <content contentuid="hb331724cgf41dg61b8g3696gf0a3eeea19e3" version="1">This transmogrified item is considered to be heavy armour.</content>
+  <content contentuid="h0c9d7153gcaf3gbd34g6346gef9327f4b5c9" version="1">Clothing</content>
+  <content contentuid="he704e8a9g3b9bgd112gfcdcgfcf972875560" version="1">This transmogrified item is not considered to be armour.</content>
+  <content contentuid="hce940b3eg58b5ge341g942dgf5555ed7b752" version="1">Transmogrify: Apply Statuses</content>
+  <content contentuid="h8556ef9egaad1g01a4g74bcgfa059b41f75f" version="1">Configure newly created transmogrified equipment.</content>
+  <content contentuid="h5954d69cg1901g6472g23b2gb6ac55a8a445" version="2">Armour</content>
+  <content contentuid="h082b3085gf3a4g014bge24bg21ec87b51d49" version="1">This transmogrified item is considered to be medium armour that gives disadvantage at Stealth checks.</content>
+  <content contentuid="h1116d8a7ge324g3f1eg98cfg12ec875642c3" version="1">This transmogrified item has no additional stats.</content>
+  <content contentuid="h7328c5aeg04ebgc6deg7ab0g8c788062a96f" version="1">This transmogrified item has a +1 AC.</content>
+  <content contentuid="hbcff2d48gb8b2g7b07g6689gab99cde7c950" version="1">This transmogrified item has a +2 AC.</content>
+  <content contentuid="h20dc29feg773fgb34ega5c9g148e74a2a623" version="1">This transmogrified item has a +3 AC.</content>
+  <content contentuid="h10f99d14gc2d4g4b89g3470g83e5f09bb2cc" version="1">This transmogrified item has a +4 AC.</content>
+  <content contentuid="h27f984a2ge496g609agf0eegb67a96ba257a" version="1">This transmogrified item has a +5 AC.</content>
+  <content contentuid="h7dc67ad8g2af6g25f0g7819gf198ac058db8" version="1">AC 10</content>
+  <content contentuid="h0eee43f5g286bg6b5ega291g102fda483d57" version="1">AC 11</content>
+  <content contentuid="hf6608796g28fagc8adgb2b8g4b63d9edd1a7" version="1">AC 12</content>
+  <content contentuid="h6c694f9cga1a7g92a8gf25egb3e73f3c64e5" version="1">AC 13</content>
+  <content contentuid="h00addeebg4d74ga6b4g8b42g90767e1d2e9c" version="1">AC 14</content>
+  <content contentuid="hf700983dg3af2gf2a0gd4f6g3cdf5c283e51" version="1">AC 15</content>
+  <content contentuid="hfedfef57geb1eg4bd3g2594ge95bb6a7f5b1" version="1">AC 16</content>
+  <content contentuid="h559c50feg1fd1g7557g2aa1g3dc112c08b31" version="1">AC 17</content>
+  <content contentuid="h0e2bb225g739eg02bbg456eg79abce434d0e" version="1">AC 18</content>
+  <content contentuid="h8b3974c7g46b3g1f54gc9e2g1e6dceea1043" version="1">AC 19</content>
+  <content contentuid="h9ef08356g1ea0g048fg1309gc91b2584fe19" version="1">AC 20</content>
+  <content contentuid="h07d239e6g7622g5474gccd1g701c3ffdfe9d" version="1">AC 21</content>
+  <content contentuid="h476425ecgd7c8g336fg35cfgf5fd4b6d73ad" version="1">AC 22</content>
+  <content contentuid="h16398017g9fa4gc5ecg5235g165a0d8897a7" version="1">Transmogrified Equipment</content>
+  <content contentuid="h795bbf41g226fgeae8gf73ag9aa30fd1371c" version="2">Blazer of Benevolence</content>
+  <content contentuid="h9be6bb3bgc75eg2cdfgcb88gd92c79c229be" version="1">Helldusk Armour</content>
+  <content contentuid="h8d2067a2g14a3g7188gea83g6610c4f3e721" version="1">Armour Type Limits</content>
+  <content contentuid="hcf36fb58gf58fgcd94gfdc3ga6c1df555cf3" version="1">You are wearing transmogrified armour that is imposing its limits (light, medium, heavy).</content>
+  <content contentuid="hea102dc7gb93fg33afg8f06g37c236968731" version="2">Dexterity (Real)</content>
+  <content contentuid="h9822ac22g97dfg8e5eg7ff1g6ba496264877" version="1">Wearing Light Armour</content>
+  <content contentuid="h684c28ccg8d13g84cfg7d90g27c072f9ffd3" version="2">Dexterity (Real)</content>
+  <content contentuid="hc55c7df6g58aag17b0gbea2ge452905d1b57" version="2">Dexterity (Real)</content>
+  <content contentuid="h9cee00d5g3810gb852g8c09gda0c2286f2ea" version="2">Heavy Armour</content>
+  <content contentuid="h253b32d3gb07fg5165g9487g04b4f0c24aba" version="1">%%% EMPTY</content>
+  <content contentuid="h446b00dfg6f5fg0243g9bfeg25dcbbe54bc2" version="1">Dexterity (Real)</content>
+  <content contentuid="h35bb4afeg2bbfg8bcfg721ag878768b4b12a" version="1">Test</content>
+  <content contentuid="h31b31946gee52g4e24g5f8bg58b165981afd" version="1">Refund Rage</content>
+  <content contentuid="hc6917569g44e8gefa4g9a27g17207ce48d7a" version="1">This character is wearing transmogrified heavy armour and cannot rage right now.</content>
+  <content contentuid="hfc2e46edgb120g99cfgd33eg299beb41626f" version="2">Spells Item</content>
+  <content contentuid="ha1218b43g1fb5g488fg76f1g83ca3352a84e" version="3">Create or dismiss equipment that combines the appearance of one item with the stats of another.</content>
+  <content contentuid="hd31aa8c3gf8fbgf5e5g07ccg84af4d19efd6" version="6">Cloaked Armour</content>
+  <content contentuid="hd5cee2bcg8109g8428ga920ga44e04c6d00a" version="6">A slight rippling in the air as its wearer moves is the only visual indication that this item still exists, and yet it is no less formidable than before.</content>
+  <content contentuid="hab2bc38bgb35fg1575g6abag14e005f8f195" version="1">Transmogrify: Dismiss</content>
+  <content contentuid="h9f40676agc6cfga2a1g88dcgc38a50a8a801" version="1">Dissolve the ties that bind a transmogrified item together, getting rid of it forever.</content>
+  <content contentuid="h6647ccb5g1c5fge4d5gfd0cg5db748a7b3f7" version="1">AC +1</content>
+  <content contentuid="h1c263576g6c92g0a47g5acbg0287b43ada47" version="1">AC +2</content>
+  <content contentuid="he38d3f24g7791gd010g5e09g424eafc16cd6" version="1">AC +3</content>
+  <content contentuid="h7b62ebf2g372fg1bc7g14e1g1bfb47ca9689" version="1">AC +4</content>
+  <content contentuid="h1b50850bgd96fg0ae8gb28cg1ee785b2e2fa" version="1">AC +5</content>
+  <content contentuid="hda98b8e5g475eg99f7gce47ge0e3cacd89b7" version="1">AC +6</content>
+  <content contentuid="h2352d7cagff71gb231g1f4bga415e3a76e93" version="1">AC +7</content>
+  <content contentuid="haacebba1ga262g2a17gea28gb396f714c2cc" version="1">AC 8</content>
+  <content contentuid="h61587669g2fe1g40dcg89a1gf56cc241f6b6" version="1">AC 9</content>
+  <content contentuid="h5e84ca93g1fe5gcefdgeae3g93aa06dbf8a2" version="1">AC 23</content>
+  <content contentuid="h4c4ae755g4968gfed4gf409gf056b9b44e4a" version="1">AC 24</content>
+  <content contentuid="hcbb031ceg958cg6029g71deg3f6d86e95046" version="2">Target must be transmogrified.</content>
+  <content contentuid="heb2aae1cg7a2ag36dfg7f75g58ea25d35028" version="2">Dexterity</content>
+  <content contentuid="h03fbfbbfg4b61ga5d9g8893g2d1f6ae01284" version="2">Dexterity</content>
+  <content contentuid="hc81bdb92gb598g1751g9302g0cc4872aa860" version="3">Invalid AC Bonus</content>
+  <content contentuid="hbf68ab15g476bg82dage2c7g1a319b79a4bc" version="3">Invalid Constitution (Unarmoured Defence)</content>
+  <content contentuid="h73fbd2e1g48eag9d66gde4bg0556cfb57737" version="3">Invalid Wisdom (Unarmoured Defence)</content>
+  <content contentuid="h536ca8b9gb54dg7cdbg26adg870de34d6de2" version="2">Target cannot be transmogrified.</content>
+  <content contentuid="h66870c31gcfabg8e65g1ffbg7f20851311e2" version="2">Invalid Dexterity Bonus</content>
+  <content contentuid="h1890e551gd220g4274gb2fbgec6f1f15ce6a" version="2">Invalid Dexterity Bonus</content>
+  <content contentuid="h72ca0b43g3879g44ffgf5f3g5b1c913c7aec" version="1">Invalid AC Bonus</content>
+  <content contentuid="WW_TL_UnsupportedItemMessage" version="1"> is not supported for transmogrification.</content>
+  <content contentuid="WW_TL_NotProficientMessage" version="2">This character does not have the proficiency to equip this item.</content>
+  <content contentuid="WW_TL_ItemAlreadyInUseMessage" version="2">Another character has already equipped an item with these stats. Use this item instead?</content>
+  <content contentuid="WW_TL_ItemSpellCooldownMessage" version="3">Cannot re-use this spell until its cooldown is finished.</content>
+  <content contentuid="WW_TL_UseOriginalItemMessage" version="1">This transmogrification will have the appearance and stats of one item. Equip original instead?</content>
+  <content contentuid="WW_TL_TransmogrificationLabel" version="1"> (Transmogrified)</content>
+  <content contentuid="WW_TL_ItemWithoutStatsName" version="1">Shimmering Field</content>
+  <content contentuid="hc99df17fg611bgc67dg5a0cgcbf94ef1fe74" version="1">Heavy Armour Master</content>
+  <content contentuid="h70ff9062gc712g5846gd35eg1b33e0396a75" version="2">Armour Bonus</content>
+  <content contentuid="h9d75a51fg65fcg559dgbdd7gf2c3b3a62e8f" version="1">Spell Save DC</content>
+  <content contentuid="ha6013767gfebcgc4d1gc05bg1308f9aa75ec" version="1">Attack Roll</content>
+  <content contentuid="h66dd2835gdec9gddbcg5aabg005756683eda" version="1">Spell Attack Roll</content>
+  <content contentuid="h45d7021egaa64gdad9g1306g1d194a43e5e1" version="1">Damage</content>
+  <content contentuid="hc38a7b73gbda6gc8f3gcce1g524b9981ce3b" version="3">Ability Score</content>
+  <content contentuid="h3a377beag2245gbec1g1b2egc93c3b78541b" version="3">Saving Throw</content>
+  <content contentuid="h7173580fgd704gc787g8884g53497a65893c" version="3">Damage Resistance</content>
+  <content contentuid="h97042d7cg1851g175dgcef1gec710c88ec01" version="1">Damage Reduction</content>
+  <content contentuid="hc635f199gd7c0gdcc8gc24egabc6d3ab4efc" version="2">Spell</content>
+  <content contentuid="hcb44dc36g7901gaec8g6210g02f2bdafce28" version="2">Other Attributes</content>
+  <content contentuid="h44c5352agaeceg9a15gefd2g8ff3b3b052c8" version="2">The wearer receives a bonus to their &lt;LSTag Tooltip="SpellDifficultyClass"&gt;Spell Save DC&lt;/LSTag&gt;.</content>
+  <content contentuid="hfc27735eg860fg17ffge319g090b5f23f14a" version="2">The wearer receives a bonus to their &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt;.</content>
+  <content contentuid="he8c04978g13d4g8336gfe97ga23413eb05e0" version="2">The wearer receives a bonus to their &lt;LSTag Tooltip="AttackRoll"&gt;Spell Attack Rolls&lt;/LSTag&gt;.</content>
+  <content contentuid="h395f2381gab03g793agcfd4g70623d248a37" version="2">The wearer deals extra damage (usually but not always added to attacks).</content>
+  <content contentuid="h44d60551ga15cg903cgf83bg2b2448639b89" version="2">One or more of the wearer's &lt;LSTag Tooltip="AbilityScore"&gt;Ability Scores&lt;/LSTag&gt; are increased.</content>
+  <content contentuid="hd01b1f3cgf7bfg3470gffc0g4083f76cac23" version="2">One or more of the wearer's &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throws&lt;/LSTag&gt; are increased.</content>
+  <content contentuid="h6d4ff9dbg18beg8e2dg0411g562a25769a76" version="3">The wearer becomes &lt;LSTag Tooltip="Resistant"&gt;resistant&lt;/LSTag&gt; to one or more damage types.</content>
+  <content contentuid="h960507ffg2545gceb1gec3fg9669e3ba17f1" version="1">Incoming damage to the wearer is reduced by some amount.</content>
+  <content contentuid="h87068ea5g462ag6ce8gffb9ge470b21ce32c" version="2">One or more spells / abilities are unlocked for the wearer.</content>
+  <content contentuid="h87bfd9bfg8f7cg40cbg6303gdf765a55d9cf" version="2">The wearer receives additional bonuses or attributes from this item. Please refer to the original item's description for details.</content>
+  <content contentuid="hdf30e63cg83e3gd943g60f7gaa5aef6dddf7" version="1">Debug</content>
+  <content contentuid="hec353ed9g8c63g9fd8gda87gb2ccf46c8cc6" version="2">Barb Debug</content>
+  <content contentuid="hd695c0d4gb8dfga661g09a0g286f8c741ac0" version="1">Monk Debug</content>
+  <content contentuid="h0c888dd3gbb1ega5fdgeb61g62847b0042b3" version="1">Dexterity</content>
+  <content contentuid="h58a515d0ge74agb1f0gf1ddgdcdbc47c2462" version="1">Dexterity</content>
+  <content contentuid="hfd32d77eg617ag7af4g6bbag5e5eadbab1df" version="2">Invalid Dexterity</content>
+  <content contentuid="h1606bb46g79cbg692age777g74b330a07bbb" version="2">Invalid Dexterity</content>
+  <content contentuid="h396090fag7507gd860gd772g0d3dc3110e58" version="1">Invalid AC Bonus</content>
+  <content contentuid="h2767249bg4154g8b83g9660gaf31d6bd64c5" version="2">Invalid Wisdom (Unarmoured Defence)</content>
+  <content contentuid="hdad5741egeff7g3f99gade4ge9168e8bcec2" version="2">Invalid Constitution (Unarmoured Defence)</content>
+  <content contentuid="h4526c0c5gb870g01efg0673g129a4b49dcce" version="1">Debug Status</content>
+  <content contentuid="h91c6f2efgc3e8gb14cg3953g5950a743ec37" version="1">Debug Passive</content>
+  <content contentuid="h16755a39g6760g9205g4a95g521250d06fd3" version="1">%%% EMPTY</content>
+  <content contentuid="heb0ae4d7g3ac7g8cf0g87e2g82b3edb035a2" version="1">DebugPassive</content>
+  <content contentuid="h646695d3gb6fag07ecgdf59g865b4255d8f4" version="1">%%% EMPTY</content>
+  <content contentuid="hc9fbd064gbae4g5165gd8f0g716b6593990c" version="1">Custom Override</content>
+  <content contentuid="h5730a79dg923dg50bbgdc98g7400370857d5" version="1">Debug Passive</content>
+  <content contentuid="h2e0370aeg308dgc7d6g15a5gc6a66ffa8e3f" version="1">Conditional AC</content>
+  <content contentuid="h9ebd9c5ag58bagf792g57f4g70b02b64de4f" version="1">The wearer receives an AC bonus in certain circumstances.</content>
+  <content contentuid="h3bfb2037g9314g1c1dg0e88g53461310a61e" version="1">AC 25</content>
+  <content contentuid="hcbd16bf0g836age462g8bc6ga2c84d8366c3" version="1">AC 26</content>
+  <content contentuid="h08e7ded4gb225g6eadg531eg288e9883396e" version="1">AC 27</content>
+  <content contentuid="h0a8505a8gb9b9g6bb5ga868g9febf50cfa05" version="1">AC 28</content>
+  <content contentuid="h50add09ag1c22gfe22g9f88g21fbc00db412" version="1">AC 29</content>
+  <content contentuid="hf1dad320g26d8gaa87gb1b3g7925e66bb60d" version="1">AC 30</content>
+</contentList>

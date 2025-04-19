@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<stats stat_object_definition_id="e988a674-28fe-49d2-a6ce-c5c1e0141f4c">
+  <stat_objects>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="5839eccb-bf8b-4820-b1a1-c65459fc852e" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_TL_Transmogrify" />
+        <field name="Requirements" type="StringTableFieldDefinition" value="!Combat" />
+        <field name="DisplayName" type="TranslatedStringTableFieldDefinition" handle="h813c2904g9034gac5eg1145g9d7ea887d7cf" version="1" />
+        <field name="SpellFlags" type="EnumerationListTableFieldDefinition" value="IsLinkedSpellContainer" enumeration_type_name="SpellFlagList" version="1" />
+        <field name="ContainerSpells" type="StringTableFieldDefinition" value="Target_WW_TL_Transmogrify_TakeAppearance;Target_WW_TL_Transmogrify_TakeStats;Target_WW_TL_Transmogrify_Destroy" />
+        <field name="Icon" type="StringTableFieldDefinition" value="statIcons_WildMagic_Swap" />
+        <field name="Description" type="TranslatedStringTableFieldDefinition" handle="ha1218b43g1fb5g488fg76f1g83ca3352a84e" version="3" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="13850034-36da-4dd9-aae5-552d36febf1a" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_TL_Transmogrify_TakeAppearance" />
+        <field name="SpellContainerID" type="StringTableFieldDefinition" value="Target_WW_TL_Transmogrify" />
+        <field name="TargetRadius" type="StringTableFieldDefinition" value="4" />
+        <field name="Requirements" type="StringTableFieldDefinition" value="!Combat" />
+        <field name="TargetConditions" type="StringTableFieldDefinition" value="Item()" />
+        <field name="DisplayName" type="TranslatedStringTableFieldDefinition" handle="h0d294566g2f50g906bgfa5agdcb97ce1c9c7" version="1" />
+        <field name="Description" type="TranslatedStringTableFieldDefinition" handle="haedc5258gb219g80e5gaa7fg887bfa7c9595" version="2" />
+        <field name="Icon" type="StringTableFieldDefinition" value="statIcons_WildMagic_gasCloud" />
+        <field name="SpellAnimation" type="CastAnimationsTableFieldDefinition" value="554a18f7-952e-494a-b301-7702a85d4bc9,,;,,;5e7e63e1-0e69-46e7-ade7-fe3dadcc9184,,;e9ad50df-e7f1-43a0-b782-4c08f92b0f5a,,;22dfbbf4-f417-4c84-b39e-2039315961e6,,;,,;5bfbe9f9-4fc3-4f26-b112-43d404db6a89,,;,,;,," />
+        <field name="PrepareEffect" type="GuidObjectTableFieldDefinition" value="60ec0a2d-1b72-4fb2-9eaf-571638aca25d" />
+        <field name="CastEffect" type="GuidObjectTableFieldDefinition" value="68ad05e0-ad4d-48cf-8b19-84434100711a" />
+        <field name="PrepareSound" type="StringTableFieldDefinition" value="Spell_Prepare_ClericGen_L1to3_01" />
+        <field name="PrepareLoopSound" type="StringTableFieldDefinition" value="Spell_Loop_ClericGen_L1to3" />
+        <field name="CastTextEvent" type="StringTableFieldDefinition" value="Cast" />
+        <field name="VerbalIntent" type="EnumerationTableFieldDefinition" value="Utility" enumeration_type_name="VerbalIntent" version="1" />
+        <field name="TargetEffect" type="GuidObjectTableFieldDefinition" value="5cd08691-b441-43e1-b9d7-14668e4affa5" />
+        <field name="CastSound" type="StringTableFieldDefinition" value="Spell_Cast_Buff_MirrorImage_L1to3" />
+        <field name="VocalComponentSound" type="StringTableFieldDefinition" value="Vocal_Component_PolymorphGeneric" />
+        <field name="SpellFlags" type="EnumerationListTableFieldDefinition" value="HasVerbalComponent" enumeration_type_name="SpellFlagList" version="1" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="dbafa220-7f92-4976-85e0-299a52fe1bb3" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_TL_Transmogrify_TakeStats" />
+        <field name="SpellContainerID" type="StringTableFieldDefinition" value="Target_WW_TL_Transmogrify" />
+        <field name="TargetRadius" type="StringTableFieldDefinition" value="4" />
+        <field name="Requirements" type="StringTableFieldDefinition" value="!Combat" />
+        <field name="TargetConditions" type="StringTableFieldDefinition" value="Item()" />
+        <field name="DisplayName" type="TranslatedStringTableFieldDefinition" handle="h10535eb6g6cc6g34a0g9289g87161a4007e6" version="1" />
+        <field name="Description" type="TranslatedStringTableFieldDefinition" handle="hfaef227eg1615g279fgdd2bg23f8e14def28" version="2" />
+        <field name="Icon" type="StringTableFieldDefinition" value="statIcons_WildMagic_Enchant" />
+        <field name="SpellAnimation" type="CastAnimationsTableFieldDefinition" value="f489d217-b699-4e8e-bf22-6ef539c5d65b,,;,,;7a343ea7-1330-428a-b0b1-9f6dc7f2a91c,,;0f872585-3c6e-4493-a0b5-5acc882b7aaf,,;f9414915-2da7-4f40-bcbd-90e956461246,,;,,;f2a62277-c87a-4ec7-b4f2-c3c37e6e30ae,,;,,;,," />
+        <field name="PrepareEffect" type="GuidObjectTableFieldDefinition" value="60ec0a2d-1b72-4fb2-9eaf-571638aca25d" />
+        <field name="CastEffect" type="GuidObjectTableFieldDefinition" value="5cd08691-b441-43e1-b9d7-14668e4affa5" />
+        <field name="PrepareSound" type="StringTableFieldDefinition" value="Spell_Prepare_ClericGen_L1to3_01" />
+        <field name="PrepareLoopSound" type="StringTableFieldDefinition" value="Spell_Loop_ClericGen_L1to3" />
+        <field name="CastTextEvent" type="StringTableFieldDefinition" value="Cast" />
+        <field name="VerbalIntent" type="EnumerationTableFieldDefinition" value="Utility" enumeration_type_name="VerbalIntent" version="1" />
+        <field name="TargetEffect" type="GuidObjectTableFieldDefinition" value="68ad05e0-ad4d-48cf-8b19-84434100711a" />
+        <field name="CastSound" type="StringTableFieldDefinition" value="Spell_Cast_Summon_Goodberry_L1to3" />
+        <field name="VocalComponentSound" type="StringTableFieldDefinition" value="Vocal_Component_Prayer" />
+        <field name="SpellFlags" type="EnumerationListTableFieldDefinition" value="HasVerbalComponent" enumeration_type_name="SpellFlagList" version="1" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="33c4f183-8f6b-41cf-8add-9313d310a55a" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_TL_Transmogrify_Destroy" />
+        <field name="SpellContainerID" type="StringTableFieldDefinition" value="Target_WW_TL_Transmogrify" />
+        <field name="TargetRadius" type="StringTableFieldDefinition" value="4" />
+        <field name="Requirements" type="StringTableFieldDefinition" value="!Combat" />
+        <field name="TargetConditions" type="StringTableFieldDefinition" value="Item() and Tagged('WW_TL_TRANSMOGRIFIED')" />
+        <field name="Icon" type="StringTableFieldDefinition" value="statIcons_WildMagic_Teleport" />
+        <field name="DisplayName" type="TranslatedStringTableFieldDefinition" handle="hab2bc38bgb35fg1575g6abag14e005f8f195" version="1" />
+        <field name="Description" type="TranslatedStringTableFieldDefinition" handle="h9f40676agc6cfga2a1g88dcgc38a50a8a801" version="1" />
+        <field name="PrepareSound" type="StringTableFieldDefinition" value="Spell_Prepare_Damage_Disintegrate" />
+        <field name="CastSound" type="StringTableFieldDefinition" value="Spell_Cast_Damage_Fireball_L5" />
+        <field name="CastTextEvent" type="StringTableFieldDefinition" value="Cast" />
+        <field name="SpellAnimation" type="CastAnimationsTableFieldDefinition" value="3ff87abf-1ea1-4c32-aadf-c822d74c7dc0,,;,,;cd5e5d4a-38e1-4d4d-b346-3fbc1e4c3c90,,;141f48d9-9615-496a-8737-9240f0dba60d,,;d8925ce4-d6d9-400c-92f5-ad772ef7f178,,;,,;eadedcce-d01b-4fbb-a1ae-d218f13aa5d6,,;,,;,," />
+        <field name="VerbalIntent" type="EnumerationTableFieldDefinition" value="Utility" enumeration_type_name="VerbalIntent" version="1" />
+        <field name="PrepareEffect" type="GuidObjectTableFieldDefinition" value="60ec0a2d-1b72-4fb2-9eaf-571638aca25d" />
+        <field name="CastEffect" type="GuidObjectTableFieldDefinition" value="79a465b8-6054-47f8-92e4-9c340f96dd77" />
+        <field name="PrepareLoopSound" type="StringTableFieldDefinition" value="Spell_Loop_ClericGen_L1to3" />
+        <field name="VocalComponentSound" type="StringTableFieldDefinition" value="Vocal_Component_Curse" />
+        <field name="SpellFlags" type="EnumerationListTableFieldDefinition" value="HasVerbalComponent" enumeration_type_name="SpellFlagList" version="1" />
+        <field name="TargetSound" type="StringTableFieldDefinition" value="Action_Cast_Jump" />
+      </fields>
+    </stat_object>
+  </stat_objects>
+</stats>

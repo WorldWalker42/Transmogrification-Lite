@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<contentList xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <content contentuid="hfb7f82c8gb1f7g1b6dgb937gc46de1547834" version="2">Plane-Walker's Breastplate (Damaged)</content>
+  <content contentuid="h9d51bef4g7082g7d1dgcaa7gd8188a2a33c0" version="2">This armour is a perfectly crafted balance of portability and protection for a busy plane-walker, always on the go and ever-harried by all sorts of interesting foes.&lt;br&gt;&lt;br&gt;This particular set has suffered some damage when its previous owner wasn't quite fleet of foot enough to dodge some devastating blow - better luck to you!</content>
+  <content contentuid="h8514f19agc3b2gd794ga442gf2b4852fe9e0" version="1">Plane Walker's Evasion</content>
+  <content contentuid="hc085960cgaadfg62d5g6428g839164f9057a" version="1">Slipping out from the clutches of a nearby threat, you teleport to an unoccupied space you can see.</content>
+  <content contentuid="hd451abc9g2acdg61c4ge743gf1f094e3c1f6" version="1">Plane-Walker's Evasion</content>
+  <content contentuid="h17053dd8gcb0fg5873g34f6gaaebe0bcf4d5" version="2">When an enemy hits the wearer with a melee attack, gain &lt;LSTag Type="Spell" Tooltip="Target_WW_CE_MistyStep"&gt;Plane-Walker's Evasion&lt;/LSTag&gt; for the next turn.</content>
+  <content contentuid="h75ed8a50gd88dgbe7dg6561g922e50967611" version="1">Exotic Material</content>
+  <content contentuid="hb75536d3gd3fcg1587g25ddgf6cccf3923b6" version="1">Add your full Dexterity &lt;LSTag Tooltip="AbilityModifier"&gt;Modifier&lt;/LSTag&gt; to your &lt;LSTag Tooltip="ArmourClass"&gt;Armour Class&lt;/LSTag&gt;. Additionally, this armour does not impose &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on Stealth &lt;LSTag Tooltip="AbilityCheck"&gt;Ability Checks&lt;/LSTag&gt;.</content>
+  <content contentuid="h8fb389e3g753agb0acg4804gb217e76a0fd5" version="2">Plane-Walker's Breastplate</content>
+  <content contentuid="hbf561faegde41ge033gbecdg7cf16de9878e" version="2">This armour is a perfectly crafted balance of portability and protection for a busy plane-walker, always on the go and ever-harried by all sorts of interesting foes.</content>
+  <content contentuid="hd0f23a61gdbc7g9970g09f1g791eb732c6a8" version="2">Plane-Walker's Boots</content>
+  <content contentuid="h4ebeb885g2c4eg6977gee69g28153628871c" version="2">Plane-walkers are on their feet all day every day, and therefore demand comfortable boots. Let's be clear - these are VERY comfortable boots.</content>
+  <content contentuid="h68776935gb762gc321g5d6fgf779f6b26bb1" version="1">Lightened Pack</content>
+  <content contentuid="h874b9a11g15c6gb2b8g81e7g767353853a0d" version="1">A practiced plane-walker knows how to bear the weight of their pack just so, increasing their &lt;LSTag Tooltip="CarryWeight"&gt;carrying capacity&lt;/LSTag&gt; by half.</content>
+  <content contentuid="hc7a5b066g1d66g5c7cg48fcg8a63e155c573" version="1">Lightened Pack</content>
+  <content contentuid="hfd39fafbg0ec5g4405g359fgab4491233a3c" version="2">Your &lt;LSTag Tooltip="CarryWeight"&gt;carrying capacity&lt;/LSTag&gt; is increased by half.</content>
+</contentList>

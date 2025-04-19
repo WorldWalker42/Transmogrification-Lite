@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<stats stat_object_definition_id="3e76b74c-a5ae-4268-944a-aa9c31e2185e">
+  <stat_objects>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="a350b8e1-2fd5-43c0-b627-4af0408cc4ee" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_TL_AddModifier_Full" />
+        <field name="DisplayName" type="TranslatedStringTableFieldDefinition" handle="heb2aae1cg7a2ag36dfg7f75g58ea25d35028" version="2" />
+        <field name="Properties" type="EnumerationListTableFieldDefinition" value="IsHidden" enumeration_type_name="PassiveFlags" version="1" />
+        <field name="BoostContext" type="EnumerationListTableFieldDefinition" value="OnEquip;OnCreate;OnStatusApplied" enumeration_type_name="StatsFunctorContext" version="1" />
+        <field name="BoostConditions" type="StringTableFieldDefinition" value="(StatusId('') and not Tagged('WW_TL_ALT_AC_MOD', context.Source) and (WearingArmor(context.Source) or not WW_TL_ACFormulaOverriden())) or (not StatusId('') and not Tagged('WW_TL_ALT_AC_MOD') and (WearingArmor(context.Target) or not WW_TL_ACFormulaOverriden(context.Target)))" />
+        <field name="Boosts" type="StringTableFieldDefinition" value="IF(StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',1)):AC(1); IF(StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',2)):AC(2); IF(StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',3)):AC(3); IF(StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',4)):AC(4); IF(StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',5)):AC(5); IF(StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',6)):AC(6); IF(StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',7)):AC(7); IF(StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',8)):AC(8); IF(StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',9)):AC(9); IF(StatusId('') and WW_TL_ModifierEqualsOrGreaterThan('Dexterity',10)):AC(10);IF(not StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',1,context.Target)):AC(1); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',2,context.Target)):AC(2); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',3,context.Target)):AC(3); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',4,context.Target)):AC(4); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',5,context.Target)):AC(5); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',6,context.Target)):AC(6); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',7,context.Target)):AC(7); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',8,context.Target)):AC(8); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',9,context.Target)):AC(9); IF(not StatusId('') and WW_TL_ModifierEqualsOrGreaterThan('Dexterity',10,context.Target)):AC(10);" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="33e68b5f-a76a-43a5-b326-a3751387f347" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_TL_AddModifier_Partial" />
+        <field name="DisplayName" type="TranslatedStringTableFieldDefinition" handle="h03fbfbbfg4b61ga5d9g8893g2d1f6ae01284" version="2" />
+        <field name="Properties" type="EnumerationListTableFieldDefinition" value="IsHidden" enumeration_type_name="PassiveFlags" version="1" />
+        <field name="BoostContext" type="EnumerationListTableFieldDefinition" value="OnEquip;OnCreate;OnStatusApplied" enumeration_type_name="StatsFunctorContext" version="1" />
+        <field name="BoostConditions" type="StringTableFieldDefinition" value="(StatusId('') and not Tagged('WW_TL_ALT_AC_MOD', context.Source) and (WearingArmor(context.Source) or not WW_TL_ACFormulaOverriden())) or (not StatusId('') and not Tagged('WW_TL_ALT_AC_MOD') and (WearingArmor(context.Target) or not WW_TL_ACFormulaOverriden(context.Target)))" />
+        <field name="Boosts" type="StringTableFieldDefinition" value="IF(StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',1)):AC(1); IF(StatusId('') and (WW_TL_ModifierEqualsTo('Dexterity',2) or (WW_TL_ModifierEqualsOrGreaterThan('Dexterity',3) and not HasPassive('MediumArmorMaster',context.Source)))):AC(2); IF(StatusId('') and (WW_TL_ModifierEqualsOrGreaterThan('Dexterity',3) and HasPassive('MediumArmorMaster',context.Source))):AC(3);IF(not StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',1,context.Target)):AC(1); IF(not StatusId('') and (WW_TL_ModifierEqualsTo('Dexterity',2,context.Target) or (WW_TL_ModifierEqualsOrGreaterThan('Dexterity',3,context.Target) and not HasPassive('MediumArmorMaster',context.Target)))):AC(2); IF(not StatusId('') and (WW_TL_ModifierEqualsOrGreaterThan('Dexterity',3,context.Target) and HasPassive('MediumArmorMaster',context.Target))):AC(3);" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="45805d65-5110-4935-af2b-b59a76382373" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_TL_PreventModifier_All" />
+        <field name="DisplayName" type="TranslatedStringTableFieldDefinition" handle="h1890e551gd220g4274gb2fbgec6f1f15ce6a" version="2" />
+        <field name="Properties" type="EnumerationListTableFieldDefinition" value="IsHidden" enumeration_type_name="PassiveFlags" version="1" />
+        <field name="BoostContext" type="EnumerationListTableFieldDefinition" value="OnEquip;OnCreate;OnStatusApplied" enumeration_type_name="StatsFunctorContext" version="1" />
+        <field name="BoostConditions" type="StringTableFieldDefinition" value="(StatusId('') and not Tagged('WW_TL_ALT_AC_MOD', context.Source) and not WearingArmor(context.Source) and WW_TL_ACFormulaOverriden()) or (not StatusId('') and not Tagged('WW_TL_ALT_AC_MOD') and not WearingArmor(context.Target) and WW_TL_ACFormulaOverriden(context.Target))" />
+        <field name="Boosts" type="StringTableFieldDefinition" value="IF(StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',1)):AC(-1); IF(StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',2)):AC(-2); IF(StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',3)):AC(-3); IF(StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',4)):AC(-4); IF(StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',5)):AC(-5); IF(StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',6)):AC(-6); IF(StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',7)):AC(-7); IF(StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',8)):AC(-8); IF(StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',9)):AC(-9); IF(StatusId('') and WW_TL_ModifierEqualsOrGreaterThan('Dexterity',10)):AC(-10);IF(not StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',1,context.Target)):AC(-1); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',2,context.Target)):AC(-2); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',3,context.Target)):AC(-3); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',4,context.Target)):AC(-4); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',5,context.Target)):AC(-5); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',6,context.Target)):AC(-6); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',7,context.Target)):AC(-7); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',8,context.Target)):AC(-8); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',9,context.Target)):AC(-9); IF(not StatusId('') and WW_TL_ModifierEqualsOrGreaterThan('Dexterity',10,context.Target)):AC(-10);" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="0de41d95-8b99-4597-bfd3-dfc1e917f2b3" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_TL_PreventModifier_Extra" />
+        <field name="DisplayName" type="TranslatedStringTableFieldDefinition" handle="h66870c31gcfabg8e65g1ffbg7f20851311e2" version="2" />
+        <field name="Properties" type="EnumerationListTableFieldDefinition" value="IsHidden" enumeration_type_name="PassiveFlags" version="1" />
+        <field name="BoostContext" type="EnumerationListTableFieldDefinition" value="OnEquip;OnCreate;OnStatusApplied" enumeration_type_name="StatsFunctorContext" version="1" />
+        <field name="BoostConditions" type="StringTableFieldDefinition" value="(StatusId('') and not Tagged('WW_TL_ALT_AC_MOD', context.Source) and not WearingArmor(context.Source) and WW_TL_ACFormulaOverriden()) or (not StatusId('') and not Tagged('WW_TL_ALT_AC_MOD') and not WearingArmor(context.Target) and WW_TL_ACFormulaOverriden(context.Target))" />
+        <field name="Boosts" type="StringTableFieldDefinition" value="IF(StatusId('') and HasPassive('MediumArmorMaster',context.Source) and WW_TL_ModifierEqualsOrGreaterThan('Dexterity',3)):AC(1); IF(StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',3)):AC(-1); IF(StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',4)):AC(-2); IF(StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',5)):AC(-3); IF(StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',6)):AC(-4); IF(StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',7)):AC(-5); IF(StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',8)):AC(-6); IF(StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',9)):AC(-7); IF(StatusId('') and WW_TL_ModifierEqualsOrGreaterThan('Dexterity',10)):AC(-8);IF(not StatusId('') and HasPassive('MediumArmorMaster',context.Target) and WW_TL_ModifierEqualsOrGreaterThan('Dexterity',3,context.Target)):AC(1); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',3,context.Target)):AC(-1); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',4,context.Target)):AC(-2); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',5,context.Target)):AC(-3); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',6,context.Target)):AC(-4); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',7,context.Target)):AC(-5); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',8,context.Target)):AC(-6); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Dexterity',9,context.Target)):AC(-7); IF(not StatusId('') and WW_TL_ModifierEqualsOrGreaterThan('Dexterity',10,context.Target)):AC(-8);" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="ee09a9b4-2d9d-4dd2-906a-589f109e752e" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_TL_HeavyArmorMaster" />
+        <field name="DisplayName" type="TranslatedStringTableFieldDefinition" handle="hc99df17fg611bgc67dg5a0cgcbf94ef1fe74" version="1" />
+        <field name="Properties" type="EnumerationListTableFieldDefinition" value="IsHidden" enumeration_type_name="PassiveFlags" version="1" />
+        <field name="BoostConditions" type="StringTableFieldDefinition" value="HasPassive('HeavyArmorMaster',context.Source) and not HasDamageEffectFlag(DamageFlags.Magical)" />
+        <field name="Boosts" type="StringTableFieldDefinition" value="DamageReduction(Slashing, Flat, 3);DamageReduction(Bludgeoning, Flat, 3);DamageReduction(Piercing, Flat, 3)" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="8f0f031b-693b-42e0-9352-41a7262bb865" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_TL_ArmorBuff" />
+        <field name="DisplayName" type="TranslatedStringTableFieldDefinition" handle="h70ff9062gc712g5846gd35eg1b33e0396a75" version="2" />
+        <field name="Properties" type="EnumerationListTableFieldDefinition" value="IsHidden" enumeration_type_name="PassiveFlags" version="1" />
+        <field name="BoostContext" type="EnumerationListTableFieldDefinition" value="OnEquip;OnCreate" enumeration_type_name="StatsFunctorContext" version="1" />
+        <field name="BoostConditions" type="StringTableFieldDefinition" value="not WearingArmor(context.Source)" />
+        <field name="Boosts" type="StringTableFieldDefinition" value="IF(HasPassive('FightingStyle_Defense',context.Source)):AC(1);" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="e4aa1493-66c6-4db4-878e-4abd1cc01789" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_TL_ArmorDebuff" />
+        <field name="Boosts" type="StringTableFieldDefinition" value="IF(HasPassive('DraconicResilience',context.Source)):AC(-3); IF(HasPassive('MAG_OfDefense_Gloves_Passive',context.Source) and not HasShieldEquipped(context.Source)):AC(-2); IF(HasPassive('MAG_Barbarian_Boots_BoneSpike_Defense_Passive',context.Source) and not HasShieldEquipped(context.Source)):AC(-1); IF(HasPassive('MAG_Barbarian_Boots_BoneSpike_Defense_Passive',context.Source) and not HasShieldEquipped(context.Source)):RollBonus(SavingThrow, -1)" />
+        <field name="DisplayName" type="TranslatedStringTableFieldDefinition" handle="hc81bdb92gb598g1751g9302g0cc4872aa860" version="3" />
+        <field name="Properties" type="EnumerationListTableFieldDefinition" value="IsHidden" enumeration_type_name="PassiveFlags" version="1" />
+        <field name="StatsFunctorContext" type="EnumerationListTableFieldDefinition" value="OnStatusApplied;OnCreate" enumeration_type_name="StatsFunctorContext" version="1" />
+        <field name="StatsFunctors" type="FunctorsTableFieldDefinition" value="ApplyStatus(WW_TL_REMOVE_UNARMORED_STATUSES,100,1)" />
+        <field name="BoostConditions" type="StringTableFieldDefinition" value="not WearingArmor(context.Source)" />
+        <field name="BoostContext" type="EnumerationListTableFieldDefinition" value="OnEquip;OnCreate" enumeration_type_name="StatsFunctorContext" version="1" />
+        <field name="Conditions" type="StringTableFieldDefinition" value="context.HasContextFlag(StatsFunctorContext.OnCreate) or (not HasStatus('WW_TL_DISABLE_REMOVE_UNARMORED_STATUSES') and not StatusId('WW_TL_REMOVE_UNARMORED_STATUSES') and not StatusId('WW_TL_REEVALUATE_OVERRIDES') and not WW_TL_IsPerformanceStatus())" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="29997fc9-c327-45f0-ac09-6191d2985788" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_TL_Replace_BaseAC" />
+        <field name="DisplayName" type="TranslatedStringTableFieldDefinition" handle="h72ca0b43g3879g44ffgf5f3g5b1c913c7aec" version="1" />
+        <field name="Properties" type="EnumerationListTableFieldDefinition" value="IsHidden" enumeration_type_name="PassiveFlags" version="1" />
+        <field name="BoostContext" type="EnumerationListTableFieldDefinition" value="OnEquip;OnCreate;OnStatusApplied" enumeration_type_name="StatsFunctorContext" version="1" />
+        <field name="BoostConditions" type="StringTableFieldDefinition" value="(StatusId('') and not WearingArmor(context.Source) and WW_TL_ACFormulaOverriden()) or (not StatusId('') and not WearingArmor(context.Target) and WW_TL_ACFormulaOverriden(context.Target))" />
+        <field name="Boosts" type="StringTableFieldDefinition" value="AC(-10)" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="167733ec-0af7-400d-803e-56ba394b4ef6" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_TL_Undo_UnarmoredBarbarian" />
+        <field name="DisplayName" type="TranslatedStringTableFieldDefinition" handle="hbf68ab15g476bg82dage2c7g1a319b79a4bc" version="3" />
+        <field name="Properties" type="EnumerationListTableFieldDefinition" value="IsHidden" enumeration_type_name="PassiveFlags" version="1" />
+        <field name="BoostContext" type="EnumerationListTableFieldDefinition" value="OnEquip;OnCreate;OnStatusApplied" enumeration_type_name="StatsFunctorContext" version="1" />
+        <field name="BoostConditions" type="StringTableFieldDefinition" value="(StatusId('') and not WearingArmor(context.Source) and WW_TL_BarbarianACOverride()) or (not StatusId('') and not WearingArmor(context.Target) and WW_TL_BarbarianACOverride(context.Target))" />
+        <field name="Boosts" type="StringTableFieldDefinition" value="IF(StatusId('') and WW_TL_ModifierEqualsTo('Constitution',1)):AC(-1); IF(StatusId('') and WW_TL_ModifierEqualsTo('Constitution',2)):AC(-2); IF(StatusId('') and WW_TL_ModifierEqualsTo('Constitution',3)):AC(-3); IF(StatusId('') and WW_TL_ModifierEqualsTo('Constitution',4)):AC(-4); IF(StatusId('') and WW_TL_ModifierEqualsTo('Constitution',5)):AC(-5); IF(StatusId('') and WW_TL_ModifierEqualsTo('Constitution',6)):AC(-6); IF(StatusId('') and WW_TL_ModifierEqualsTo('Constitution',7)):AC(-7); IF(StatusId('') and WW_TL_ModifierEqualsTo('Constitution',8)):AC(-8); IF(StatusId('') and WW_TL_ModifierEqualsTo('Constitution',9)):AC(-9); IF(StatusId('') and WW_TL_ModifierEqualsOrGreaterThan('Constitution',10)):AC(-10);IF(not StatusId('') and WW_TL_ModifierEqualsTo('Constitution',1,context.Target)):AC(-1); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Constitution',2,context.Target)):AC(-2); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Constitution',3,context.Target)):AC(-3); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Constitution',4,context.Target)):AC(-4); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Constitution',5,context.Target)):AC(-5); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Constitution',6,context.Target)):AC(-6); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Constitution',7,context.Target)):AC(-7); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Constitution',8,context.Target)):AC(-8); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Constitution',9,context.Target)):AC(-9); IF(not StatusId('') and WW_TL_ModifierEqualsOrGreaterThan('Constitution',10,context.Target)):AC(-10);" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="edfe4849-5fb1-4d29-be64-09b818a1bea2" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_TL_Undo_UnarmoredMonk" />
+        <field name="DisplayName" type="TranslatedStringTableFieldDefinition" handle="h73fbd2e1g48eag9d66gde4bg0556cfb57737" version="3" />
+        <field name="Properties" type="EnumerationListTableFieldDefinition" value="IsHidden" enumeration_type_name="PassiveFlags" version="1" />
+        <field name="BoostContext" type="EnumerationListTableFieldDefinition" value="OnEquip;OnCreate;OnStatusApplied" enumeration_type_name="StatsFunctorContext" version="1" />
+        <field name="BoostConditions" type="StringTableFieldDefinition" value="(StatusId('') and not WearingArmor(context.Source) and WW_TL_MonkACOverride()) or (not StatusId('') and not WearingArmor(context.Target) and WW_TL_MonkACOverride(context.Target))" />
+        <field name="Boosts" type="StringTableFieldDefinition" value="IF(StatusId('') and WW_TL_ModifierEqualsTo('Wisdom',1)):AC(-1); IF(StatusId('') and WW_TL_ModifierEqualsTo('Wisdom',2)):AC(-2); IF(StatusId('') and WW_TL_ModifierEqualsTo('Wisdom',3)):AC(-3); IF(StatusId('') and WW_TL_ModifierEqualsTo('Wisdom',4)):AC(-4); IF(StatusId('') and WW_TL_ModifierEqualsTo('Wisdom',5)):AC(-5); IF(StatusId('') and WW_TL_ModifierEqualsTo('Wisdom',6)):AC(-6); IF(StatusId('') and WW_TL_ModifierEqualsTo('Wisdom',7)):AC(-7); IF(StatusId('') and WW_TL_ModifierEqualsTo('Wisdom',8)):AC(-8); IF(StatusId('') and WW_TL_ModifierEqualsTo('Wisdom',9)):AC(-9); IF(StatusId('') and WW_TL_ModifierEqualsOrGreaterThan('Wisdom',10)):AC(-10);IF(not StatusId('') and WW_TL_ModifierEqualsTo('Wisdom',1,context.Target)):AC(-1); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Wisdom',2,context.Target)):AC(-2); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Wisdom',3,context.Target)):AC(-3); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Wisdom',4,context.Target)):AC(-4); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Wisdom',5,context.Target)):AC(-5); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Wisdom',6,context.Target)):AC(-6); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Wisdom',7,context.Target)):AC(-7); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Wisdom',8,context.Target)):AC(-8); IF(not StatusId('') and WW_TL_ModifierEqualsTo('Wisdom',9,context.Target)):AC(-9); IF(not StatusId('') and WW_TL_ModifierEqualsOrGreaterThan('Wisdom',10,context.Target)):AC(-10);" />
+      </fields>
+    </stat_object>
+  </stat_objects>
+</stats>
