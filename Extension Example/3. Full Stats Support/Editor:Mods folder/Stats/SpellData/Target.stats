@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<stats stat_object_definition_id="e988a674-28fe-49d2-a6ce-c5c1e0141f4c">
+  <stat_objects>
+    <stat_object color="#FF556B2F" is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="f67bfeb8-8d7f-4fe2-b67d-36bff1f53a1e" />
+        <field name="Name" type="NameTableFieldDefinition" value="ORIGINAL EQUIPMENT SPELLS" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="2df76c50-f2ac-42cb-b589-d0cdcc6d36ae" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_CE_MistyStep" />
+        <field name="Using" type="BaseClassTableFieldDefinition" value="fdf25d3d-b45f-47b6-9760-d2f2f0651239" />
+        <field name="DisplayName" type="TranslatedStringTableFieldDefinition" handle="h8514f19agc3b2gd794ga442gf2b4852fe9e0" version="1" />
+        <field name="Description" type="TranslatedStringTableFieldDefinition" handle="hc085960cgaadfg62d5g6428g839164f9057a" version="1" />
+        <field name="UseCosts" type="StringTableFieldDefinition" clear_inherited_value="true" value="" />
+        <field name="SpellFlags" type="EnumerationListTableFieldDefinition" value="HasVerbalComponent;IsSpell;HasHighGroundRangeExtension;RangeIgnoreVerticalThreshold;Temporary" enumeration_type_name="SpellFlagList" version="1" />
+        <field name="SpellPrepareCost" type="IntegerTableFieldDefinition" clear_inherited_value="true" value="" />
+        <field name="TargetRadius" type="StringTableFieldDefinition" value="12" />
+      </fields>
+    </stat_object>
+  </stat_objects>
+</stats>

@@ -1,0 +1,16 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+// The INIT section of the transmogrification compatibility script must at least add a fact to DB_WW_TL_ArmorComponents for each piece of equipment.
+// The database has the following format:
+// DB_WW_TL_ArmorComponents(_Template, _AppearanceTemplate, _StatsStatusName, _ArmorType, _DisplayAC, _Slot, _Unique, _AdditionalAttributesTooltip);
+
+// In this example, the following items are given support for taking their appearance AND a basic version of their stats:
+DB_WW_TL_ArmorComponents(WW_CE_ARM_Breastplate_WalkersPlate_Damaged_3e817f24-38d7-4f18-827e-531a220fd4a9, WW_CE_ARM_Breastplate_WalkersPlate_Damaged_AppearanceOnly_3d98ad35-afce-472f-a393-a0129bd4345e, "WW_CE_TL_ARM_Breastplate_WalkersPlate_Damaged", 1, 12, "Breast", 0, 1);
+DB_WW_TL_ArmorComponents(WW_CE_ARM_Breastplate_WalkersPlate_c97df1d0-3011-47f4-b859-3ea9e3664997, WW_CE_ARM_Breastplate_WalkersPlate_AppearanceOnly_fa942a7b-ea01-4562-be3c-19854ae8a255, "WW_CE_TL_ARM_Breastplate_WalkersPlate", 5, 14, "Breast", 1, 1);
+DB_WW_TL_ArmorComponents(WW_CE_ARM_Boots_WalkersPlate_39001a4c-8a06-47d9-8e22-5b5a9b545a5b, WW_CE_ARM_Boots_WalkersPlate_AppearanceOnly_b3acf254-166c-4bab-9b36-3503a046dd3b, "WW_CE_TL_ARM_Boots_WalkersPlate", 0, 0, "Boots", 1, 1);
+KBSECTION
+
+EXITSECTION
+
+ENDEXITSECTION

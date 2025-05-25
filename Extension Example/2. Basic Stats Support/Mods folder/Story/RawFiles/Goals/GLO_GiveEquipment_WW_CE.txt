@@ -1,0 +1,21 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+
+KBSECTION
+// This script gives all of the example equipment to the player.
+// You do NOT need to use this technique to have transmogrification compatibility. It is JUST an easy way for me to make the
+// original items available for the example. However, feel free to copy this approach if you want to - Osiris is very useful.
+IF
+LevelGameplayStarted(_,_)
+AND
+DB_Avatars(_Avatar)
+AND
+QRY_OnlyOnce("WW_CE_GiveEquipment")
+THEN
+TemplateAddTo((ITEMROOT)WW_CE_ARM_Breastplate_WalkersPlate_Damaged_3e817f24-38d7-4f18-827e-531a220fd4a9,(GUIDSTRING)_Avatar,1,1);
+TemplateAddTo((ITEMROOT)WW_CE_ARM_Breastplate_WalkersPlate_c97df1d0-3011-47f4-b859-3ea9e3664997,(GUIDSTRING)_Avatar,1,1);
+TemplateAddTo((ITEMROOT)WW_CE_ARM_Boots_WalkersPlate_39001a4c-8a06-47d9-8e22-5b5a9b545a5b,(GUIDSTRING)_Avatar,1,1);
+EXITSECTION
+
+ENDEXITSECTION

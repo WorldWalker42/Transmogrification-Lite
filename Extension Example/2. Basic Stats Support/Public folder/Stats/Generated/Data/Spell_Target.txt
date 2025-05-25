@@ -1,0 +1,15 @@
+new entry "Target_ORIGINAL EQUIPMENT SPELLS"
+type "SpellData"
+data "SpellType" "Target"
+
+new entry "Target_WW_CE_MistyStep"
+type "SpellData"
+data "SpellType" "Target"
+using "Target_MistyStep"
+data "TargetRadius" "12"
+data "DisplayName" "h8514f19agc3b2gd794ga442gf2b4852fe9e0;1"
+data "Description" "hc085960cgaadfg62d5g6428g839164f9057a;1"
+data "UseCosts" ""
+data "SpellFlags" "HasVerbalComponent;IsSpell;HasHighGroundRangeExtension;RangeIgnoreVerticalThreshold;Temporary"
+data "MemoryCost" ""
+

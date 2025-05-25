@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<stats stat_object_definition_id="239de60a-29b5-4010-bf7d-f6169d4ddd8a">
+  <stat_objects>
+    <stat_object color="#FF556B2F" is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="ee00283c-a73d-40d9-90a8-af75997a9b8e" />
+        <field name="Name" type="NameTableFieldDefinition" value="ORIGINAL EQUIPMENT STATS" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="981f27aa-25e9-45c1-985a-9d674a008db5" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_CE_ARM_Breastplate_WalkersPlate_Damaged" />
+        <field name="Using" type="BaseClassTableFieldDefinition" value="7583d8f7-d11e-489f-bc58-e42d97187a8e" />
+        <field name="RootTemplate" type="RootTemplateTableFieldDefinition" value="3e817f24-38d7-4f18-827e-531a220fd4a9" />
+        <field name="ArmorClass" type="IntegerTableFieldDefinition" value="12" />
+        <field name="Weight" type="FloatTableFieldDefinition" value="7" />
+        <field name="PassivesOnEquip" type="StringTableFieldDefinition" value="WW_CE_PlaneWalker_Evasion" />
+        <field name="Ability Modifier Cap" type="IntegerTableFieldDefinition" clear_inherited_value="true" value="" />
+        <field name="Proficiency Group" type="EnumerationListTableFieldDefinition" value="LightArmor" enumeration_type_name="ProficiencyGroupFlags" version="1" />
+        <field name="ArmorType" type="EnumerationTableFieldDefinition" value="Padded" enumeration_type_name="ArmorType" version="1" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="c9cda405-f963-4955-b581-63bdc993e313" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_CE_ARM_Breastplate_WalkersPlate" />
+        <field name="Using" type="BaseClassTableFieldDefinition" value="7583d8f7-d11e-489f-bc58-e42d97187a8e" />
+        <field name="RootTemplate" type="RootTemplateTableFieldDefinition" value="c97df1d0-3011-47f4-b859-3ea9e3664997" />
+        <field name="Boosts" type="StringTableFieldDefinition" value="Disadvantage(AttackTarget)" />
+        <field name="PassivesOnEquip" type="StringTableFieldDefinition" value="WW_CE_PlaneWalker_Evasion;WW_CE_PlaneWalker_ExoticMaterial" />
+        <field name="Ability Modifier Cap" type="IntegerTableFieldDefinition" clear_inherited_value="true" value="" />
+        <field name="UseConditions" type="StringTableFieldDefinition" value="Tagged('AVATAR', context.Source)" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="0f76869e-7371-4918-949e-a8d66516f5cd" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_CE_ARM_Boots_WalkersPlate" />
+        <field name="Using" type="BaseClassTableFieldDefinition" value="c6d249ce-32d3-4c33-941c-298d686bb1f1" />
+        <field name="RootTemplate" type="RootTemplateTableFieldDefinition" value="39001a4c-8a06-47d9-8e22-5b5a9b545a5b" />
+        <field name="Weight" type="FloatTableFieldDefinition" value="0.2" />
+        <field name="Boosts" type="StringTableFieldDefinition" value="ActionResource(Movement,5,0);UnlockSpell(Projectile_WW_CE_Fly)" />
+        <field name="PassivesOnEquip" type="StringTableFieldDefinition" value="WW_CE_PlaneWalker_LightenedPack_Display" />
+        <field name="StatusOnEquip" type="StringTableFieldDefinition" value="WW_CE_PLANE_WALKERS_LIGHTENED_PACK" />
+      </fields>
+    </stat_object>
+    <stat_object color="#FF556B2F" is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="4b775a7e-7ff1-4e2b-b220-d44e8d73e8d3" />
+        <field name="Name" type="NameTableFieldDefinition" value="TRANSMOG COMPATIBILITY STATS" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="297dcf73-2dfc-4a16-85b2-b9279b8fb5f3" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_TL_Base" />
+        <field name="Using" type="BaseClassTableFieldDefinition" value="17fbd33d-6377-4ec4-b642-5c6e9b063366" />
+        <field name="Weight" type="FloatTableFieldDefinition" value="0" />
+        <field name="MinAmount" type="IntegerTableFieldDefinition" value="1" />
+        <field name="MaxAmount" type="IntegerTableFieldDefinition" value="1" />
+        <field name="Priority" type="IntegerTableFieldDefinition" value="1" />
+        <field name="MinLevel" type="IntegerTableFieldDefinition" value="1" />
+        <field name="Slot" type="EnumerationTableFieldDefinition" value="Breast" enumeration_type_name="Itemslot" version="1" />
+        <field name="ValueUUID" type="GuidObjectTableFieldDefinition" value="8b2ad47c-891e-4a19-bab8-43cd5e964cb1" />
+        <field name="Tags" type="StringTableFieldDefinition" value="WW_TL_TRANSMOGRIFIED" />
+        <field name="RootTemplate" type="RootTemplateTableFieldDefinition" value="02ae5d88-8044-43df-8363-02a2900776db" />
+        <field name="ArmorType" type="EnumerationTableFieldDefinition" value="Padded" enumeration_type_name="ArmorType" version="1" />
+        <field name="Proficiency Group" type="EnumerationListTableFieldDefinition" value="None" enumeration_type_name="ProficiencyGroupFlags" version="1" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="217b943a-e4bf-4ec8-81ae-48df9a495a26" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_TL_Base_Helmet" />
+        <field name="Using" type="BaseClassTableFieldDefinition" value="297dcf73-2dfc-4a16-85b2-b9279b8fb5f3" />
+        <field name="Slot" type="EnumerationTableFieldDefinition" value="Helmet" enumeration_type_name="Itemslot" version="1" />
+        <field name="RootTemplate" type="RootTemplateTableFieldDefinition" clear_inherited_value="true" value="" />
+        <field name="ArmorClass" type="IntegerTableFieldDefinition" clear_inherited_value="true" value="" />
+        <field name="ArmorType" type="EnumerationTableFieldDefinition" clear_inherited_value="true" value="" enumeration_type_name="ArmorType" version="1" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="817a383b-23af-4595-81d7-8fdb46800a88" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_TL_Base_Boots" />
+        <field name="Using" type="BaseClassTableFieldDefinition" value="297dcf73-2dfc-4a16-85b2-b9279b8fb5f3" />
+        <field name="RootTemplate" type="RootTemplateTableFieldDefinition" clear_inherited_value="true" value="" />
+        <field name="Slot" type="EnumerationTableFieldDefinition" value="Boots" enumeration_type_name="Itemslot" version="1" />
+        <field name="ArmorClass" type="IntegerTableFieldDefinition" clear_inherited_value="true" value="" />
+        <field name="ArmorType" type="EnumerationTableFieldDefinition" clear_inherited_value="true" value="" enumeration_type_name="ArmorType" version="1" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="ad252c9e-0353-40e4-9421-41340d3f502d" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_TL_Base_Gloves" />
+        <field name="Using" type="BaseClassTableFieldDefinition" value="297dcf73-2dfc-4a16-85b2-b9279b8fb5f3" />
+        <field name="RootTemplate" type="RootTemplateTableFieldDefinition" clear_inherited_value="true" value="" />
+        <field name="Slot" type="EnumerationTableFieldDefinition" value="Gloves" enumeration_type_name="Itemslot" version="1" />
+        <field name="ArmorClass" type="IntegerTableFieldDefinition" clear_inherited_value="true" value="" />
+        <field name="ArmorType" type="EnumerationTableFieldDefinition" clear_inherited_value="true" value="" enumeration_type_name="ArmorType" version="1" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="bb8d47dd-7914-4901-bc0f-01aa32604434" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_TL_Base_Cloak" />
+        <field name="Using" type="BaseClassTableFieldDefinition" value="297dcf73-2dfc-4a16-85b2-b9279b8fb5f3" />
+        <field name="RootTemplate" type="RootTemplateTableFieldDefinition" clear_inherited_value="true" value="" />
+        <field name="Slot" type="EnumerationTableFieldDefinition" value="Cloak" enumeration_type_name="Itemslot" version="1" />
+        <field name="ArmorClass" type="IntegerTableFieldDefinition" clear_inherited_value="true" value="" />
+        <field name="ArmorType" type="EnumerationTableFieldDefinition" clear_inherited_value="true" value="" enumeration_type_name="ArmorType" version="1" />
+      </fields>
+    </stat_object>
+  </stat_objects>
+</stats>

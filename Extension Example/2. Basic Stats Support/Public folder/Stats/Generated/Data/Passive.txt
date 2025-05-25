@@ -1,0 +1,22 @@
+new entry "ORIGINAL EQUIPMENT PASSIVES"
+type "PassiveData"
+
+new entry "WW_CE_PlaneWalker_Evasion"
+type "PassiveData"
+data "DisplayName" "hd451abc9g2acdg61c4ge743gf1f094e3c1f6;1"
+data "Description" "h17053dd8gcb0fg5873g34f6gaaebe0bcf4d5;2"
+data "Properties" "Highlighted"
+data "StatsFunctorContext" "OnAttacked"
+data "Conditions" "Enemy() and IsMeleeAttack() and not IsMiss()"
+data "StatsFunctors" "ApplyStatus(WW_CE_PLANE_WALKERS_EVASION_UNLOCK, 100, 1)"
+
+new entry "WW_CE_PlaneWalker_ExoticMaterial"
+type "PassiveData"
+data "DisplayName" "h75ed8a50gd88dgbe7dg6561g922e50967611;1"
+data "Description" "hb75536d3gd3fcg1587g25ddgf6cccf3923b6;1"
+
+new entry "WW_CE_PlaneWalker_LightenedPack_Display"
+type "PassiveData"
+data "DisplayName" "hc7a5b066g1d66g5c7cg48fcg8a63e155c573;1"
+data "Description" "hfd39fafbg0ec5g4405g359fgab4491233a3c;2"
+
