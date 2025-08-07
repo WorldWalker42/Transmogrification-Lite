@@ -1,7 +1,7 @@
 # A script for modding Baldur's Gate 3 to extend compatibility with Transmogrification Lite to more equipment. It generates .lsx files for new Root Templates, as well as a basic INIT section for an Osiris goal.
 # DISCLAIMER: This script is definitely NOT perfect, nor is it written with any particular elegance or efficiency. However, it can speed up a tedious process and requires relatively little supervision, and so
 # I am making it available as-is in the hopes that someone else will find it helpful too.
-# Last modified: 5/4/25
+# Last modified: 8/6/25
 
 import sys
 import os
@@ -302,7 +302,7 @@ else:
 		try:
 			os.mkdir(f'{output_dir}/templates')
 		except FileExistsError:
-			dont_care = -1
+			pass
 		except Exception as e:
 			print(f'Exception: {e}')
 
