@@ -10,15 +10,19 @@ At a high level, there are only two things you need to do for each item:
 
 There's a little bit of one-time setup for each step, but once you're familiar with the process, it's all very easy to do. Let's go into more detail.
 
-###Root Templates
+### Root Templates
 
 The first step is to create new Root Templates that are identical to each piece of equipment that you want to support, except that their armor stats are replaced with ones that don't grant any bonuses.
 
-####One-Time Setup
+#### One-Time Setup
 
 Before we can start making the duplicate Root Templates, we need to prepare the empty stats that will be assigned to them. Because of the way armor stats work, we need to make one for each equipment slot. You can make your own, but I recommend copying the ones made in Transmogrification Lite so that, if they ever get updated, putting the equipment mod earlier in the load order will cause its version of the stats to be overwritten by the newer, correct version.
 
-The easiest way to copy Transmogrification Lite's armor stats is to close the toolkit, paste some values into your mod's `Armor.stats` editor file, and then relaunch the toolkit. The file is probably located somewhere like this: `C:\Program Files (x86)\Steam\steamapps\common\Baldurs Gate 3\Data\Editor\Mods\[your mod name]\Stats\Stats\`
+The easiest way to copy Transmogrification Lite's armor stats is to close the toolkit, paste some values into your mod's `Armor.stats` editor file, and then relaunch the toolkit. The file is probably located somewhere like this:
+
+```
+C:\Program Files (x86)\Steam\steamapps\common\Baldurs Gate 3\Data\Editor\Mods\[your mod name]\Stats\Stats\
+```
 
 Open the file with any text editor and scroll down to the bottom. I recommend pasting the new values in the third-to-last line:
 
@@ -99,12 +103,16 @@ Here are the values to copy-paste:
 Make sure to save these changes to the editor file. Now, when you reopen the toolkit, you will be able to see and use the armor stats like normal. Each of the stats corresponds with an equipment slot:
 
 Chest: "WW_TL_Base"
+
 Helmet: "WW_TL_Base_Helmet"
+
 Cloak: "WW_TL_Base_Cloak"
+
 Gloves:"WW_TL_Base_Gloves"
+
 Footwear: "WW_TL_Base_Boots"
 
-####For Each Item
+#### For Each Item
 
 We're now ready to create new Root Templates for each item we want to support:
 
@@ -120,25 +128,25 @@ We're now ready to create new Root Templates for each item we want to support:
 
 If there are more pieces of equipment than you want to duplicate by hand, then make sure to read the **[Automating This Process](#automating-this-process)** section below.
 
-###Database Entries
+### Database Entries
 
 Now that we have templates for the equipment's appearance, we just need to connect them to the transmogrification system so that they can be used. This is done in an Osiris script, but don't worry if you haven't done anything with Osiris before - it's pretty easy to do.
 
-####One-Time Setup
+#### One-Time Setup
 
 First, we need to create an Osiris script. Open the Story Editor with this button in the main toolkit window:
 
-![Button to open Story Editor](/Extension Resources/Assets/StoryEditorButton.JPG)
+![Button to open Story Editor](https://github.com/WorldWalker42/Transmogrification-Lite/blob/ab540fb4988dfba42461bf3afd72dc4e7854ee35/Extension%20Resources/Assets/StoryEditorButton.JPG)
 
 Next, create a new top-level script by right-clicking on one of the items in the list and choosing "Add New Item".
 
-![Menu item to create new Osiris script](/Extension Resources/Assets/AddNewScript.JPG)
+![Menu item to create new Osiris script](https://github.com/WorldWalker42/Transmogrification-Lite/blob/ab540fb4988dfba42461bf3afd72dc4e7854ee35/Extension%20Resources/Assets/AddNewScript.JPG)
 
 I recommend naming the script something like `GLO_Transmogrification_IDENTIFIER` where you replace `IDENTIFIER` with an abbreviation of your username and/or the mod's name (for example, the identifier I use for Transmogrification Lite is `WW_TL`, and the one I use for this Compatibility Example is `WW_CE`).
 
 When you create the script, it should automatically open three text boxes on the right side of the window. If this doesn't happen automatically, you can find the name of your script in the list on the left (it probably went to the bottom) and double-click it.
 
-####For Each Item
+#### For Each Item
 
 In the topmost text box (called the INIT section), you will need to add the following line once for each piece of equipment and then fill in its values:
 
@@ -148,9 +156,15 @@ DB_WW_TL_ArmorComponents(_Template, _AppearanceTemplate, _StatsStatusName, _Armo
 
 A lot of these values have to do with recreating equipment stats, which we don't care about right now. Instead, we can use the values for default stats (e.g. clothes with 10 AC for the chest slot and nothing for every other slot). To keep things simple, you can start with one of the following lines that are already mostly filled in:
 
-For equipment in the chest slot: `DB_WW_TL_ArmorComponents(_Template, _AppearanceTemplate, "WW_TL_AC_10", 0, 10, "Breast", 0, 0);`
+For equipment in the chest slot:
+```
+DB_WW_TL_ArmorComponents(_Template, _AppearanceTemplate, "WW_TL_AC_10", 0, 10, "Breast", 0, 0);
+```
 
-For equipment in any other slot: `DB_WW_TL_ArmorComponents(_Template, _AppearanceTemplate, "NULL", 0, 0, _Slot, 0, 0);`
+For equipment in any other slot:
+```
+DB_WW_TL_ArmorComponents(_Template, _AppearanceTemplate, "NULL", 0, 0, _Slot, 0, 0);
+```
 
 Replace `_Template` with the Name_GUID for the original item's Root Template (which you can get by right-clicking on it in the main window's Root Templates pane and select "Copy Name_GUID to clipboard").
 
@@ -163,7 +177,7 @@ For example, here's what I did for a basic robe in the base game for Transmogrif
 DB_WW_TL_ArmorComponents(ARM_Robe_B_69302808-57a0-4fbb-9938-137bce5421d1, ARM_Robe_B_WW_TL_01f1643b-363b-42e0-84c4-44fe7851b2c7, "WW_TL_AC_10", 0, 10, "Breast", 0, 0);
 ```
 
-####Finalizing the Script
+#### Finalizing the Script
 
 Once you've added everything to your script, you MUST finalize it by 'building' the script so that it takes effect in the game. Do this by opening the "File" menu and choosing "Generate Definitions, Build and Reload".
 
@@ -171,11 +185,11 @@ The first time you do this after opening the toolkit, you will get a popup warni
 
 To do this, close both popups and click on the "Ignore Orphan Queries" button toward the bottom of the window.
 
-![The buttons to click on to resolve orphan queries warning](/Extension Resources/Assets/OrphanQueriesWarning.JPG)
+![The buttons to click on to resolve orphan queries warning](https://github.com/WorldWalker42/Transmogrification-Lite/blob/ab540fb4988dfba42461bf3afd72dc4e7854ee35/Extension%20Resources/Assets/OrphanQueriesWarning.JPG)
 
 A new window will open to let you choose which orphan queries you want to ignore. There should only be one for `DB_WW_TL_ArmorComponents`, so toggle on the checkbox next to it and press "OK" to finalize your choice.
 
-![The correct state for the orphan queries resolution window](/Extension Resources/Assets/OrphanQueriesSelector.JPG)
+![The correct state for the orphan queries resolution window](https://github.com/WorldWalker42/Transmogrification-Lite/blob/ab540fb4988dfba42461bf3afd72dc4e7854ee35/Extension%20Resources/Assets/OrphanQueriesSelector.JPG)
 
 Now that we've told the Story Editor to ignore this possible problem, choose "Generate Definitions, Build and Reload" again. Until the next time you close the toolkit, the process should complete without any warnings and your script is ready to work.
 
@@ -198,7 +212,7 @@ I recommend taking one last (optional) step to reduce the file size of your mod.
 
 To reduce your mod's size, navigate to your toolkit project files (most likely `C:\Program Files (x86)\Steam\steamapps\common\Baldurs Gate 3\Data` and then find this mod's Story files in `Mods\[mod_guid]\Story`. There will be a folder "RawFiles" and a bunch of other files. You MUST keep "RawFiles" but it should be safe to delete everything else.
 
-###Complete Example
+### Complete Example
 
 That's everything you need to do so that people can use the appearance of your equipment with the stats of any other supported item! It's perfectly fine to leave it this way if you don't want to add stats support - which gets more complicated - but I do recommend making it very clear in your mod description that the transmogrification support is appearance-only.
 
@@ -206,9 +220,9 @@ I've made a simple mod that just adds a few pieces of equipment with built-in ap
 
 An important thing to note: If you release an update to this mod that changes equipment that already has support (or if you add support for more equipment in the update), some of these changes might not apply to transmogrifications unless the player starts a new game OR you update the INIT section in a special way. For more information about this, see the **Updating Transmogrification Databases** section in another part of this guide.
 
-###Automating This Process
+### Automating This Process
 
-To make creating extensions easier, I wrote a Python script that can do everything we've covered so far automatically. It's available in this GitHub repository: https://github.com/WorldWalker42/Transmogrification-Lite/blob/main/Extension%20Resources/script.py
+To make creating extensions easier, I wrote a Python script that can do everything we've covered so far automatically. It's available [in this GitHub repository](https://github.com/WorldWalker42/Transmogrification-Lite/blob/main/Extension%20Resources/script.py).
 
 DISCLAIMER: I've found the script to be very helpful, but I DO NOT make any promises that it is perfect. Also, it was not written with any particular elegance or efficiency in mind - it's just something I threw together to help me, and I'm sharing it as-is. I do not plan to provide detailed support or troubleshooting for it.
 
