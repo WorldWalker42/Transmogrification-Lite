@@ -29,7 +29,7 @@ This directory contains three snapshots of a simple equipment mod in the process
 
 Each snapshot contains the project files, a .pak file, and a detailed guide that explains how to add this level of support. Each snapshot / guide builds on the previous one, so it will be confusing if you skip straight to the full stats support guide.
 
-**I recommend reading the three snapshot guides in order and then coming back here to read the remaining topics below.** If you'd prefer to read these guides all in one place, there's an [all-in-one version on mod.io]().
+**I recommend reading the three snapshot guides in order and then coming back here to read the remaining topics below.** If you'd prefer to read these guides all in one place, there's an [all-in-one version on mod.io](https://mod.io/g/baldursgate3/r/how-to-extend-transmogrification-lite).
 
 ## Updating the Mod
 
@@ -124,7 +124,7 @@ DB_WW_TL_ArmorSpells("WW_CE_TL_ExampleItem", "Shout_ExampleSpell", "SHORT"); // 
 
 Other than adding or removing entire facts from `DB_WW_TL_ArmorComponents`, I recommend trying to avoid _changing values_ in facts for that database because it will cause problems with how transmogrifications and their tooltips are updated. I think it would be fine if players destroy any existing transmogrifications of that item and then re-make them, but I'd be prepared to get bug reports about it even if you try to make sure everyone knows that this is necessary.
 
-For a complete example of updating the INIT section, I recommend referencing the actual Transmogrification Lite script `[GLO_Transmogrification_WW](https://github.com/WorldWalker42/Transmogrification-Lite/blob/main/Project%20Files/Mods%20folder/Story/RawFiles/Goals/GLO_Transmogrification_WW.txt)`. The relevant code is at the top of the KB section, or you can search for `PROC_WW_TL_CheckForUpdate()` to jump straight to it. To better organize the bigger updates, I defined the PROC `PROC_WW_TL_UpdateInitFacts(_Ver)` in a different script, `[GLO_TransmogrificationUpdates_WW](https://github.com/WorldWalker42/Transmogrification-Lite/blob/main/Project%20Files/Mods%20folder/Story/RawFiles/Goals/GLO_TransmogrificationUpdates_WW.txt)`.
+For a complete example of updating the INIT section, I recommend referencing the actual Transmogrification Lite script ['GLO_Transmogrification_WW'](https://github.com/WorldWalker42/Transmogrification-Lite/blob/main/Project%20Files/Mods%20folder/Story/RawFiles/Goals/GLO_Transmogrification_WW.txt). The relevant code is at the top of the KB section, or you can search for `PROC_WW_TL_CheckForUpdate()` to jump straight to it. To better organize the bigger updates, I defined the PROC `PROC_WW_TL_UpdateInitFacts(_Ver)` in a different script, ['GLO_TransmogrificationUpdates_WW'](https://github.com/WorldWalker42/Transmogrification-Lite/blob/main/Project%20Files/Mods%20folder/Story/RawFiles/Goals/GLO_TransmogrificationUpdates_WW.txt).
 
 ## Adding Support for Someone Else's Mod
 
@@ -162,7 +162,7 @@ Most of this guide is about adding transmogrification compatibility to new equip
 
 For example, a caster class might also add the character's INT modifier to their AC when not wearing armor, just like Barbarians can add their CON modifier. This should be fixed like [any other unarmored-only bonus](https://github.com/WorldWalker42/Transmogrification-Lite/tree/main/Extension%20Resources/3.%20Full%20Stats%20Support#enforcing-unarmored-only-bonuses).
 
-Or, a class might use an ability other than DEX for their primary AC bonus, in which case Transmogrification Lite's AC calculations would need to be disabled for that character by applying the `[WW_TL_ALT_AC_MOD](https://github.com/WorldWalker42/Transmogrification-Lite/tree/main/Extension%20Resources/3.%20Full%20Stats%20Support#tags)` tag to them before giving them new passives that perform the new AC calculation.
+Or, a class might use an ability other than DEX for their primary AC bonus, in which case Transmogrification Lite's AC calculations would need to be disabled for that character by applying the ['WW_TL_ALT_AC_MOD'](https://github.com/WorldWalker42/Transmogrification-Lite/tree/main/Extension%20Resources/3.%20Full%20Stats%20Support#tags) tag to them before giving them new passives that perform the new AC calculation.
 
 ## Can You Make Extensions on a Mac?
 
