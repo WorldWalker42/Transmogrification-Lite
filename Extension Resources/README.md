@@ -1,4 +1,4 @@
-#### Table of Contents
+## Table of Contents
 
 - [Introduction](#introduction)
 - [How to Use These Resources](#how-to-use-these-resources)
@@ -39,7 +39,7 @@ It's possible to do this because any changes we make to the KB section of the Os
 
 Note: If you want to keep your original script cleaner, you can add these rules to a different Osiris script that's just for handling updates. It will work exactly the same.
 
-To start, add `DB_IDENTIFIER_Ver(_Version);` to the INIT section, where `_Version` is replaced by the current version number (`1` probably makes the most sense to start). Note that version numbers in this context can only be integers (e.g. `1`, `2`, `3`, ...) and CANNOT be any other format like `1.0.2`.
+To start, add `DB_IDENTIFIER_Ver(_Version);` to the INIT section, `IDENTIFIER` is replaced with your mod's identifier and `_Version` is replaced by the current version number (`1` probably makes the most sense to start). Note that version numbers in this context can only be integers (e.g. `1`, `2`, `3`, ...) and CANNOT be any other format like `1.0.2`.
 
 Next, add these rules to the KB section:
 

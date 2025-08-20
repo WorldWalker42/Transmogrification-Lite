@@ -2,7 +2,7 @@ Each of these folders are named for the location they need to be placed in the B
 
 ## How to Extend Basic Stats Support
 
-#### Table of Contents
+### Table of Contents
 
 - [Introduction](#introduction)
 - [BOOST Status](#boost-status)

@@ -2,7 +2,7 @@ Each of these folders are named for the location they need to be placed in the B
 
 ## How to Extend Appearance-Only Support
 
-#### Table of Contents
+### Table of Contents
 
 - [Introduction](#introduction)
 - [Root Templates](#root-templates)
@@ -233,7 +233,7 @@ That's everything you need to do so that people can use the appearance of your e
 
 I've made a simple mod that just adds a few pieces of equipment with built-in appearance transmogrification support if you want to look at a complete example. The .pak and all project files for this example are available above.
 
-An important thing to note: If you release an update to this mod that changes equipment that already has support (or if you add support for more equipment in the update), some of these changes might not apply to transmogrifications unless the player starts a new game OR you update the INIT section in a special way. For more information about this, see the **Updating Transmogrification Databases** section in another part of this guide.
+An important thing to note: If you release an update to this mod that changes equipment that already has support (or if you add support for more equipment in the update), some of these changes might not apply to transmogrifications unless the player starts a new game OR you update the INIT section in a special way. For more information about this, see the [Updating the Mod](https://github.com/WorldWalker42/Transmogrification-Lite/tree/main/Extension%20Resources#updating-the-mod) section in another part of this guide.
 
 ### Automating This Process
 

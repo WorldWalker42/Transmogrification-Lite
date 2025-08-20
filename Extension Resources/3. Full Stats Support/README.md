@@ -2,7 +2,7 @@ Each of these folders are named for the location they need to be placed in the B
 
 ## How to Extend Full Stats Support
 
-#### Table of Contents
+### Table of Contents
 
 - [Introduction](#introduction)
 - [Descriptions in Transmog Tooltips](#descriptions-in-transmog-tooltips)
@@ -263,7 +263,7 @@ Also, if a transmogrification is created with stats taken from another transmogr
 
 There are two more databases you might want to know about, but they're used differently. Rather than writing Osiris rules that use these databases, instead you just need to add new facts to them in the INIT section of your own script.
 
-For example, some statuses should be removed when a character is wearing armor, but this won't happen by default with transmogrified armor because the game doesn't recognize it as such. You could resolve this as described in the **Enforcing Unarmored-Only Bonuses** section, but using a status or passive to remove another status is kind of overkill when it can be removed directly by the Osiris rule instead. The rule to do this is already written in Transmogrification Lite's script, and so all you need to do is qualify another status to be removed by transmogrified armor by addding `DB_WW_TL_UnarmoredOnlyStatuses(_Status);` to the init section of your script, where `_Status` is replaced with the name of the status in quotation marks (e.g. `DB_WW_TL_UnarmoredOnlyStatuses("MAGE_ARMOR");`).
+For example, some statuses should be removed when a character is wearing armor, but this won't happen by default with transmogrified armor because the game doesn't recognize it as such. You could resolve this as described in the [Enforcing Unarmored-Only Bonuses](#enforcing-unarmored-only-bonuses) section, but using a status or passive to remove another status is kind of overkill when it can be removed directly by the Osiris rule instead. The rule to do this is already written in Transmogrification Lite's script, and so all you need to do is qualify another status to be removed by transmogrified armor by addding `DB_WW_TL_UnarmoredOnlyStatuses(_Status);` to the init section of your script, where `_Status` is replaced with the name of the status in quotation marks (e.g. `DB_WW_TL_UnarmoredOnlyStatuses("MAGE_ARMOR");`).
 
 Similarly, most polymorph shapes are supposed to disable armor bonuses, but if you want to make one an exception to this behavior then you can also add a fact to the INIT section for the database `DB_WW_TL_PolymorphStatusExceptionsForAC(_PolymorphStatus)` where you replace `_PolymorphStatus` with the name of the polymorph status in quotation marks.
 
