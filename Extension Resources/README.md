@@ -29,7 +29,7 @@ This directory contains three snapshots of a simple equipment mod in the process
 
 Each snapshot contains the project files, a .pak file, and a detailed guide that explains how to add this level of support. Each snapshot / guide builds on the previous one, so it will be confusing if you skip straight to the full stats support guide.
 
-I recommend reading the three snapshot guides in order and then coming back here to read the remaining topics below. If you'd prefer to read these guides all in one place, there's an [all-in-one guide on mod.io]().
+**I recommend reading the three snapshot guides in order and then coming back here to read the remaining topics below.** If you'd prefer to read these guides all in one place, there's an [all-in-one version on mod.io]().
 
 ## Updating the Mod
 
@@ -39,7 +39,7 @@ It's possible to do this because any changes we make to the KB section of the Os
 
 Note: If you want to keep your original script cleaner, you can add these rules to a different Osiris script that's just for handling updates. It will work exactly the same.
 
-To start, add `DB_IDENTIFIER_Ver(_Version);` to the INIT section, `IDENTIFIER` is replaced with your mod's identifier and `_Version` is replaced by the current version number (`1` probably makes the most sense to start). Note that version numbers in this context can only be integers (e.g. `1`, `2`, `3`, ...) and CANNOT be any other format like `1.0.2`.
+To start, add `DB_IDENTIFIER_Ver(_Version);` to the INIT section, where `IDENTIFIER` is replaced with your mod's identifier and `_Version` is replaced by the current version number (`1` probably makes the most sense to start). Note that version numbers in this context can only be integers (e.g. `1`, `2`, `3`, ...) and CANNOT be any other format like `1.0.2`.
 
 Next, add these rules to the KB section:
 
@@ -124,7 +124,7 @@ DB_WW_TL_ArmorSpells("WW_CE_TL_ExampleItem", "Shout_ExampleSpell", "SHORT"); // 
 
 Other than adding or removing entire facts from `DB_WW_TL_ArmorComponents`, I recommend trying to avoid _changing values_ in facts for that database because it will cause problems with how transmogrifications and their tooltips are updated. I think it would be fine if players destroy any existing transmogrifications of that item and then re-make them, but I'd be prepared to get bug reports about it even if you try to make sure everyone knows that this is necessary.
 
-For a complete example of updating the INIT section, I recommend referencing the actual Transmogrification Lite script [GLO_Transmogrification_WW](https://github.com/WorldWalker42/Transmogrification-Lite/blob/main/Project%20Files/Mods%20folder/Story/RawFiles/Goals/GLO_Transmogrification_WW.txt). The relevant code is at the top of the KB section, or you can search for `PROC_WW_TL_CheckForUpdate()` to jump straight to it. To better organize the bigger updates, I defined the PROC `PROC_WW_TL_UpdateInitFacts(_Ver)` in a different script, [GLO_TransmogrificationUpdates_WW](https://github.com/WorldWalker42/Transmogrification-Lite/blob/main/Project%20Files/Mods%20folder/Story/RawFiles/Goals/GLO_TransmogrificationUpdates_WW.txt).
+For a complete example of updating the INIT section, I recommend referencing the actual Transmogrification Lite script `[GLO_Transmogrification_WW](https://github.com/WorldWalker42/Transmogrification-Lite/blob/main/Project%20Files/Mods%20folder/Story/RawFiles/Goals/GLO_Transmogrification_WW.txt)`. The relevant code is at the top of the KB section, or you can search for `PROC_WW_TL_CheckForUpdate()` to jump straight to it. To better organize the bigger updates, I defined the PROC `PROC_WW_TL_UpdateInitFacts(_Ver)` in a different script, `[GLO_TransmogrificationUpdates_WW](https://github.com/WorldWalker42/Transmogrification-Lite/blob/main/Project%20Files/Mods%20folder/Story/RawFiles/Goals/GLO_TransmogrificationUpdates_WW.txt)`.
 
 ## Adding Support for Someone Else's Mod
 
@@ -148,7 +148,7 @@ Restart the toolkit after adding dependencies to be able to see their Root Templ
 
 ### Adding Support for Each Item
 
-From here, the things you need to make for a standalone extension are exactly the same as what you need to add to an equipment mod for built-in compatibility.
+From here, the things you need to make for a standalone extension are almost exactly the same as what you need to add to an equipment mod for built-in compatibility. However, you can skip some steps now that Transmogrification Lite is a formal dependency, which means you don't have to recreate its blank armor stats or parent BOOST status, etc.
 
 The biggest difference in the process is that you won't be able to use the Stats Editor to directly access the equipment's stats when you're making the BOOST statuses. Instead, you will probably need to use a tool like [LSLib](https://github.com/Norbyte/lslib) to unpack the mod and get the text file(s) from its Public folder (specifically in `Stats\Generated\Data`). Now you can copy from the text file, or feed it into my automation script to speed up the process.
 
@@ -160,9 +160,9 @@ When the mod is ready to share and has been uploaded to mod.io, it's important t
 
 Most of this guide is about adding transmogrification compatibility to new equipment, but it's worth noting that some modded classes can interfere with Transmogrification Lite's AC calculations unless they also have custom support.
 
-For example, a caster class might also add the character's INT modifier to their AC when not wearing armor, just like Barbarians can add their CON modifier. This should be fixed like any other unarmored-only bonus, as described above.
+For example, a caster class might also add the character's INT modifier to their AC when not wearing armor, just like Barbarians can add their CON modifier. This should be fixed like [any other unarmored-only bonus](https://github.com/WorldWalker42/Transmogrification-Lite/tree/main/Extension%20Resources/3.%20Full%20Stats%20Support#enforcing-unarmored-only-bonuses).
 
-Or, a class might use an ability other than DEX for their primary AC bonus, in which case Transmogrification Lite's AC calculations would need to be disabled for that character by applying the `WW_TL_ALT_AC_MOD` tag to them (also described above) before giving them new passives that perform the new AC calculation.
+Or, a class might use an ability other than DEX for their primary AC bonus, in which case Transmogrification Lite's AC calculations would need to be disabled for that character by applying the `[WW_TL_ALT_AC_MOD](https://github.com/WorldWalker42/Transmogrification-Lite/tree/main/Extension%20Resources/3.%20Full%20Stats%20Support#tags)` tag to them before giving them new passives that perform the new AC calculation.
 
 ## Can You Make Extensions on a Mac?
 
@@ -174,15 +174,15 @@ However, my guess is that you'll get better results from using modding technique
 
 Of course, there are still a number of steps that, to the best of my knowledge, can't currently be done on macOS. For example:
 
-1. Unpacking the equipment mod so that you can get its Root Template .lsf files, as well as the stats and passives files
+1. Unpacking the equipment mod so that you can get its Root Template `.lsf` files, as well as the stats and passives files
 
-2. Converting the .lsf files to .lsx so that a text editor can open them
+2. Converting the `.lsf` files to `.lsx` so that a text editor can open them
 
-3. Converting the .lsx files you make into .lsf files that the game can use
+3. Converting the `.lsx` files you make into `.lsf` files that the game can use
 
 4. Packing your mod
 
-These and other things can be done with third-party tools like [LSLib](https://github.com/Norbyte/lslib/tree/master) and the [Baldur's Gate 3 Modder's Multitool](https://github.com/ShinyHobo/BG3-Modders-Multitool). Compared to the toolkit, these are extremely lightweight programs that should be far, far easier to get set up on a virtual machine. Also, there are good [resources for third-party modding techniques](https://wiki.bg3.community) to help you navigate the process, such as [creating a meta.lsx file](https://wiki.bg3.community/Tutorials/General/creating_meta). This is the approach I personally would take to try to make simple mods like Transmogrification Lite extensions on a Mac.
+These and other things can be done with third-party tools like [LSLib](https://github.com/Norbyte/lslib/tree/master) and the [Baldur's Gate 3 Modder's Multitool](https://github.com/ShinyHobo/BG3-Modders-Multitool). Compared to the toolkit, these are extremely lightweight programs that should be far, far easier to get set up on a virtual machine. Also, there are good [resources for third-party modding techniques](https://wiki.bg3.community) to help you navigate the process, such as [creating a `meta.lsx` file](https://wiki.bg3.community/Tutorials/General/creating_meta). This is the approach I personally would take to try to make simple mods like Transmogrification Lite extensions on a Mac.
 
 Unfortunately, even if you get all of this to work, you still won't be able to publish to mod.io without the toolkit. The good news is that you can always upload it to Nexus Mods with the other third-party mods.
 

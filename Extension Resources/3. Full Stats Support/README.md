@@ -21,7 +21,7 @@ Each of these folders are named for the location they need to be placed in the B
 
 ### Introduction
 
-Although the stats from our equipment can now be used with a transmogrification, the tooltip still doesn't describe anything it does (which in my experience will make players think that it isn't working), and some types of stats won't work correctly in all circumstances without more customized support.
+Although the basic stats for our equipment can now be used with a transmogrification, the tooltip still doesn't describe anything it does (which in my experience will make players think that it isn't working), and some types of stats won't work correctly in all circumstances without more customized support.
 
 For example, one of the items in my example mod unlocks a spell with a Short Rest cooldown, but you can easily avoid the cooldown by re-transmogrifying it unless you hook the item up to Transmogrification Lite's cooldown enforcement system. Also, another item in my example should only be able to be equipped by avatars, but without adding special support for this restriction, anyone will be able to equip a transmogrification that uses its stats.
 
@@ -358,7 +358,7 @@ The Python script [discussed before](https://github.com/WorldWalker42/Transmogri
 
 Also, the script can't make the editor files for the BOOST statuses. It only makes the final / generated text file that gets packaged with the mod. If your mod doesn't have any other BOOST statuses, you will need to add `Stats\Generated\Data\Status_BOOST.txt` to your mod's Public directory. If this file already exists, you can just copy and paste the script's output into it, but be aware that whatever you paste in will be lost the next time you reload the project's stats in the toolkit because these statuses don't exist in the editor file. If you're still in active development, I recommend making these statuses manually in the toolkit to avoid them being overwritten.
 
-To tell the script to generate stats, you just need to enter `1` after the previously described arguments in the console command to run it. Also, to get more complete tooltips, it's preferable to also give it a relative file path to a Passives file if the armor stats reference one.
+To tell the script to generate stats, you just need to enter `1` after the previously described arguments in the console command to run it. Also, to get more complete tooltips, it's preferable to also give it a relative file path to a `Passives` file if the armor stats reference one.
 
 The full console command to run the script with stats support ends up something like this:
 

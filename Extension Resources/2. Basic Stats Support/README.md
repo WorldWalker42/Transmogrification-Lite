@@ -2,6 +2,8 @@ Each of these folders are named for the location they need to be placed in the B
 
 ## How to Extend Basic Stats Support
 
+Note: This guide assumes that you've already read the guide on [extending appearance-only support](https://github.com/WorldWalker42/Transmogrification-Lite/tree/main/Extension%20Resources/1.%20Appearance-Only%20Support).
+
 ### Table of Contents
 
 - [Introduction](#introduction)
@@ -13,9 +15,7 @@ Each of these folders are named for the location they need to be placed in the B
 
 ### Introduction
 
-Note: This guide assumes that you've already read the guide on [extending appearance-only support](https://github.com/WorldWalker42/Transmogrification-Lite/tree/main/Extension%20Resources/1.%20Appearance-Only%20Support).
-
-To also be able to create transmogrifications that use your equipment's stats, we need to do a couple more things:
+To also be able to create transmogrifications that use your equipment's basic stats, we need to do a couple more things:
 1. Create a status effect that mimics the equipment's stats
 2. Fill out the remaining values in the line added to the Osiris script
 
@@ -44,9 +44,9 @@ If you're interested to know, the benefit of giving this status the exact same n
 
 Now you can create a BOOST status for each piece of equipment you want to add stats support for. This process is mostly a matter of copying and pasting cells between the `Armor` file and the `Status_BOOST` file:
 
-1. Create a new status with the name of the armor stats you're recreating plus your mod's unique identifier (e.g. for the stats `MAG_DarkJusticiar_HalfPlate` I made the status `WW_TL_MAG_DarkJusticiar_HalfPlate`). If this is already the name for the armor stats, you need to add something else (like `TL` for Transmogrification Lite compatibility), because it won't work if they have the same name.
+1. Create a new status with the name of the armor stats you're recreating plus your mod's unique identifier (e.g. for the stats `MAG_DarkJusticiar_HalfPlate` I made the status `WW_TL_MAG_DarkJusticiar_HalfPlate`). If this is already the name for the armor stats, then you need to add something else (like `TL` for Transmogrification Lite compatibility), because it won't work if they have the same name.
 
-2. Set its parent to `WW_TL_ARMOR_STATS` that we created in the previous section
+2. Set its parent to `WW_TL_ARMOR_STATS` that we created in the previous step
 
 3. Copy-paste the original `Boosts` column into the one for this status. If it has a penalty to stealth from being medium or heavy armor, don't copy the penalty, because this is handled automatically somewhere else.
 
@@ -60,7 +60,11 @@ Now you can create a BOOST status for each piece of equipment you want to add st
 
     * Add `RemoveStatus(STATUS_NAME);` in this status' `OnRemoveFunctors` column (again, replacing `STATUS_NAME`).
 
-    * For example, the original armor stats for the Boots of Persistence has the `StatusOnEquip` column `MAG_FREEDOM_OF_MOVEMENT;MAG_END_GAME_LONGSTRIDER`, and so the status that I made for it has the `OnApplyFunctors` column `ApplyStatus(MAG_FREEDOM_OF_MOVEMENT,100,-1);ApplyStatus(MAG_END_GAME_LONGSTRIDER,100,-1)` and the `OnRemoveFunctors` column `RemoveStatus(MAG_FREEDOM_OF_MOVEMENT);RemoveStatus(MAG_END_GAME_LONGSTRIDER)`
+    * For example, the original armor stats for the Boots of Persistence has the `StatusOnEquip` column `MAG_FREEDOM_OF_MOVEMENT;MAG_END_GAME_LONGSTRIDER`, and so the status that I made for it has the following:
+
+        * `OnApplyFunctors`: `ApplyStatus(MAG_FREEDOM_OF_MOVEMENT,100,-1);ApplyStatus(MAG_END_GAME_LONGSTRIDER,100,-1)`
+
+        * `OnRemoveFunctors`: `RemoveStatus(MAG_FREEDOM_OF_MOVEMENT);RemoveStatus(MAG_END_GAME_LONGSTRIDER)`
 
 7. I haven't seen any equipment stats using the StatsFunctor or other columns, but theoretically if one did then you should copy those too.
 
@@ -156,7 +160,7 @@ Breaking it down:
 
 ### Complete Example
 
-Now people can also use the stats of your equipment with the appearance of any other supported item!
+Now players can also use the basic stats of your equipment with the appearance of any other supported item!
 
 I've added basic stats support to my example mod. The .pak and project files are available above.
 

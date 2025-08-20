@@ -194,7 +194,7 @@ DB_WW_TL_ArmorComponents(ARM_Robe_B_69302808-57a0-4fbb-9938-137bce5421d1, ARM_Ro
 
 #### Finalizing the Script
 
-Once you've added everything to your script, you MUST finalize it by 'building' the script so that it takes effect in the game. Do this by opening the "File" menu and choosing "Generate Definitions, Build and Reload".
+Once you've added everything to your script, you MUST finalize it by 'building' the script (and fixing any errors it points out) so that it takes effect in the game. Do this by opening the "File" menu and choosing "Generate Definitions, Build and Reload".
 
 The first time you do this after opening the toolkit, you will get a popup warning about orphan queries - this just means that you're adding facts to a database that isn't used anywhere, and it's letting you know about it in case this was a mistake. Because the database will be used by another mod - Transmogrification Lite - we want to ignore this warning.
 
@@ -233,11 +233,11 @@ That's everything you need to do so that people can use the appearance of your e
 
 I've made a simple mod that just adds a few pieces of equipment with built-in appearance transmogrification support if you want to look at a complete example. The .pak and all project files for this example are available above.
 
-An important thing to note: If you release an update to this mod that changes equipment that already has support (or if you add support for more equipment in the update), some of these changes might not apply to transmogrifications unless the player starts a new game OR you update the INIT section in a special way. For more information about this, see the [Updating the Mod](https://github.com/WorldWalker42/Transmogrification-Lite/tree/main/Extension%20Resources#updating-the-mod) section in another part of this guide.
+Although most of the section on [updating transmogrification mods](https://github.com/WorldWalker42/Transmogrification-Lite/tree/main/Extension%20Resources#updating-the-mod) isn't necessary for appearance-only support, it's still worth reading if you ever want to add support for more equipment in an update.
 
 ### Automating This Process
 
-To make creating extensions easier, I wrote a Python script that can do everything we've covered so far automatically. It's available [in this GitHub repository](https://github.com/WorldWalker42/Transmogrification-Lite/blob/main/Extension%20Resources/script.py).
+To make this process easier, I wrote a Python script that can do everything we've covered so far automatically. It's available [in this GitHub repository](https://github.com/WorldWalker42/Transmogrification-Lite/blob/main/Extension%20Resources/script.py).
 
 DISCLAIMER: I've found the script to be very helpful, but I DO NOT make any promises that it is perfect. Also, it was not written with any particular elegance or efficiency in mind - it's just something I threw together to help me, and I'm sharing it as-is. I do not plan to provide detailed support or troubleshooting for it.
 
@@ -245,15 +245,15 @@ That being said, if you have Python installed, all you should have to do is run 
 
 Here's the process to use the script in more detail:
 
-1. Use something like the [LSLib package](https://github.com/Norbyte/lslib/tree/master) to convert all of the equipment mod's Root Template `.lsf` files (which will be in the mod's Public -> RootTemplates directory) into `.lsx` files. Put these `.lsx` files into a different folder (which can be anywhere, like your desktop) and make sure the original `.lsf` files are still in the mod folder.
+1. Use something like the [LSLib package](https://github.com/Norbyte/lslib/tree/master) to convert the Root Template `.lsf` files (which will be in the mod's Public -> RootTemplates directory) into `.lsx` files. Put these `.lsx` files into a different folder (which can be anywhere, like your desktop) and make sure the original `.lsf` files are still in the mod folder.
 
 2. Create another folder where the script's output can go.
 
 3. Open the terminal or command line application and change the directory to the location where you put the Python script. Run it with: `python3 script.py IDENTIFIER relative/path/to/lsx/files relative/path/to/armor/stats relative/path/to/output/directory` where you replace `IDENTIFIER` with your mod's unique identifier and the placeholder filepaths with the actual relative filepaths to the described location or file.
 
-4. In the output directory, check the "remainder.txt" file to see if any Root Templates were rejected by the script. Depending on the mod, it might be totally normal for there to be LOTS of rejected templates for things like weapons, containers, dyes, summons, etc. If any equipment that should have been supported was rejected, then refer to the script's output for the most up-to-date instructions on how to troubleshoot the problem.
+4. In the output directory, check the `remainder.txt` file to see if any Root Templates were rejected by the script. Depending on the mod, it might be totally normal for there to be LOTS of rejected templates for things like weapons, containers, dyes, summons, etc. If any equipment that should have been supported was rejected, then refer to the script's output for the most up-to-date instructions on how to troubleshoot the problem.
 
-5. Copy the contents of "script_init.txt" in the script output directory and paste it into your mod's Osiris script INIT section that you should create but not fill in as described above. Make sure to build and reload.
+5. Copy the contents of `script_init.txt` in the script output directory and paste it into your mod's Osiris script INIT section that you should create but not fill in as described above. Make sure to build and reload.
 
 6. Convert the `.lsx` files in the output directory's "templates" subdirectory back into `.lsf` files, and then move them into the project's Public -> RootTemplates directory along with the original `.lsf` files.
 
