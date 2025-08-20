@@ -2,6 +2,17 @@ Each of these folders are named for the location they need to be placed in the B
 
 ## How to Extend Basic Stats Support
 
+#### Table of Contents
+
+- [Introduction](#introduction)
+- [BOOST Status](#boost-status)
+    * [One-Time Setup](#one-time-setup)
+    * [For Each Item](#for-each-item)
+- [Finishing the Database Entries](#finishing-the-database-entries)
+- [Complete Example](#complete-example)
+
+### Introduction
+
 Note: This guide assumes that you've already read the guide on [extending appearance-only support](https://github.com/WorldWalker42/Transmogrification-Lite/tree/main/Extension%20Resources/1.%20Appearance-Only%20Support).
 
 To also be able to create transmogrifications that use your equipment's stats, we need to do a couple more things:

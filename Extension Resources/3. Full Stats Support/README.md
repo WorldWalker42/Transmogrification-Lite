@@ -2,6 +2,25 @@ Each of these folders are named for the location they need to be placed in the B
 
 ## How to Extend Full Stats Support
 
+#### Table of Contents
+
+- [Introduction](#introduction)
+- [Descriptions in Transmog Tooltips](#descriptions-in-transmog-tooltips)
+- [Enforcing Spell Cooldowns](#enforcing-spell-cooldowns)
+    * [Container Spells](#container-spells)
+- [Enforcing Unarmored-Only Bonuses](#enforcing-unarmored-only-bonuses)
+- [Custom Behaviors](#custom-behaviors)
+    * [All Transmogrifications Database](#all-transmogrifications-database)
+    * [Equipped Transmogrifications Database](#equipped-transmogrifications-database)
+    * [Transmogrification Sources Database](#transmogrification-sources-database)
+    * [Other Databases](#other-databases)
+    * [Tags](#tags)
+    * [Examples](#examples)
+- [Complete Example](#complete-example)
+- [Automating This Process](#automating-this-process)
+
+### Introduction
+
 Although the stats from our equipment can now be used with a transmogrification, the tooltip still doesn't describe anything it does (which in my experience will make players think that it isn't working), and some types of stats won't work correctly in all circumstances without more customized support.
 
 For example, one of the items in my example mod unlocks a spell with a Short Rest cooldown, but you can easily avoid the cooldown by re-transmogrifying it unless you hook the item up to Transmogrification Lite's cooldown enforcement system. Also, another item in my example should only be able to be equipped by avatars, but without adding special support for this restriction, anyone will be able to equip a transmogrification that uses its stats.
@@ -190,7 +209,7 @@ Most issues can probably be solved with Osiris scripting (either by doing someth
 
 Transmogrification Lite maintains a handful of Osiris databases that you might find useful in your own script, the definitions of which are described below.
 
-Note: The first time you reference each database in your own script, you will need to include the type of any values you leave unbound. Please see the **Examples** subsection below for reference.
+Note: The first time you reference each database in your own script, you will need to include the type of any values you leave unbound. Please see the [Examples](#examples) subsection below for reference.
 
 #### All Transmogrifications Database
 
@@ -325,7 +344,7 @@ THEN
 DB_NOOP(1);
 ```
 
-All that's left to do is hook the custom query `QRY_WW_CE_EntireSetEquipped` into the relevant events and then apply/remove the set bonus status as needed. For a complete example, I recommend looking at my [example script for full stats support](https://github.com/WorldWalker42/Transmogrification-Lite/blob/main/Extension%20Example/3.%20Full%20Stats%20Support/Mods%20folder/Story/RawFiles/Goals/GLO_Transmogrification_WW_CE.txt).
+All that's left to do is hook the custom query `QRY_WW_CE_EntireSetEquipped` into the relevant events and then apply/remove the set bonus status as needed. For a complete example, I recommend looking at my [example script for full stats support](https://github.com/WorldWalker42/Transmogrification-Lite/blob/main/Extension%20Resources/3.%20Full%20Stats%20Support/Mods%20folder/Story/RawFiles/Goals/GLO_Transmogrification_WW_CE.txt).
 
 ### Complete Example
 

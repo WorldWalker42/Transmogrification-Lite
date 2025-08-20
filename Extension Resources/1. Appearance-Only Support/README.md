@@ -2,6 +2,21 @@ Each of these folders are named for the location they need to be placed in the B
 
 ## How to Extend Appearance-Only Support
 
+#### Table of Contents
+
+- [Introduction](#introduction)
+- [Root Templates](#root-templates)
+    * [One-Time Setup](#one-time-setup)
+    * [For Each Item](#for-each-item)
+- [Database Entries](#database-entries)
+    * [One-Time Setup](#one-time-setup-1)
+    * [For Each Item](#for-each-item-1)
+    * [Finalizing the Script](#finalizing-the-script)
+- [Complete Example](#complete-example)
+- [Automating This Process](#automating-this-process)
+
+### Introduction
+
 Let's start adding transmogrification compatibility to new equipment. The easiest thing to do is to have your own equipment mod and add built-in support for creating transmogrifications with just the appearance (and not the stats) of your items. We'll add stats support in the next section.
 
 At a high level, there are only two things you need to do for each item:
