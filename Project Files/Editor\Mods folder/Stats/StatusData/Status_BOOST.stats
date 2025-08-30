@@ -525,6 +525,7 @@
         <field name="Name" type="NameTableFieldDefinition" value="WW_TL_ARMOR_STATS" />
         <field name="DisplayName" type="TranslatedStringTableFieldDefinition" handle="h16398017g9fa4gc5ecg5235g165a0d8897a7" version="1" />
         <field name="StatusPropertyFlags" type="EnumerationListTableFieldDefinition" value="IgnoreResting;DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead" enumeration_type_name="StatusPropertyFlags" version="1" />
+        <field name="Icon" type="StringTableFieldDefinition" value="PassiveFeature_LightlyArmored" />
       </fields>
     </stat_object>
     <stat_object is_substat="false">

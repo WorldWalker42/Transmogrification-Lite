@@ -1,7 +1,7 @@
 # A script for modding Baldur's Gate 3 to extend compatibility with Transmogrification Lite to more equipment. It generates .lsx files for new Root Templates, as well as a basic INIT section for an Osiris goal.
 # DISCLAIMER: This script is definitely NOT perfect, nor is it written with any particular elegance or efficiency. However, it can speed up a tedious process and requires relatively little supervision, and so
 # I am making it available as-is in the hopes that someone else will find it helpful too.
-# Last modified: 8/6/25
+# Last modified: 8/24/25
 
 import sys
 import os
@@ -27,9 +27,12 @@ ONETIME_FOOTWEAR_PARENT_STATS = []
 ONETIME_FOOTWEAR_CAMP_PARENT_STATS = []
 
 # Very common / shared stats that are inherited by many items that should not be removed
-BODY_PARENT_STATS = ['_Body', 'ARM_Robe_Body','ARM_Padded_Body','ARM_ChainMail_Body','ARM_ChainShirt_Body','ARM_HalfPlate_Body','ARM_Plate_Body','ARM_StuddedLeather_Body','_Armor_Magic_Robe','ARM_Cloth_Body_1','ARM_Cloth_Body_2','ARM_Leather_Body']
-BODY_CAMP_PARENT_STATS = ['ARM_Camp_Body']
-HELMET_PARENT_STATS = ['_Head','_Head_Magic','_Head_Magic_Circlet','_Head_Magic_Leather','_Head_Magic_Metal','ARM_Circlet','ARM_Hat','ARM_Helmet_Metal','ARM_Hat_Wizard_A']
+BODY_PARENT_STATS = ['_Body', 'ARM_Robe_Body','ARM_Padded_Body','ARM_ChainMail_Body','ARM_ChainShirt_Body','ARM_ChainShirt_Body_1','ARM_HalfPlate_Body','ARM_HalfPlate_Body_1','ARM_HalfPlate_Body_2',
+					 'ARM_Plate_Body','ARM_Plate_Body_1','ARM_Plate_Body_2','ARM_Barbarian','ARM_Bard',
+					 'ARM_Breastplate_Body','ARM_Breastplate_Body_1','ARM_Breastplate_Body_2','ARM_ScaleMail_Body','ARM_ScaleMail_Body_1','ARM_ScaleMail_Body_2',
+					 'ARM_StuddedLeather_Body','_Armor_Magic_Robe','ARM_Cloth_Body_1','ARM_Cloth_Body_2','ARM_Leather_Body','ARM_Leather_Body_1','ARM_Leather_Body_2']
+BODY_CAMP_PARENT_STATS = ['ARM_Camp_Body','_Vanity_Body_Generic_Rich']
+HELMET_PARENT_STATS = ['_Head','_Head_Magic','_Head_Magic_Circlet','_Head_Magic_Leather','_Head_Magic_Metal','ARM_Circlet','ARM_Hat','ARM_Helmet_Leather','ARM_Helmet_Metal','ARM_Hat_Wizard_A']
 CLOAK_PARENT_STATS = ['_Back','_Back_Magic','ARM_Cloak','ARM_Cloak_Long_B']
 GLOVE_PARENT_STATS = ['_Hand','_Hand_Magic','_Hand_Magic_Metal','ARM_Gloves_Leather','ARM_Gloves_Metal']
 FOOTWEAR_PARENT_STATS = ['_Foot','_Foot_Magic','_Foot_Magic_Metal','ARM_Shoes','ARM_Magic_Shoes','ARM_Boots_Leather','ARM_Boots_Metal']
@@ -260,8 +263,19 @@ def addEntry(mod_identifier, armor_file, output_dir, database, boost_file, remai
 			destination.write('\t</region>\n')
 			destination.write('</save>\n')
 
-		# DB_WW_TL_ArmorComponents(_Template, _AppearanceTemplate, _StatsBoost, _Type, _AC, _SlotName, _Unique);
-		database.write(f'DB_WW_TL_ArmorComponents({source_name}_{source_uuid},{name}_{uuid},"{boost}",{item_type},{default_ac},"{slot}",{enforce_unique},0);\n')
+		# Root Templates are typically entered as Name_UUID for clarity, but it also works to just enter the UUID.
+		# So, try to enter the full Name_UUID unless the name of the template contains problematic characters for Osiris
+		short_form_entry = False
+		invalid_chars = [ '\'', '"', '\\', '/' ]
+		for char in invalid_chars:
+			if char in source_name:
+				short_form_entry = True
+				break
+		source_template = f'{source_name}_{source_uuid}' if not short_form_entry else source_uuid
+		new_template = f'{name}_{uuid}' if not short_form_entry else uuid
+
+		# DB_WW_TL_ArmorComponents(_Template,_AppearanceTemplate,_StatsBoost,_Type,_AC,_SlotName,_Unique);
+		database.write(f'DB_WW_TL_ArmorComponents({source_template},{new_template},"{boost}",{item_type},{default_ac},"{slot}",{enforce_unique},0);\n')
 		resetEntry()
 
 def processTemplateFile(input_file, database, boost_file, remainder):
@@ -314,7 +328,7 @@ else:
 				break
 		else:
 			processTemplateFile(input_path, database, boost_file, remainder)
-		
+
 		if queued_tooltip_statuses:
 			database.write('\n')
 			for tooltip_status in queued_tooltip_statuses:

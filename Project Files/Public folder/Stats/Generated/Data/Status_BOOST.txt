@@ -402,6 +402,7 @@ new entry "WW_TL_ARMOR_STATS"
 type "StatusData"
 data "StatusType" "BOOST"
 data "DisplayName" "h16398017g9fa4gc5ecg5235g165a0d8897a7;1"
+data "Icon" "PassiveFeature_LightlyArmored"
 data "StatusPropertyFlags" "IgnoreResting;DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead"
 
 new entry "WW_TL_AC_10"

@@ -31,6 +31,7 @@ In your mod's `Status_BOOST` file (which is in the Stats Editor, if you haven't 
 
 Next, assign it the following values:
 - `DisplayName` is "Transmogrified Equipment"
+- `Icon` is `PassiveFeature_LightlyArmored`
 - `StatusPropertyFlags` are:
     * `IgnoreResting`
     * `DisableOverhead`

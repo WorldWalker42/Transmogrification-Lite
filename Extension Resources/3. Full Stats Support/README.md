@@ -10,6 +10,8 @@ Each of these folders are named for the location they need to be placed in the B
     * [Container Spells](#container-spells)
 - [Enforcing Unarmored-Only Bonuses](#enforcing-unarmored-only-bonuses)
 - [Custom Behaviors](#custom-behaviors)
+    * [Event-Like Procedures](#event-like-procedures)
+    * [Armor Type Query](#armor-type-query)
     * [All Transmogrifications Database](#all-transmogrifications-database)
     * [Equipped Transmogrifications Database](#equipped-transmogrifications-database)
     * [Transmogrification Sources Database](#transmogrification-sources-database)
@@ -207,9 +209,80 @@ Of course, part of why modded equipment is so much fun is because it can do enti
 
 Most issues can probably be solved with Osiris scripting (either by doing something directly or by applying extra statuses / passives). If you don't have much experience with this kind of scripting and want to learn more, I recommend reading the official guide [Introduction to Osiris](https://mod.io/g/baldursgate3/r/introduction-to-osiris) and my guide [Understanding Osiris Rules](https://mod.io/g/baldursgate3/r/understanding-osiris-rules).
 
-Transmogrification Lite maintains a handful of Osiris databases that you might find useful in your own script, the definitions of which are described below.
+Transmogrification Lite implements two event-like procedures, a custom query, and several Osiris databases that you might find useful in your own script, the definitions of which are described below.
 
 Note: The first time you reference each database in your own script, you will need to include the type of any values you leave unbound. Please see the [Examples](#examples) subsection below for reference.
+
+#### Event-Like Procedures
+
+The normal Osiris events `Equipped((ITEM)_Item, (CHARACTER)_Character)` and `Unequipped((ITEM)_Item, (CHARACTER)_Character)` will be triggered when a character (un)equips any kind of item, but it can be tricky to use them with transmogrifications due to a handful of small technical details. Instead, this mod calls the following procedures that you can use like the original events for transmogrifications:
+
+`PROC_WW_TL_Event_Equipped((ITEM)_Armor, (CHARACTER)_Character)` when `_Character` equips the transmogrification `_Armor`.
+
+`PROC_WW_TL_Event_Unequipped((ITEM)_Armor, (CHARACTER)_Character)` when `_Character` unequips the transmogrification `_Armor`.
+
+You can add more rules to these procedures to use them just like events, like so:
+
+```
+// A character unequipped any item
+IF
+Unequipped(_Item, _Character)
+AND
+...
+THEN
+...
+
+// A character unequipped a transmogrification
+PROC
+PROC_WW_TL_Event_Unequipped((ITEM)_Armor, (CHARACTER)_Character)
+AND
+...
+THEN
+...
+```
+
+#### Armor Type Query
+
+There's also a custom query that returns the heaviest type of transmogrified armor that a character has equipped:
+
+```
+QRY_WW_TL_GetEquipmentHeaviness((GUIDSTRING)_Character)
+```
+
+This query is guaranteed to evaluate to true, and it stores one fact in each of the following databases:
+
+1. `DB_QRYRTN_WW_TL_GetEquipmentHeaviness_Overall((GUIDSTRING)_Character, (INTEGER)_Heaviness)` with the heaviest type of transmogrification equipped anywhere (if there is one). For example, a character with transmogrified light armor in one slot and transmogrified heavy armor in another slot would return the value for heavy armor.
+
+2. `DB_QRYRTN_WW_TL_GetEquipmentHeaviness_Chest((GUIDSTRING)_Character, (INTEGER)_Heaviness)` with the heaviness of the transmogrification equipped in the chest slot (if there is one).
+
+Note that the heaviness / armor type is just a number, the same as we put into [the fourth column of the main database](https://github.com/WorldWalker42/Transmogrification-Lite/tree/main/Extension%20Resources/2.%20Basic%20Stats%20Support#finishing-the-database-entries) when adding basic stats support.
+
+You can use the query and its query-return databases like this:
+
+```
+// A character has received a status that should also trigger something else if they're wearing transmogrified heavy armor
+IF
+StatusApplied(_Character, "TRIGGERS_IF_HEAVY_ARMOR", _, _) 
+AND
+QRY_WW_TL_GetEquipmentHeaviness(_Character) // execute the query that will put the result in the QRYRTN databases
+AND
+DB_QRYRTN_WW_TL_GetEquipmentHeaviness_Overall(_Character, _Heaviness) // assign the result to _Heaviness
+AND
+_Heaviness == 4 // check if the result is heavy armor
+THEN
+...
+```
+
+If a character does not have _any_ transmogrifications equipped (even just clothes), then the query will still evaluate to true but the query-return databases will not have any facts stored in them. You can check for this situation with the condition: `NOT DB_QRYRTN_WW_TL_GetEquipmentHeaviness_Overall(_Character, _)`
+
+If your equipment stats need this query to work but you don't want to make Transmogrification Lite a direct dependency, then you just need to define a simple version of the query in your own script. It won't be able to return any values without Transmogrification Lite also being loaded (which is fine because there won't be any transmogrifications without it either!), but this will allow the script to build and run independently:
+
+```
+QRY
+QRY_WW_TL_GetEquipmentHeaviness((GUIDSTRING)_Character)
+THEN
+DB_NOOP(1);
+```
 
 #### All Transmogrifications Database
 

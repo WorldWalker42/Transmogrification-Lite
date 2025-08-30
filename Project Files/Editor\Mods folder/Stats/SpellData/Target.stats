@@ -20,7 +20,7 @@
         <field name="SpellContainerID" type="StringTableFieldDefinition" value="Target_WW_TL_Transmogrify" />
         <field name="TargetRadius" type="StringTableFieldDefinition" value="4" />
         <field name="Requirements" type="StringTableFieldDefinition" value="!Combat" />
-        <field name="TargetConditions" type="StringTableFieldDefinition" value="Item()" />
+        <field name="TargetConditions" type="StringTableFieldDefinition" value="Item() and not IsWeapon();" />
         <field name="DisplayName" type="TranslatedStringTableFieldDefinition" handle="h0d294566g2f50g906bgfa5agdcb97ce1c9c7" version="1" />
         <field name="Description" type="TranslatedStringTableFieldDefinition" handle="haedc5258gb219g80e5gaa7fg887bfa7c9595" version="2" />
         <field name="Icon" type="StringTableFieldDefinition" value="statIcons_WildMagic_gasCloud" />
@@ -44,7 +44,7 @@
         <field name="SpellContainerID" type="StringTableFieldDefinition" value="Target_WW_TL_Transmogrify" />
         <field name="TargetRadius" type="StringTableFieldDefinition" value="4" />
         <field name="Requirements" type="StringTableFieldDefinition" value="!Combat" />
-        <field name="TargetConditions" type="StringTableFieldDefinition" value="Item()" />
+        <field name="TargetConditions" type="StringTableFieldDefinition" value="Item() and not IsWeapon();" />
         <field name="DisplayName" type="TranslatedStringTableFieldDefinition" handle="h10535eb6g6cc6g34a0g9289g87161a4007e6" version="1" />
         <field name="Description" type="TranslatedStringTableFieldDefinition" handle="hfaef227eg1615g279fgdd2bg23f8e14def28" version="2" />
         <field name="Icon" type="StringTableFieldDefinition" value="statIcons_WildMagic_Enchant" />
@@ -68,7 +68,7 @@
         <field name="SpellContainerID" type="StringTableFieldDefinition" value="Target_WW_TL_Transmogrify" />
         <field name="TargetRadius" type="StringTableFieldDefinition" value="4" />
         <field name="Requirements" type="StringTableFieldDefinition" value="!Combat" />
-        <field name="TargetConditions" type="StringTableFieldDefinition" value="Item() and Tagged('WW_TL_TRANSMOGRIFIED')" />
+        <field name="TargetConditions" type="StringTableFieldDefinition" value="Item() and Tagged('WW_TL_TRANSMOGRIFIED');" />
         <field name="Icon" type="StringTableFieldDefinition" value="statIcons_WildMagic_Teleport" />
         <field name="DisplayName" type="TranslatedStringTableFieldDefinition" handle="hab2bc38bgb35fg1575g6abag14e005f8f195" version="1" />
         <field name="Description" type="TranslatedStringTableFieldDefinition" handle="h9f40676agc6cfga2a1g88dcgc38a50a8a801" version="1" />

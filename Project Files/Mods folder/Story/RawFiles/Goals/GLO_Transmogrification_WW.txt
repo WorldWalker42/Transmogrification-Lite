@@ -1,7 +1,7 @@
 Version 1
 SubGoalCombiner SGC_AND
 INITSECTION
-DB_WW_TL_InitVer(6);
+DB_WW_TL_InitVer(7);
 
 // Runtime DBs:
 // DB_WW_TL_TransmogrifiedArmors((GUIDSTRING)_Item,(INTEGER)_Heaviness,(GUIDSTRING)_OriginalTemplateForStats,(STRING)_StatsBoost)
@@ -15,6 +15,7 @@ DB_WW_TL_InitVer(6);
 // DB_WW_TL_CoolingDown((GUIDSTRING)_OriginalItemTemplate,(STRING)_Spell,(STRING)_Cooldown)
 // * Spells granted by items that are currently cooling down
 // DB_WW_TL_TransmogrificationDyes((ITEM)_Transmogrification,(GUIDSTRING)_DyeTemplate)
+// * Deprecated in v1.0.5.3
 
 // _Heaviness, _BehaviourStat, _DisplayStat
 DB_WW_TL_ArmorTypes(-1,"WW_TL_ARMOR_BEHAVIOUR_CLOTHES","WW_TL_ARMOR_DISPLAY_CLOTHES"); // use for camp clothes and camp shoes
@@ -680,6 +681,8 @@ DB_WW_TL_ArmorComponents(EPI_Camp_Shoes_Shar_e3b092c6-82e8-49df-843c-40d64341017
 DB_WW_TL_ArmorComponents(EPI_Camp_Shoes_Spawn_5fdac3e9-455c-49e0-83a0-3222108f5651,EPI_Camp_Shoes_Spawn_WW_TL_54467239-4499-4ec6-97b7-7bea6a53f3cd,"NULL",-1,0,"Boots",0,0);
 DB_WW_TL_ArmorComponents(EPI_Camp_Shoes_Wyll_Blade_c3f02e6c-d519-40d1-b686-a241a9f9972e,EPI_Camp_Shoes_Wyll_Blade_WW_TL_ff3e5fb6-4ec3-4d34-8fc4-76f592a4303b,"NULL",-1,0,"Boots",0,0);
 DB_WW_TL_ArmorComponents(EPI_Camp_Shoes_Wyll_Duke_4aa0dbb1-f51a-45bc-8a58-814ac5063035,EPI_Camp_Shoes_Wyll_Duke_WW_TL_5f7cdbee-d584-4628-b943-339d1c2e20f9,"NULL",-1,0,"Boots",0,0);
+// Item added in v1.0.5.3
+DB_WW_TL_ArmorComponents(ARM_Boots_Metal_689e8d3e-b79b-417b-8cd2-9d08b2f5e618,ARM_Boots_Metal_WW_TL_8a525698-5669-4643-80d1-cb9c71723bde,"WW_TL_ARM_Boots_Metal",2,0,"Boots",0,1);
 
 // (STRING)_StatsBoostSource,(STRING)_Spell,(STRING)_Cooldown
 DB_WW_TL_ArmorSpells("WW_TL_MAG_Infernal_Plate_Armor","Shout_MAG_Infernal_Fly","LONG");
@@ -1054,7 +1057,7 @@ PROC_WW_TL_CheckForUpdate()
 AND
 DB_WW_TL_InitVer(_Ver)
 AND
-_Ver < 6
+_Ver < 7
 THEN
 PROC_WW_TL_UpdateModVersion(_Ver);
 
@@ -1135,6 +1138,21 @@ PROC
 PROC_WW_TL_UpdateModVersion(5)
 THEN
 DB_WW_TL_TooltipStatuses("WW_TL_MAG_Barbarian_BoneSpike_Armor","REDUCE_DAMAGE");
+
+// v6 -> v7
+// Add new item and clean up the deprecated database that records dye usage
+
+PROC
+PROC_WW_TL_UpdateModVersion(6)
+THEN
+DB_WW_TL_ArmorComponents(ARM_Boots_Metal_689e8d3e-b79b-417b-8cd2-9d08b2f5e618,ARM_Boots_Metal_WW_TL_8a525698-5669-4643-80d1-cb9c71723bde,"WW_TL_ARM_Boots_Metal",2,0,"Boots",0,1);
+
+PROC
+PROC_WW_TL_UpdateModVersion(6)
+AND
+DB_WW_TL_TransmogrificationDyes((ITEM)_Transmogrification,(GUIDSTRING)_DyeTemplate)
+THEN
+NOT DB_WW_TL_TransmogrificationDyes(_Transmogrification,_DyeTemplate);
 
 // Loop back around in case there's more than one version to upgrade
 PROC
@@ -1231,40 +1249,44 @@ NOT DB_QRYRTN_WW_TL_FetchString(_Warning);
 OpenMessageBox((CHARACTER)_Caster,_Message);
 
 // Record dyes that have been applied to items
-IF
-Combined(_Dye,_Item,_,_,_,_,_)
-AND
-IsTagged(_Dye,(TAG)DYE_d8ef5332-ed2f-42cb-817d-bd2164673223,1)
-AND
-GetTemplate(_Dye,_DyeTemplate)
-THEN
-DB_WW_TL_TransmogrificationDyes((ITEM)_Item,_DyeTemplate);
+// Disabled in v1.0.5.3
+//IF
+//Combined(_Dye,_Item,_,_,_,_,_)
+//AND
+//IsTagged(_Dye,(TAG)DYE_d8ef5332-ed2f-42cb-817d-bd2164673223,1)
+//AND
+//GetTemplate(_Dye,_DyeTemplate)
+//THEN
+//DB_WW_TL_TransmogrificationDyes((ITEM)_Item,_DyeTemplate);
 
 // Overwrite old dyes
-IF
-DB_WW_TL_TransmogrificationDyes(_Item,_Dye)
-AND
-DB_WW_TL_TransmogrificationDyes(_Item,_OtherDye)
-AND
-_Dye != _OtherDye
-THEN
-NOT DB_WW_TL_TransmogrificationDyes(_Item,_OtherDye);
-PROC_WW_TL_RefundDye(_Item,_OtherDye);
+// Disabled in v1.0.5.3
+//IF
+//DB_WW_TL_TransmogrificationDyes(_Item,_Dye)
+//AND
+//DB_WW_TL_TransmogrificationDyes(_Item,_OtherDye)
+//AND
+//_Dye != _OtherDye
+//THEN
+//NOT DB_WW_TL_TransmogrificationDyes(_Item,_OtherDye);
+//PROC_WW_TL_RefundDye(_Item,_OtherDye);
 
 // Only refund the dye if it is a transmogrified armor that was re-dyed
-PROC
-PROC_WW_TL_RefundDye((ITEM)_Transmogrification,(GUIDSTRING)_DyeTemplate)
-AND
-DB_WW_TL_TransmogrifiedArmors((GUIDSTRING)_Transmogrification,(INTEGER)_,(GUIDSTRING)_,(STRING)_)
-AND
-GetInventoryOwner((GUIDSTRING)_Transmogrification,_Owner)
-THEN
-PROC_WW_TL_RefundDyeToCharacter((ITEMROOT)_DyeTemplate,_Owner);
+// Disabled in v1.0.5.3
+//PROC
+//PROC_WW_TL_RefundDye((ITEM)_Transmogrification,(GUIDSTRING)_DyeTemplate)
+//AND
+//DB_WW_TL_TransmogrifiedArmors((GUIDSTRING)_Transmogrification,(INTEGER)_,(GUIDSTRING)_,(STRING)_)
+//AND
+//GetInventoryOwner((GUIDSTRING)_Transmogrification,_Owner)
+//THEN
+//PROC_WW_TL_RefundDyeToCharacter((ITEMROOT)_DyeTemplate,_Owner);
 
-PROC
-PROC_WW_TL_RefundDyeToCharacter((GUIDSTRING)_DyeTemplate,(GUIDSTRING)_Character)
-THEN
-TemplateAddTo((ITEMROOT)_DyeTemplate,_Character,1,0);
+// Disabled in v1.0.5.3
+//PROC
+//PROC_WW_TL_RefundDyeToCharacter((GUIDSTRING)_DyeTemplate,(GUIDSTRING)_Character)
+//THEN
+//TemplateAddTo((ITEMROOT)_DyeTemplate,_Character,1,0);
 
 QRY
 QRY_WW_TL_UsingStatsFromTemplate((CHARACTER)_Character,(GUIDSTRING)_Template)
@@ -1299,7 +1321,7 @@ DB_NOOP(1);
 QRY
 QRY_WW_TL_GetEquipmentHeaviness((GUIDSTRING)_Character)
 AND
-DB_QRYRTN_WW_TL_GetEquipmentHeaviness_Overall(_Character,_Heaviness)
+DB_QRYRTN_WW_TL_GetEquipmentHeaviness_Overall(_Character,(INTEGER)_Heaviness)
 THEN
 NOT DB_QRYRTN_WW_TL_GetEquipmentHeaviness_Overall(_Character,_Heaviness);
 
@@ -1780,7 +1802,7 @@ GetTemplate(_Item,_AppearanceOnlyTemplate)
 THEN
 PROC_WW_TL_TagArmor(_Item);
 PROC_WW_TL_SetTransmogrificationAttributes(_Item,_Caster);
-PROC_WW_TL_GiveMissingDye(_Caster,_AppearanceSourceItem);
+//PROC_WW_TL_GiveMissingDye(_Caster,_AppearanceSourceItem); disabled in v1.0.5.3
 Equip((CHARACTER)_Caster,(ITEM)_Item,1,1);
 
 // Should be applied automatically by the armor stats, but it doesn't seem to be???
@@ -1791,14 +1813,15 @@ IsTagged(_Item,(TAG)WW_TL_TRANSMOGRIFIED_f4a99f6c-34e9-4958-9ce7-3b4d01e61e07,0)
 THEN
 SetTag(_Item,(TAG)WW_TL_TRANSMOGRIFIED_f4a99f6c-34e9-4958-9ce7-3b4d01e61e07);
 
-PROC
-PROC_WW_TL_GiveMissingDye((GUIDSTRING)_Caster,(GUIDSTRING)_AppearanceSourceItem)
-AND
-_AppearanceSourceItem != NULL_00000000-0000-0000-0000-000000000000
-AND
-DB_WW_TL_TransmogrificationDyes((ITEM)_AppearanceSourceItem,_DyeTemplate)
-THEN
-PROC_WW_TL_RefundDyeToCharacter(_DyeTemplate,_Caster);
+// Disabled in v1.0.5.3
+//PROC
+//PROC_WW_TL_GiveMissingDye((GUIDSTRING)_Caster,(GUIDSTRING)_AppearanceSourceItem)
+//AND
+//_AppearanceSourceItem != NULL_00000000-0000-0000-0000-000000000000
+//AND
+//DB_WW_TL_TransmogrificationDyes((ITEM)_AppearanceSourceItem,_DyeTemplate)
+//THEN
+//PROC_WW_TL_RefundDyeToCharacter(_DyeTemplate,_Caster);
 
 PROC
 PROC_WW_TL_SetTransmogrificationAttributes((GUIDSTRING)_Item,(GUIDSTRING)_Caster)
@@ -2009,6 +2032,22 @@ RemoveStatus(_Item,"WW_TL_ARMOR_DISPLAY_OTHER");
 
 //REGION Handle transmogrifications being (un)equipped
 
+// This PROC does not actually do anything in this base mod, but it will be called whenever _Character equips a transmogrification, _Armor.
+// Dependencies can use this PROC like the transmog equivalent of the built-in Osiris event Equipped(_Item,_Character)
+// Added in v1.0.5.3
+PROC
+PROC_WW_TL_Event_Equipped((ITEM)_Armor,(CHARACTER)_Character)
+THEN
+DB_NOOP(1);
+
+// This PROC does not actually do anything in this base mod, but it will be called whenever _Character unequips a transmogrification, _Armor.
+// Dependencies can use this PROC like the transmog equivalent of the built-in Osiris event Unequipped(_Item,_Character)
+// Added in v1.0.5.3
+PROC
+PROC_WW_TL_Event_Unequipped((ITEM)_Armor,(CHARACTER)_Character)
+THEN
+DB_NOOP(1);
+
 IF
 Unequipped(_Armor,_Character)
 AND
@@ -2019,6 +2058,7 @@ THEN
 NOT DB_WW_TL_EquippedTransmogrifications(_Character,_Armor);
 PROC_WW_TL_RemoveStatsBoost(_Character,_StatsBoost,_Armor);
 PROC_WW_TL_ApplyArmorHeaviness(_Character);
+PROC_WW_TL_Event_Unequipped(_Armor,(CHARACTER)_Character); // added in v1.0.5.3
 
 IF
 Equipped(_Armor,_Character)
@@ -2086,6 +2126,7 @@ NOT DB_WW_TL_EquippingTransmogrification(_Character,_Armor);
 DB_WW_TL_EquippedTransmogrifications((GUIDSTRING)_Character,_Armor);
 PROC_WW_TL_ApplyArmorHeaviness((CHARACTER)_Character);
 PROC_WW_TL_ApplyStatsBoost(_Character,_StatsBoost);
+PROC_WW_TL_Event_Equipped(_Armor,_Character); // added in v1.0.5.3
 
 // Check for anyone already wearing other transmogrified armor from the same source that is restricted to one use at a time
 PROC
@@ -2369,13 +2410,17 @@ DB_Is_InCombat(_Character,_)
 THEN
 DB_NOOP(1);
 
-// Prevent casting spells that are cooling down
+// Prevent casting spells from items that are still cooling down
+// Changed in v1.0.5.3 to only apply to transmogrifications and not the original items
 IF
 StartedPreviewingSpell(_Caster,_Spell,_,_)
 AND
 DB_WW_TL_CoolingDown(_ItemTemplate,_Spell,_)
 AND
-QRY_WW_TL_UsingStatsFromTemplate((CHARACTER)_Caster,_ItemTemplate)
+//QRY_WW_TL_UsingStatsFromTemplate((CHARACTER)_Caster,_ItemTemplate)
+DB_WW_TL_TransmogrifiedArmors(_Item,_,_ItemTemplate,_)
+AND
+DB_WW_TL_EquippedTransmogrifications(_Caster,(ITEM)_Item)
 AND
 GetPosition(_Caster,_X,_Y,_Z)
 AND
@@ -2702,7 +2747,7 @@ PROC_WW_TL_WipeTransmogrificationDBs(_Item,_Caster);
 RequestDelete((ITEM)_Item);
 
 PROC
-PROC_WW_TL_WipeTransmogrificationDBs((GUIDSTRING)_Item,_)
+PROC_WW_TL_WipeTransmogrificationDBs((GUIDSTRING)_Item,(GUIDSTRING)_)
 AND
 DB_WW_TL_TransmogrificationStatsSources(_Source,_Item)
 THEN
@@ -2723,13 +2768,14 @@ DB_WW_TL_TransmogrificationDisplayNames(_Item,_DisplayName)
 THEN
 NOT DB_WW_TL_TransmogrificationDisplayNames(_Item,_DisplayName);
 
-PROC
-PROC_WW_TL_WipeTransmogrificationDBs((GUIDSTRING)_Item,(GUIDSTRING)_Caster)
-AND
-DB_WW_TL_TransmogrificationDyes((ITEM)_Item,_DyeTemplate)
-THEN
-NOT DB_WW_TL_TransmogrificationDyes(_Item,_DyeTemplate);
-PROC_WW_TL_RefundDyeToCharacter(_DyeTemplate,_Caster);
+// Disabled in v1.0.5.3
+//PROC
+//PROC_WW_TL_WipeTransmogrificationDBs((GUIDSTRING)_Item,(GUIDSTRING)_Caster)
+//AND
+//DB_WW_TL_TransmogrificationDyes((ITEM)_Item,_DyeTemplate)
+//THEN
+//NOT DB_WW_TL_TransmogrificationDyes(_Item,_DyeTemplate);
+//PROC_WW_TL_RefundDyeToCharacter(_DyeTemplate,_Caster);
 
 //END_REGION
 
