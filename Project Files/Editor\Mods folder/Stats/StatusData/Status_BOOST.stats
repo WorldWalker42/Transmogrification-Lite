@@ -521,6 +521,59 @@
     </stat_object>
     <stat_object is_substat="false">
       <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="36436a64-91d9-4142-89a3-64c507940276" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_TL_COMPATIBILITY_WEARING_NORMAL_ARMOR" />
+        <field name="DisplayName" type="TranslatedStringTableFieldDefinition" handle="hba076e34gf9f9gae2eg4375ge3fb7f9aa643" version="1" />
+        <field name="StatusPropertyFlags" type="EnumerationListTableFieldDefinition" value="DisableOverhead;DisableCombatlog;DisablePortraitIndicator" enumeration_type_name="StatusPropertyFlags" version="1" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="7393fc11-2d3f-4871-ab2b-4d322ba08e7c" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_TL_COMPATIBILITY_ZEPHYR_REDUCE_AC_1" />
+        <field name="StackId" type="StringTableFieldDefinition" value="WW_TL_COMPATIBILITY_ZEPHYR_REDUCE_AC" />
+        <field name="StackType" type="EnumerationTableFieldDefinition" value="Overwrite" enumeration_type_name="StatusStackType" version="1" />
+        <field name="DisplayName" type="TranslatedStringTableFieldDefinition" handle="he560215dg304dgc5f5g8f4eg10c8ddcd1419" version="1" />
+        <field name="Boosts" type="StringTableFieldDefinition" value="AC(-1);" />
+        <field name="StatusPropertyFlags" type="EnumerationListTableFieldDefinition" value="DisableOverhead;DisableCombatlog;DisablePortraitIndicator" enumeration_type_name="StatusPropertyFlags" version="1" />
+        <field name="RemoveConditions" type="RollConditionsTableFieldDefinition" value="HasShieldEquipped(context.Source)" />
+        <field name="RemoveEvents" type="EnumerationListTableFieldDefinition" value="OnEquip" enumeration_type_name="StatusEvent" version="1" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="5a9a7891-cad0-4577-bf40-dec8d48bcc95" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_TL_COMPATIBILITY_ZEPHYR_REDUCE_AC_2" />
+        <field name="Using" type="BaseClassTableFieldDefinition" value="7393fc11-2d3f-4871-ab2b-4d322ba08e7c" />
+        <field name="Boosts" type="StringTableFieldDefinition" value="AC(-2);" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="b10b6353-4e8c-4533-a80d-bac9861af1fe" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_TL_COMPATIBILITY_ZEPHYR_REDUCE_AC_3" />
+        <field name="Using" type="BaseClassTableFieldDefinition" value="7393fc11-2d3f-4871-ab2b-4d322ba08e7c" />
+        <field name="Boosts" type="StringTableFieldDefinition" value="AC(-3);" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="23c55a1f-96e2-4c5e-b2ec-cc411e1060a8" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_TL_COMPATIBILITY_ZEPHYR_REDUCE_AC_4" />
+        <field name="Using" type="BaseClassTableFieldDefinition" value="7393fc11-2d3f-4871-ab2b-4d322ba08e7c" />
+        <field name="Boosts" type="StringTableFieldDefinition" value="AC(-4);" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="cd5cedcf-5c82-48ad-b26c-623ef8ddd606" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_TL_COMPATIBILITY_ZEPHYR_REDUCE_AC_5" />
+        <field name="Using" type="BaseClassTableFieldDefinition" value="7393fc11-2d3f-4871-ab2b-4d322ba08e7c" />
+        <field name="Boosts" type="StringTableFieldDefinition" value="AC(-5);" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
         <field name="UUID" type="IdTableFieldDefinition" value="961c9f60-4891-4992-b286-feae03d8ff72" />
         <field name="Name" type="NameTableFieldDefinition" value="WW_TL_ARMOR_STATS" />
         <field name="DisplayName" type="TranslatedStringTableFieldDefinition" handle="h16398017g9fa4gc5ecg5235g165a0d8897a7" version="1" />

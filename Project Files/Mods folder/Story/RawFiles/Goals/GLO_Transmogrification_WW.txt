@@ -1,7 +1,7 @@
 Version 1
 SubGoalCombiner SGC_AND
 INITSECTION
-DB_WW_TL_InitVer(7);
+DB_WW_TL_InitVer(8);
 
 // Runtime DBs:
 // DB_WW_TL_TransmogrifiedArmors((GUIDSTRING)_Item,(INTEGER)_Heaviness,(GUIDSTRING)_OriginalTemplateForStats,(STRING)_StatsBoost)
@@ -34,10 +34,19 @@ DB_WW_TL_ArmorSlots("Gloves",0,WW_TL_ARMOR_Gloves_117e3e42-6d8f-45ff-b18c-08c64b
 DB_WW_TL_ArmorSlots("Cloak",0,WW_TL_ARMOR_Cloak_ed53fbda-1ebc-47b5-bac8-44a0cdae8e1c);
 
 DB_WW_TL_UnarmoredOnlyStatuses("MAGE_ARMOR");
+// Check GLO_TransmogrificationCompatibility_WW for more facts in this DB
 
 // Polymorph statuses that have a special exception from disabling any bonuses from transmogrified equipment
 // Added in v1.0.3.0
 DB_WW_TL_PolymorphStatusExceptionsForAC("MIND_FLAYER_FORM"); // not strictly necessary but need at least one fact in this DB for dependencies to be able to add to it
+
+// Statuses to ignore when it comes to to reevaluating a character's AC (usually needs to be done after losing any status in case it changes
+// the AC calculation, but some statuses that are applied a LOT just for technical reasons might be worth specifically ignoring because it
+// can interrupt things like bards performing)
+// Added in v1.0.6.31
+DB_WW_TL_StatusesIgnoredForAC("WW_TL_REEVALUATE_OVERRIDES");
+DB_WW_TL_StatusesIgnoredForAC("WW_TL_REMOVE_UNARMORED_STATUSES");
+// Check GLO_TransmogrificationCompatibility_WW for more facts in this DB
 
 // (GUIDSTRING)_OriginalTemplate,(GUIDSTRING)_AppearanceOnlyTemplate,(STRING)_StatsBoost,(INTEGER)_ArmorType,(INTEGER)_AC,(STRING)_Slotname,(INTEGER)_EnforceUnique,(INTEGER)_IncompleteTooltip
 DB_WW_TL_ArmorComponents(MAG_Zhentarim_Demonspirit_Gloves_7ef359b6-79af-4414-99bc-f93bc5eeed77,MAG_Zhentarim_Demonspirit_Gloves_WW_TL_72cd3cb3-062e-4052-82f9-0ee2cc2986fb,"WW_TL_MAG_Zhentarim_Demonspirit_Gloves",0,0,"Gloves",1,1);
@@ -1057,7 +1066,7 @@ PROC_WW_TL_CheckForUpdate()
 AND
 DB_WW_TL_InitVer(_Ver)
 AND
-_Ver < 7
+_Ver < 8
 THEN
 PROC_WW_TL_UpdateModVersion(_Ver);
 
@@ -1154,6 +1163,15 @@ DB_WW_TL_TransmogrificationDyes((ITEM)_Transmogrification,(GUIDSTRING)_DyeTempla
 THEN
 NOT DB_WW_TL_TransmogrificationDyes(_Transmogrification,_DyeTemplate);
 
+// v7 -> v8
+// Add database for ignoring certain statuses as triggers for AC reevaluation
+
+PROC
+PROC_WW_TL_UpdateModVersion(7)
+THEN
+DB_WW_TL_StatusesIgnoredForAC("WW_TL_REEVALUATE_OVERRIDES");
+DB_WW_TL_StatusesIgnoredForAC("WW_TL_REMOVE_UNARMORED_STATUSES");
+
 // Loop back around in case there's more than one version to upgrade
 PROC
 PROC_WW_TL_UpdateModVersion(_)
@@ -1164,9 +1182,7 @@ PROC_WW_TL_CheckForUpdate();
 
 //REGION Helpers
 
-//
-// Limit transmogrification display name DB to only store the most recent name for each armor, and reapply names periodically
-//
+//REGION Limit transmogrification display name DB to only store the most recent name for each armor, and reapply names periodically
 
 // Added in v1.0.1
 IF
@@ -1187,9 +1203,9 @@ DB_WW_TL_TransmogrificationDisplayNames(_Item,_DisplayName)
 THEN
 SetStoryDisplayName(_Item,_DisplayName);
 
-//
-// Query that creates temp DB with return value for a translated string, or the string key if there is not a valid translation for it
-//
+//END_REGION
+
+//REGION Query that creates temp DB with return value for a translated string, or the string key if there is not a valid translation for it
 
 QRY
 QRY_WW_TL_FetchString((STRING)_TranslatedStringKey)
@@ -1226,9 +1242,9 @@ THEN
 NOT DB_WW_TL_PendingResult(1);
 DB_QRYRTN_WW_TL_FetchString(_Fallback);
 
-//
-// misc helpers
-//
+//END_REGION
+
+//REGION misc helpers
 
 PROC
 PROC_WW_TL_NotSupportedMessage((GUIDSTRING)_Caster,(GUIDSTRING)_Target)
@@ -1308,9 +1324,9 @@ DB_WW_TL_EquippedTransmogrifications((GUIDSTRING)_Character,(ITEM)_Item)
 THEN
 DB_NOOP(1);
 
-//
-// query to get the heaviest type of transmogrified armor a character has equipped
-//
+//END_REGION
+
+//REGION query to get the heaviest type of transmogrified armor a character has equipped
 
 // want to guarantee that the query will return true
 QRY
@@ -1384,6 +1400,143 @@ AND
 _Heaviness < _OtherHeaviness
 THEN
 NOT DB_QRYRTN_WW_TL_GetEquipmentHeaviness_Overall(_Character,_Heaviness);
+
+//END_REGION
+
+//REGION query to convert transmog heaviness to category of AC limitation (added in v1.0.6.31)
+
+// Reset query return database
+QRY
+QRY_WW_TL_ArmorHeavinessToACCategory((INTEGER)_Heaviness)
+AND
+DB_QRYRTN_WW_TL_ArmorHeavinessToACCategory(_Category)
+THEN
+NOT DB_QRYRTN_WW_TL_ArmorHeavinessToACCategory(_Category);
+
+// Check for (camp) clothes
+QRY
+QRY_WW_TL_ArmorHeavinessToACCategory((INTEGER)_Heaviness)
+AND
+_Heaviness <= 0
+THEN
+DB_QRYRTN_WW_TL_ArmorHeavinessToACCategory(0);
+
+// Check for light armor
+QRY
+QRY_WW_TL_ArmorHeavinessToACCategory(1)
+THEN
+DB_QRYRTN_WW_TL_ArmorHeavinessToACCategory(1);
+
+// Check for medium armor that behaves like light armor
+QRY
+QRY_WW_TL_ArmorHeavinessToACCategory(5)
+THEN
+DB_QRYRTN_WW_TL_ArmorHeavinessToACCategory(1);
+
+// Check for medium armor that actually behaves like medium armor
+QRY
+QRY_WW_TL_ArmorHeavinessToACCategory((INTEGER)_Heaviness)
+AND
+_Heaviness >= 2
+AND
+_Heaviness <= 3
+THEN
+DB_QRYRTN_WW_TL_ArmorHeavinessToACCategory(2);
+
+// Check for heavy armor
+QRY
+QRY_WW_TL_ArmorHeavinessToACCategory(4)
+THEN
+DB_QRYRTN_WW_TL_ArmorHeavinessToACCategory(3);
+
+//END_REGION
+
+//REGION query to get character's category of equipped transmogs (added in v1.0.6.31)
+
+// Armor heaviness can get a bit convoluted (e.g. not wearing anything _or_ wearing clothes _or_ light armor
+// doesn't limit AC, while medium armor can have heaviness 2, 3, or 5, but heaviness 5 behaves like light
+// armor...). This level of technical detail can be obtained with QRY_WW_TL_GetEquipmentHeaviness, which also
+// returns separate answers for only the chest slot (which affects AC) and overall (which might not affect AC but
+// can be relevant for other things).
+
+// However, we usually only care about broad categories and not the specifics of how we get there.
+// To make this easier to check, QRY_WW_TL_GetACLimits will return a single number that means:
+// 0 = no armor (no transmog equipped or wearing clothes)
+// 1 = armor that does not limit AC (light armor or certain types of medium armor)
+// 2 = armor that partially limits AC (most medium armor)
+// 3 = armor that fully limits AC (heavy armor)
+
+// By default, it only checks the chest slot because this is usually the only one that actually affects AC.
+// However, providing a positive integer (usually just 1) as a second argument will check every slot and return
+// the largest category found.
+
+// If only given the first argument, use the default value for the second argument
+QRY
+QRY_WW_TL_GetACLimits((GUIDSTRING)_Character)
+AND
+QRY_WW_TL_GetACLimits(_Character,0)
+THEN
+DB_NOOP(1);
+
+// Reset query return database
+QRY
+QRY_WW_TL_GetACLimits((GUIDSTRING)_Character,(INTEGER)_CheckOverall)
+AND
+DB_QRYRTN_WW_TL_GetACLimits(_LimitCategory)
+THEN
+NOT DB_QRYRTN_WW_TL_GetACLimits(_LimitCategory);
+
+// Perform sub-query to get the technical armor heaviness and guarantee that this query evaluates to true
+QRY
+QRY_WW_TL_GetACLimits((GUIDSTRING)_Character,_)
+AND
+QRY_WW_TL_GetEquipmentHeaviness(_Character)
+THEN
+DB_NOOP(1);
+
+// If sub-query did not return anything, then character does not have transmog equipped
+QRY
+QRY_WW_TL_GetACLimits((GUIDSTRING)_Character,0)
+AND
+NOT DB_QRYRTN_WW_TL_GetEquipmentHeaviness_Chest(_Character,_)
+THEN
+DB_QRYRTN_WW_TL_GetACLimits(0);
+
+// ...and the same for overall
+QRY
+QRY_WW_TL_GetACLimits((GUIDSTRING)_Character,1)
+AND
+NOT DB_QRYRTN_WW_TL_GetEquipmentHeaviness_Overall(_Character,_)
+THEN
+DB_QRYRTN_WW_TL_GetACLimits(0);
+
+// Otherwise, perform additional sub-query to convert result to a category
+QRY
+QRY_WW_TL_GetACLimits((GUIDSTRING)_Character,0)
+AND
+DB_QRYRTN_WW_TL_GetEquipmentHeaviness_Chest(_Character,_Heaviness)
+AND
+QRY_WW_TL_ArmorHeavinessToACCategory(_Heaviness)
+AND
+DB_QRYRTN_WW_TL_ArmorHeavinessToACCategory(_Category)
+THEN
+NOT DB_QRYRTN_WW_TL_ArmorHeavinessToACCategory(_Category);
+DB_QRYRTN_WW_TL_GetACLimits(_Category);
+
+// ...and the same for overall
+QRY
+QRY_WW_TL_GetACLimits((GUIDSTRING)_Character,1)
+AND
+DB_QRYRTN_WW_TL_GetEquipmentHeaviness_Overall(_Character,_Heaviness)
+AND
+QRY_WW_TL_ArmorHeavinessToACCategory(_Heaviness)
+AND
+DB_QRYRTN_WW_TL_ArmorHeavinessToACCategory(_Category)
+THEN
+NOT DB_QRYRTN_WW_TL_ArmorHeavinessToACCategory(_Category);
+DB_QRYRTN_WW_TL_GetACLimits(_Category);
+
+//END_REGION
 
 //END_REGION
 
@@ -2568,6 +2721,18 @@ THEN
 RemoveStatus(_Barbarian,_Rage); // not using Shout_EndRage b/c shouldn't have been able to rage at all, so don't want to allow bonuses applied at end of rage
 UseSpell(_Barbarian,"Shout_WW_TL_RefundRage",_Barbarian);
 
+// Open a message box to warn the player that their rage was refunded
+// Added in v1.0.6.31
+IF
+CastedSpell(_Barbarian,"Shout_WW_TL_RefundRage",_,_,_)
+AND
+QRY_WW_TL_FetchString("WW_TL_RageRefundMessage")
+AND
+DB_QRYRTN_WW_TL_FetchString(_Warning)
+THEN
+NOT DB_QRYRTN_WW_TL_FetchString(_Warning);
+OpenMessageBox((CHARACTER)_Barbarian,_Warning);
+
 IF
 StatusApplied(_Barbarian,"WW_TL_ARMOR_BEHAVIOUR_HEAVY",_,_)
 AND
@@ -2691,9 +2856,7 @@ DB_NOOP(1);
 IF
 StatusRemoved(_Character,_Status,_,_)
 AND
-_Status != "WW_TL_REEVALUATE_OVERRIDES"
-AND
-_Status != "WW_TL_REMOVE_UNARMORED_STATUSES"
+NOT DB_WW_TL_StatusesIgnoredForAC(_Status) // changed in v1.0.6.31
 AND
 DB_WW_TL_EquippedTransmogrifications(_Character,_)
 AND

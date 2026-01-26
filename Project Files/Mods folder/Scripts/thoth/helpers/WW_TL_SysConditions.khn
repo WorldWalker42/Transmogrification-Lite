@@ -114,3 +114,8 @@ end
 function WW_TL_IsArmorBehaviourStatus()
     return (StatusId('WW_TL_ARMOR_BEHAVIOUR_CLOTHES') | StatusId('WW_TL_ARMOR_BEHAVIOUR_LIGHT') | StatusId('WW_TL_ARMOR_BEHAVIOUR_MEDIUM') | StatusId('WW_TL_ARMOR_BEHAVIOUR_MEDIUM_DIS') | StatusId('WW_TL_ARMOR_BEHAVIOUR_HEAVY'))
 end
+
+function WW_TL_ACFormulaOverrideDisabled(entity)
+    entity = entity or context.Source
+    return WearingArmor(entity) & ~Tagged('WW_TL_IGNORE_WEARING_ARMOR', entity)
+end

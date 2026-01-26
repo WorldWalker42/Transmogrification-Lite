@@ -158,11 +158,34 @@ When the mod is ready to share and has been uploaded to mod.io, it's important t
 
 ## Adding Class Compatibility
 
-Most of this guide is about adding transmogrification compatibility to new equipment, but it's worth noting that some modded classes can interfere with Transmogrification Lite's AC calculations unless they also have custom support.
+Most of this guide is about adding transmogrification compatibility to new equipment, but modded classes that change a character's core AC calculation (such as using an ability modifier other than DEX or raising the 'floor' above 10), or that add features which depend on (not) wearing armor, will also need custom support in order for Transmogrification Lite to work with it correctly.
 
-For example, a caster class might also add the character's INT modifier to their AC when not wearing armor, just like Barbarians can add their CON modifier. This should be fixed like [any other unarmored-only bonus](https://github.com/WorldWalker42/Transmogrification-Lite/tree/main/Extension%20Resources/3.%20Full%20Stats%20Support#enforcing-unarmored-only-bonuses).
+For example, if a new caster class adds the character's INT modifier to their AC when not wearing armor, this can be done similar to [any other unarmored-only bonus](https://github.com/WorldWalker42/Transmogrification-Lite/tree/main/Extension%20Resources/3.%20Full%20Stats%20Support#enforcing-unarmored-only-bonuses). Or, if a new class replaces DEX with a different ability score for their primary AC bonus, Transmogrification Lite's normal AC calculations should be disabled for that character by applying the ['WW_TL_ALT_AC_MOD'](https://github.com/WorldWalker42/Transmogrification-Lite/tree/main/Extension%20Resources/3.%20Full%20Stats%20Support#tags) tag to them, and then they will need to be given new passives that perform the correct calculations.
 
-Or, a class might use an ability other than DEX for their primary AC bonus, in which case Transmogrification Lite's AC calculations would need to be disabled for that character by applying the ['WW_TL_ALT_AC_MOD'](https://github.com/WorldWalker42/Transmogrification-Lite/tree/main/Extension%20Resources/3.%20Full%20Stats%20Support#tags) tag to them before giving them new passives that perform the new AC calculation.
+For actual examples of custom class support, I recommend looking at Transmogrification Lite's compatibility script, [`GLO_TransmogrificationCompatibility_WW`](https://github.com/WorldWalker42/Transmogrification-Lite/blob/main/Project%20Files/Mods%20folder/Story/RawFiles/Goals/GLO_TransmogrificationCompatibility_WW.txt).
+
+This script adds several procedures that can make it easier to apply tags when needed. Depending on which tag(s) you want, you can just add a new rule in your own script that satisfies any or all the following queries:
+
+1. `QRY_WW_TL_Compatibility_UsesAltACModifier((GUIDSTRING)_Character)` will qualify `_Character` for the tag `WW_TL_ALT_AC_MOD`
+
+2. `QRY_WW_TL_Compatibility_OverridesAC((GUIDSTRING)_Character)` will qualify `_Character` for the tag `WW_TL_CUSTOM_AC_OVERRIDE`
+
+3. `QRY_WW_TL_Compatibility_IgnoresOtherArmor((GUIDSTRING)_Character)` will qualify `_Character` for the tag `WW_TL_IGNORE_WEARING_ARMOR`
+
+4. `QRY_WW_TL_Compatibility_NeedsStandardArmorTracker((GUIDSTRING)_Character)` will qualify `_Character` to receive the status `WW_TL_COMPATIBILITY_WEARING_NORMAL_ARMOR` when wearing original, non-transmogrified armor
+
+For example, if you want a character to receive the `WW_TL_ALT_AC_MOD` tag when they have a level in a particular class, you can just add another rule for `QRY_WW_TL_Compatibility_UsesAltACModifier` in your own script that will evaluate to true if they have the tag for this class:
+
+```
+QRY
+QRY_WW_TL_Compatibility_UsesAltACModifier((GUIDSTRING)_Character)
+AND
+IsTagged(_Character, (TAG)MY_CLASS_TAG_00000000-1111-2222-3333-444444444444, 1)
+THEN
+DB_NOOP(1);
+```
+
+If needed, you can check for a passive or status or anything else instead of a tag, and you can add as many conditions as you want. Or, if it's easier to just ignore these queries and add or remove the tags yourself, feel free to do so.
 
 ## Can You Make Extensions on a Mac?
 

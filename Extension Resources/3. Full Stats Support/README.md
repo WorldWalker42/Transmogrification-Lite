@@ -11,7 +11,7 @@ Each of these folders are named for the location they need to be placed in the B
 - [Enforcing Unarmored-Only Bonuses](#enforcing-unarmored-only-bonuses)
 - [Custom Behaviors](#custom-behaviors)
     * [Event-Like Procedures](#event-like-procedures)
-    * [Armor Type Query](#armor-type-query)
+    * [Custom Queries](#custom-queries)
     * [All Transmogrifications Database](#all-transmogrifications-database)
     * [Equipped Transmogrifications Database](#equipped-transmogrifications-database)
     * [Transmogrification Sources Database](#transmogrification-sources-database)
@@ -241,15 +241,52 @@ THEN
 ...
 ```
 
-#### Armor Type Query
+#### Custom Queries
 
-There's also a custom query that returns the heaviest type of transmogrified armor that a character has equipped:
+There are also a handful of custom queries that can be used to determine what types of transmogrified armor a character has equipped.
+
+The simplest one is `QRY_WW_TL_Compatibility_TransmogEquippedOnChest((GUIDSTRING)_Character)` that will evaluate to true if `_Character` has equipped any kind of transmogrification on their chest and false if `_Character` does not have a transmogrification equipped on their chest.
+
+However, most of the time we want a little more information about _what kind_ of transmogrifications a character has equipped. They tend to fall into one of the following categories:
+
+0. No armor (e.g. nothing equipped, or clothes)
+
+1. Armor that does not limit AC (e.g. light armor or certain types of medium armor)
+
+2. Armor that partially limits AC (e.g. most medium armor)
+
+3. Armor that fully limits AC (e.g. heavy armor)
+
+You can get this information about a character's equipped transmogrifications with the following query:
+
+```
+QRY_WW_TL_GetACLimits((GUIDSTRING)_Character, (INTEGER)_CheckOverall)
+```
+
+If `_CheckOverall` is given an argument of `0`, then the query will only check equipment on the chest slot. If `_CheckOverall` is given an argument of `1`, then the query will check every equipment slot and return the largest category found (for example, if wearing light armor on the chest and heavy armor on the head, then the result will be for the heavy armor category).
+
+The query itself is guaranteed to evaluate to true, and the query's result will be stored in the database `DB_QRYRTN_WW_TL_GetACLimits(_LimitCategory)`, where `_LimitCategory` is an integer that corresponds to the categories listed above. Note that the categories use zero-based indexing, which means that the first category starts with `0` instead of `1`.
+
+For example, you can check if a character is wearing transmogrified medium armor on their chest like this:
+
+```
+PROC
+PROC_WW_CE_Example((GUIDSTRING)_Character)
+AND
+QRY_WW_TL_GetACLimits(_Character, 0) // perform the query
+AND
+DB_QRYRTN_WW_TL_GetACLimits(2) // require the result to be the category for armor that partially limits AC
+THEN
+// do something
+```
+
+If you do need more granular information about things like whether a character is specifically wearing clothes or medium armor that acts like light armor, you can use this custom query instead:
 
 ```
 QRY_WW_TL_GetEquipmentHeaviness((GUIDSTRING)_Character)
 ```
 
-This query is guaranteed to evaluate to true, and it stores one fact in each of the following databases:
+This query is also guaranteed to evaluate to true, and it stores one fact in each of the following databases for its result:
 
 1. `DB_QRYRTN_WW_TL_GetEquipmentHeaviness_Overall((GUIDSTRING)_Character, (INTEGER)_Heaviness)` with the heaviest type of transmogrification equipped anywhere (if there is one). For example, a character with transmogrified light armor in one slot and transmogrified heavy armor in another slot would return the value for heavy armor.
 
@@ -275,11 +312,13 @@ THEN
 
 If a character does not have _any_ transmogrifications equipped (even just clothes), then the query will still evaluate to true but the query-return databases will not have any facts stored in them. You can check for this situation with the condition: `NOT DB_QRYRTN_WW_TL_GetEquipmentHeaviness_Overall(_Character, _)`
 
-If your equipment stats need this query to work but you don't want to make Transmogrification Lite a direct dependency, then you just need to define a simple version of the query in your own script. It won't be able to return any values without Transmogrification Lite also being loaded (which is fine because there won't be any transmogrifications without it either!), but this will allow the script to build and run independently:
+In the unlikely scenario where you need some of the detail from `QRY_WW_TL_GetEquipmentHeaviness` and _also_ want the broad category from `QRY_WW_TL_GetACLimits`, you can use `QRY_WW_TL_ArmorHeavinessToACCategory((INTEGER)_Heaviness)` and its query-return database `DB_QRYRTN_WW_TL_ArmorHeavinessToACCategory(_Category)` to convert from the former to the latter.
+
+If you want to use any of these custom queries but you don't want to make Transmogrification Lite a direct dependency, then you just need to define a simple version of any query you use in your own script. It won't be able to return any values without Transmogrification Lite also being loaded (which is fine because there won't be any transmogrifications without it either!), but something like this will allow the script to build and run independently:
 
 ```
 QRY
-QRY_WW_TL_GetEquipmentHeaviness((GUIDSTRING)_Character)
+QRY_WW_TL_GetEquipmentHeaviness((GUIDSTRING)_Character) // change to whichever query you need
 THEN
 DB_NOOP(1);
 ```
@@ -334,11 +373,13 @@ Also, if a transmogrification is created with stats taken from another transmogr
 
 #### Other Databases
 
-There are two more databases you might want to know about, but they're used differently. Rather than writing Osiris rules that use these databases, instead you just need to add new facts to them in the INIT section of your own script.
+There are three more databases you might want to know about, but they're used differently. Rather than writing Osiris rules that use these databases, instead you just need to add new facts to them in the INIT section of your own script.
 
 For example, some statuses should be removed when a character is wearing armor, but this won't happen by default with transmogrified armor because the game doesn't recognize it as such. You could resolve this as described in the [Enforcing Unarmored-Only Bonuses](#enforcing-unarmored-only-bonuses) section, but using a status or passive to remove another status is kind of overkill when it can be removed directly by the Osiris rule instead. The rule to do this is already written in Transmogrification Lite's script, and so all you need to do is qualify another status to be removed by transmogrified armor by addding `DB_WW_TL_UnarmoredOnlyStatuses(_Status);` to the init section of your script, where `_Status` is replaced with the name of the status in quotation marks (e.g. `DB_WW_TL_UnarmoredOnlyStatuses("MAGE_ARMOR");`).
 
 Similarly, most polymorph shapes are supposed to disable armor bonuses, but if you want to make one an exception to this behavior then you can also add a fact to the INIT section for the database `DB_WW_TL_PolymorphStatusExceptionsForAC(_PolymorphStatus)` where you replace `_PolymorphStatus` with the name of the polymorph status in quotation marks.
+
+Finally, in order to keep the AC calculation accurate when statuses on a character might change something important, the calculation is performed again after almost any status is removed. This can very rarely cause problems if the status is a technical one (doesn't affect AC at all) that starts/ends extremely frequently or is removed right before a bard starts to perform with an instrument. If so, you can add a fact to the INIT section for the database `DB_WW_TL_StatusesIgnoredForAC(_Status);` where you replace `_Status` with the name of the status in quotation marks to prevent it from triggering AC reevaluations.
 
 #### Tags
 
@@ -355,6 +396,8 @@ Equipment can apply the following tags to its wearer:
 3. `WW_TL_BARB_AC_OVERRIDE` (UUID: `a0381c58-d848-4c6d-a4a4-f014eb056d77`): This character currently has a modded equivalent to Unarmoured Defense for Barbarians. They will receive the same debuffs as `WW_TL_CUSTOM_AC_OVERRIDE`, except their CON bonus will also be undone if they are wearing armor.
 
 4. `WW_TL_ALT_AC_MOD` (UUID: `fd51851b-3d8d-4e2e-baf6-e8fd0c480e91`): This character is currently using a different ability modifier than DEX for their primary AC bonus. This does not need to be used if another ability modifier is added on top of DEX, only if DEX shouldn't be added at all. Tagging a character with this basically disables all of the AC calculation passives so that you have a blank slate with which to work.
+
+5. `WW_TL_IGNORE_WEARING_ARMOR` (UUID: `900cc7cd-9dd5-42fe-b355-6fc56d61cdca`): This character has an AC override that should not be disabled by wearing normal, non-transmogrified armor. In the base game, AC overrides are bonuses only for when not wearing any armor, but mods might add AC overrides that should continue even when wearing some or all kinds of armor.
 
 #### Examples
 

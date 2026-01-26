@@ -74,7 +74,7 @@
   <content contentuid="hcbb031ceg958cg6029g71deg3f6d86e95046" version="2">Target must be transmogrified.</content>
   <content contentuid="heb2aae1cg7a2ag36dfg7f75g58ea25d35028" version="2">Dexterity</content>
   <content contentuid="h03fbfbbfg4b61ga5d9g8893g2d1f6ae01284" version="2">Dexterity</content>
-  <content contentuid="hc81bdb92gb598g1751g9302g0cc4872aa860" version="3">Invalid AC Bonus</content>
+  <content contentuid="hc81bdb92gb598g1751g9302g0cc4872aa860" version="4">Invalid Armour Bonus</content>
   <content contentuid="hbf68ab15g476bg82dage2c7g1a319b79a4bc" version="3">Invalid Constitution (Unarmoured Defence)</content>
   <content contentuid="h73fbd2e1g48eag9d66gde4bg0556cfb57737" version="3">Invalid Wisdom (Unarmoured Defence)</content>
   <content contentuid="h536ca8b9gb54dg7cdbg26adg870de34d6de2" version="2">Target cannot be transmogrified.</content>
@@ -135,4 +135,29 @@
   <content contentuid="h0a8505a8gb9b9g6bb5ga868g9febf50cfa05" version="1">AC 28</content>
   <content contentuid="h50add09ag1c22gfe22g9f88g21fbc00db412" version="1">AC 29</content>
   <content contentuid="hf1dad320g26d8gaa87gb1b3g7925e66bb60d" version="1">AC 30</content>
+  <content contentuid="WW_TL_RageRefundMessage" version="1">This character is wearing transmogrified heavy armour and cannot rage right now.&lt;br&gt;&lt;br&gt;The Bonus Action and Rage Charge used to enter a rage have been refunded.</content>
+  <content contentuid="hb386cc05gf4f4g58c7g44ddgffbfd4ae1ae1" version="1">Invalid Intelligence Bonus</content>
+  <content contentuid="h86474f3bg48f4g2589g00cagdf185b90221d" version="1">Invalid Intelligence Bonus</content>
+  <content contentuid="h8a28d25fg994bgdca9ge2a0g1065a835ffbd" version="1">Invalid Intelligence Bonus</content>
+  <content contentuid="h61511ae4g0aa9gd58bgeff3g3de699130fec" version="1">Invalid Intelligence Bonus</content>
+  <content contentuid="hba4ef3d0gc27bg0af0gac53g5ba6c038d370" version="1">Invalid Intelligence Bonus</content>
+  <content contentuid="hbdba93a7gdbccgbb68ga520g91570b212c57" version="1">Invalid Intelligence Bonus</content>
+  <content contentuid="h5d7a9931g78bfg19c8gf08eg11260242e60f" version="1">Invalid Constitution Bonus</content>
+  <content contentuid="h7fe8c7d1g0312g96dcgb8eag7170f5ef72cc" version="1">Invalid Constitution Bonus</content>
+  <content contentuid="h864e89a9gd8f0g20c7g0dbag8e49f746eea7" version="2">Warrior Smith</content>
+  <content contentuid="h2f40d63ag998cg5796g4167g21ed182324c4" version="1">Invalid Wisdom Bonus</content>
+  <content contentuid="hba076e34gf9f9gae2eg4375ge3fb7f9aa643" version="1">%%% EMPTY</content>
+  <content contentuid="h35412062g5c36g8d13g68bag535d5304b747" version="1">%%% EMPTY (StandardArmorTracker)</content>
+  <content contentuid="h5bb878e0ge0f4gf6b2g8d38g664462a0cae9" version="1">Invalid AC Bonus</content>
+  <content contentuid="hb72ce08dg6feag0b21gc8bcg2d64ed6b1e41" version="1">Invalid AC Bonus</content>
+  <content contentuid="h827239f6g1608g8a81gb39bg222f899b464c" version="1">Awakened Steel</content>
+  <content contentuid="h91b7d7c7g499eg6fa1g80aag1c55e9a5e236" version="1">%%% EMPTY (zephyr)</content>
+  <content contentuid="hfdd89cb4g430egcf1bgb46fge37ef0a5a0a0" version="1">Dexterity</content>
+  <content contentuid="h7adec5a7ga455gf236g49bcg4bf59e9ea151" version="1">Dexterity</content>
+  <content contentuid="hf5de6d07g8c1eg103ag0011gcbd13d297afa" version="1">Iron Fist</content>
+  <content contentuid="he560215dg304dgc5f5g8f4eg10c8ddcd1419" version="1">Invalid AC Bonus</content>
+  <content contentuid="h6022b20ag4127g9711ga1bdgd3598076c35c" version="2">Improved Iron Fist</content>
+  <content contentuid="h4189835agdbd6g036agf96dgec25317a73f4" version="1">Invalid Resistive (transmog)</content>
+  <content contentuid="hc5ff4b11gbef3g76d7g89f9g8ae9ddea0565" version="1">Invalid Intelligence Bonus</content>
+  <content contentuid="h3b773db6g72fag2073g17afg577b34bb58ac" version="1">Iron Discipline</content>
 </contentList>

@@ -1,7 +1,7 @@
 # A script for modding Baldur's Gate 3 to extend compatibility with Transmogrification Lite to more equipment. It generates .lsx files for new Root Templates, as well as a basic INIT section for an Osiris goal.
 # DISCLAIMER: This script is definitely NOT perfect, nor is it written with any particular elegance or efficiency. However, it can speed up a tedious process and requires relatively little supervision, and so
 # I am making it available as-is in the hopes that someone else will find it helpful too.
-# Last modified: 8/24/25
+# Last modified: 9/1/25
 
 import sys
 import os
@@ -28,9 +28,8 @@ ONETIME_FOOTWEAR_CAMP_PARENT_STATS = []
 
 # Very common / shared stats that are inherited by many items that should not be removed
 BODY_PARENT_STATS = ['_Body', 'ARM_Robe_Body','ARM_Padded_Body','ARM_ChainMail_Body','ARM_ChainShirt_Body','ARM_ChainShirt_Body_1','ARM_HalfPlate_Body','ARM_HalfPlate_Body_1','ARM_HalfPlate_Body_2',
-					 'ARM_Plate_Body','ARM_Plate_Body_1','ARM_Plate_Body_2','ARM_Barbarian','ARM_Bard',
-					 'ARM_Breastplate_Body','ARM_Breastplate_Body_1','ARM_Breastplate_Body_2','ARM_ScaleMail_Body','ARM_ScaleMail_Body_1','ARM_ScaleMail_Body_2',
-					 'ARM_StuddedLeather_Body','_Armor_Magic_Robe','ARM_Cloth_Body_1','ARM_Cloth_Body_2','ARM_Leather_Body','ARM_Leather_Body_1','ARM_Leather_Body_2']
+					 'ARM_Plate_Body','ARM_Plate_Body_1','ARM_Plate_Body_2','ARM_Barbarian','ARM_Bard','ARM_Breastplate_Body','ARM_Breastplate_Body_1','ARM_Breastplate_Body_2','ARM_ScaleMail_Body',
+					 'ARM_ScaleMail_Body_1','ARM_ScaleMail_Body_2','ARM_StuddedLeather_Body','_Armor_Magic_Robe','ARM_Cloth_Body_1','ARM_Cloth_Body_2','ARM_Leather_Body','ARM_Leather_Body_1','ARM_Leather_Body_2']
 BODY_CAMP_PARENT_STATS = ['ARM_Camp_Body','_Vanity_Body_Generic_Rich']
 HELMET_PARENT_STATS = ['_Head','_Head_Magic','_Head_Magic_Circlet','_Head_Magic_Leather','_Head_Magic_Metal','ARM_Circlet','ARM_Hat','ARM_Helmet_Leather','ARM_Helmet_Metal','ARM_Hat_Wizard_A']
 CLOAK_PARENT_STATS = ['_Back','_Back_Magic','ARM_Cloak','ARM_Cloak_Long_B']
@@ -144,7 +143,17 @@ def getTransmogStats(mod_identifier, armor_file, original_stats, boost_file):
 			return generated_stats
 
 	return_val = None
+	error = None
 	grants_other_bonuses = False
+
+	# If not generating transmog stats, then it's okay for the Root Template's stats to not be included in the armor file so long as we can still
+	# recognize it from the lists of stats at the top of the script (MUST be able to determine its equipment slot somehow)
+	if boost_file is None:
+		for transmog_stat_values in TRANSMOG_STAT_VALUES:
+			new_stat, slot, default_boost, item_type, default_ac, using_candidates, new_stats_candidates = transmog_stat_values
+			if original_stats in using_candidates:
+					return (new_stat, slot, default_boost, item_type, default_ac)
+
 	with open(armor_file, 'r') as reference:
 		boosts = None
 		passives = None
@@ -162,10 +171,15 @@ def getTransmogStats(mod_identifier, armor_file, original_stats, boost_file):
 						return_val = (new_stat, slot, default_boost, item_type, default_ac)
 			elif found_stat and line.startswith('using "'):
 				using = line[7:line.rindex('"')]
+				recognized_using = False
 				for transmog_stat_values in TRANSMOG_STAT_VALUES:
 					new_stat, slot, default_boost, item_type, default_ac, using_candidates, new_stats_candidates = transmog_stat_values
 					if using in using_candidates:
+						recognized_using = True
 						return_val = (new_stat, slot, default_boost, item_type, default_ac)
+						break
+				if not recognized_using:
+					error = f'Found stats in armor file but its inherited stats ("{using}") are unrecognized, need to know its equipment slot'
 			elif found_stat and return_val is not None and boost_file is not None and line.startswith('data "Boosts"'):
 				boosts = line[15:line.rindex('"')]
 				if boosts != '':
@@ -190,7 +204,13 @@ def getTransmogStats(mod_identifier, armor_file, original_stats, boost_file):
 					if statuses is not None:
 						grants_other_bonuses = True
 
-	if return_val is not None and boost_file is not None and grants_other_bonuses:
+	if not found_stat:
+		error = 'Could not find stats in armor file'
+
+	# If not successful, return None or the error message if there is one
+	if return_val is None:
+		return error
+	elif boost_file is not None and grants_other_bonuses:
 		new_stat, slot, default_boost, item_type, default_ac = return_val
 
 		boost_file.write(f'new entry "{stat_name}"\n')
@@ -219,11 +239,14 @@ def getTransmogStats(mod_identifier, armor_file, original_stats, boost_file):
 	else:
 		return return_val
 	
-def resetEntry(remainder = None):
+def resetEntry(remainder = None, message = None):
 	global source_uuid, source_name, stats
 
 	if remainder is not None and (source_name is not None or source_uuid is not None or stats is not None):
-		remainder.write(f'Incomplete or rejected template:\n- Name: {source_name}\n- UUID: {source_uuid}\n- Stats: {stats}\n\n')
+		remainder.write(f'Incomplete or rejected template:\n- Name: {source_name}\n- UUID: {source_uuid}\n- Stats: {stats}\n')
+		if message is not None:
+			remainder.write(f'- Extra info: {message}\n')
+		remainder.write('\n')
 
 	source_uuid = None
 	source_name = None
@@ -235,6 +258,9 @@ def addEntry(mod_identifier, armor_file, output_dir, database, boost_file, remai
 	transmog_stats = getTransmogStats(mod_identifier, armor_file, stats, boost_file)
 	if transmog_stats is None:
 		resetEntry(remainder)
+	# if the return value is a string, then it's a message / error description that can be printed to the remainder log
+	elif isinstance(transmog_stats, str):
+		resetEntry(remainder, transmog_stats)
 	else:
 		new_stats, slot, boost, item_type, default_ac,  = transmog_stats
 		name = source_name + '_' + mod_identifier

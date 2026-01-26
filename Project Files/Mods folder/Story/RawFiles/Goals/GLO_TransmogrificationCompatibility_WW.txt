@@ -1,0 +1,1408 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+// Script added in v1.0.6.31
+
+DB_WW_TL_StatusesIgnoredForAC("TE_CHARACTER_RADAR"); // PixellBytes' Tactician Enhanced - https://mod.io/g/baldursgate3/m/tactician-enhanced
+
+DB_WW_TL_UnarmoredOnlyStatuses("MINDWEAVER_ArcaneArmour_Boost"); // Mind Weaver class by zx10rx - https://mod.io/g/baldursgate3/m/mindweaver1
+
+// If a character doesn't have _any_ of the prerequisite tags, then their AC-limiting compatibility passive will be cleared
+DB_WW_TL_Compatibility_PrereqTagsForACLimiterPassives((TAG)WW_TL_ALT_AC_MOD_fd51851b-3d8d-4e2e-baf6-e8fd0c480e91);
+DB_WW_TL_Compatibility_PrereqTagsForACLimiterPassives((TAG)WW_TL_CUSTOM_AC_OVERRIDE_44ca0460-b271-4118-a5a9-4c8756905d72);
+
+//REGION The Zephyr class by TheWailingBard - https://mod.io/g/baldursgate3/m/the-zephyr
+
+DB_WW_TL_Compatibility_ZephyrACBonuses("SVZephyr_SinuousDefense",13);
+DB_WW_TL_Compatibility_ZephyrACBonuses("SVZephyr_SinuousDefense_2",14);
+DB_WW_TL_Compatibility_ZephyrACBonuses("SVZephyr_SinuousDefense_3",15);
+
+DB_WW_TL_Compatibility_ZephyrACAdjustmentStatuses("WW_TL_COMPATIBILITY_ZEPHYR_REDUCE_AC_1");
+DB_WW_TL_Compatibility_ZephyrACAdjustmentStatuses("WW_TL_COMPATIBILITY_ZEPHYR_REDUCE_AC_2");
+DB_WW_TL_Compatibility_ZephyrACAdjustmentStatuses("WW_TL_COMPATIBILITY_ZEPHYR_REDUCE_AC_3");
+DB_WW_TL_Compatibility_ZephyrACAdjustmentStatuses("WW_TL_COMPATIBILITY_ZEPHYR_REDUCE_AC_4");
+DB_WW_TL_Compatibility_ZephyrACAdjustmentStatuses("WW_TL_COMPATIBILITY_ZEPHYR_REDUCE_AC_5");
+
+//END_REGION
+KBSECTION
+//REGION General
+
+QRY
+QRY_WW_TL_Compatibility_TransmogEquippedOnChest((GUIDSTRING)_Character)
+AND
+DB_WW_TL_EquippedTransmogrifications(_Character,_Armor)
+AND
+DB_WW_TL_TransmogrifiedArmors((GUIDSTRING)_Armor,_,_OriginalTemplateForStats,_)
+AND
+DB_WW_TL_ArmorComponents(_OriginalTemplateForStats,_,_,_,_,"Breast",_,_)
+THEN
+DB_NOOP(1);
+
+//REGION Handle mutually exclusive armor buff passives
+
+// Give the new passive
+IF
+DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ArmorBuff((GUIDSTRING)_Character,(STRING)_Passive)
+THEN
+AddPassive(_Character,_Passive);
+
+// Remove the previous passive if there is one
+IF
+DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ArmorBuff(_Character,_Passive)
+AND
+DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ArmorBuff(_Character,_OtherPassive)
+AND
+_Passive != _OtherPassive
+THEN
+NOT DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ArmorBuff(_Character,_OtherPassive);
+RemovePassive(_Character,_OtherPassive);
+
+// Easy way to clear current passive
+PROC
+PROC_WW_TL_Compatibility_RemoveMutuallyExclusivePassive_ArmorBuff((GUIDSTRING)_Character)
+AND
+DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ArmorBuff(_Character,_Passive)
+THEN
+NOT DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ArmorBuff(_Character,_Passive);
+RemovePassive(_Character,_Passive);
+
+// Automatically clear current passive if character unequips their last transmog
+PROC
+PROC_WW_TL_Event_Unequipped((ITEM)_,(CHARACTER)_Character)
+AND
+NOT DB_WW_TL_EquippedTransmogrifications(_Character,(ITEM)_)
+AND
+DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ArmorBuff(_Character,_)
+THEN
+PROC_WW_TL_Compatibility_RemoveMutuallyExclusivePassive_ArmorBuff(_Character);
+
+//END_REGION
+
+//REGION Handle mutually exclusive AC limiting passives
+
+// Give the new passive
+IF
+DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ACLimiter((GUIDSTRING)_Character,(STRING)_Passive)
+THEN
+AddPassive(_Character,_Passive);
+
+// Remove the previous passive if there is one
+IF
+DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ACLimiter(_Character,_Passive)
+AND
+DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ACLimiter(_Character,_OtherPassive)
+AND
+_Passive != _OtherPassive
+THEN
+NOT DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ACLimiter(_Character,_OtherPassive);
+RemovePassive(_Character,_OtherPassive);
+
+// Easy way to clear current passive
+PROC
+PROC_WW_TL_Compatibility_RemoveMutuallyExclusivePassive_ACLimiter((GUIDSTRING)_Character)
+AND
+DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ACLimiter(_Character,_Passive)
+THEN
+NOT DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ACLimiter(_Character,_Passive);
+RemovePassive(_Character,_Passive);
+
+// Automatically clear current passive if character unequips their last transmog
+PROC
+PROC_WW_TL_Event_Unequipped((ITEM)_,(CHARACTER)_Character)
+AND
+NOT DB_WW_TL_EquippedTransmogrifications(_Character,(ITEM)_)
+AND
+DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ACLimiter(_Character,_)
+THEN
+PROC_WW_TL_Compatibility_RemoveMutuallyExclusivePassive_ACLimiter(_Character);
+
+// Automatically clear the current passive if the character loses the last of the prerequisite tags
+IF
+TagCleared(_Character,_Tag)
+AND
+DB_WW_TL_Compatibility_PrereqTagsForACLimiterPassives(_Tag)
+AND
+DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ACLimiter(_Character,_)
+AND
+NOT QRY_WW_TL_Compatibility_HasPrereqTagForACLimiterPassives(_Character)
+THEN
+PROC_WW_TL_Compatibility_RemoveMutuallyExclusivePassive_ACLimiter(_Character);
+
+QRY
+QRY_WW_TL_Compatibility_HasPrereqTagForACLimiterPassives((GUIDSTRING)_Character)
+AND
+DB_WW_TL_Compatibility_PrereqTagsForACLimiterPassives(_Tag)
+AND
+IsTagged(_Character,_Tag,1)
+THEN
+DB_NOOP(1);
+
+//END_REGION
+
+//REGION Triggers and general logic for special mod compatibility
+
+PROC
+PROC_WW_TL_Event_Equipped((ITEM)_,(CHARACTER)_Character)
+THEN
+PROC_WW_TL_CompatibilityCheck(_Character);
+
+PROC
+PROC_WW_TL_Event_Unequipped((ITEM)_,(CHARACTER)_Character)
+THEN
+PROC_WW_TL_CompatibilityCheck(_Character);
+
+// Custom trigger for equipping shield with any transmog equipped
+IF
+Equipped(_Shield,_Character)
+AND
+DB_WW_TL_EquippedTransmogrifications((GUIDSTRING)_Character,(ITEM)_)
+AND
+IsTagged((GUIDSTRING)_Shield,(TAG)WPN_SHIELD_dc9e09f0-b2ba-4720-bd28-ee9ddbdef2f1,1)
+THEN
+RealtimeObjectTimerLaunch(_Character,"WW_TL_Compatibility_QueueCheck_IncludeAC",500);
+
+// Custom trigger for unequipping shield
+IF
+Unequipped(_Shield,_Character)
+AND
+DB_WW_TL_EquippedTransmogrifications((GUIDSTRING)_Character,(ITEM)_)
+AND
+IsTagged((GUIDSTRING)_Shield,(TAG)WPN_SHIELD_dc9e09f0-b2ba-4720-bd28-ee9ddbdef2f1,1)
+THEN
+RealtimeObjectTimerLaunch(_Character,"WW_TL_Compatibility_QueueCheck_IncludeAC",500);
+
+// Custom trigger for gaining unarmored-only status
+IF
+StatusApplied(_Character,_Status,_,_)
+AND
+DB_WW_TL_UnarmoredOnlyStatuses(_Status)
+AND
+DB_WW_TL_EquippedTransmogrifications(_Character,_)
+THEN
+RealtimeObjectTimerLaunch(_Character,"WW_TL_Compatibility_QueueCheck_IncludeAC",500);
+
+// Custom trigger for losing unarmored-only status
+IF
+StatusRemoved(_Character,_Status,_,_)
+AND
+DB_WW_TL_UnarmoredOnlyStatuses(_Status)
+AND
+DB_WW_TL_EquippedTransmogrifications(_Character,_)
+THEN
+RealtimeObjectTimerLaunch(_Character,"WW_TL_Compatibility_QueueCheck_IncludeAC",500);
+
+// Custom trigger for leveling up (will probably need to update AC after respeccing, multiclassing, or gaining new class features)
+IF
+LeveledUp(_Character)
+AND
+DB_WW_TL_EquippedTransmogrifications((GUIDSTRING)_Character,_)
+THEN
+RealtimeObjectTimerLaunch(_Character,"WW_TL_Compatibility_QueueCheck_IncludeAC",750);
+
+IF
+ObjectTimerFinished(_Character,"WW_TL_Compatibility_QueueCheck")
+THEN
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character);
+
+IF
+ObjectTimerFinished(_Character,"WW_TL_Compatibility_QueueCheck_IncludeAC")
+THEN
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character);
+RealtimeObjectTimerLaunch(_Character,"WW_TL_TriggerACReevaluation",500); // will trigger rule in main script
+
+//REGION Apply/remove standard armor tracker passive (and logic related to it)
+
+// Check whether character needs this passive
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+HasPassive((GUIDSTRING)_Character,"WW_TL_Compatibility_StandardArmorTracker",0)
+AND
+QRY_WW_TL_Compatibility_NeedsStandardArmorTracker(_Character)
+THEN
+AddPassive(_Character,"WW_TL_Compatibility_StandardArmorTracker");
+RealtimeObjectTimerLaunch(_Character,"WW_TL_Compatibility_QueueCheck",500); // queue another compatibility check after passive has time to resolve (it might apply armor status)
+
+// Check whether character no longer needs this passive
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+HasPassive((GUIDSTRING)_Character,"WW_TL_Compatibility_StandardArmorTracker",1)
+AND
+NOT QRY_WW_TL_Compatibility_NeedsStandardArmorTracker(_Character)
+THEN
+RemovePassive(_Character,"WW_TL_Compatibility_StandardArmorTracker");
+RemoveStatus(_Character,"WW_TL_COMPATIBILITY_WEARING_NORMAL_ARMOR"); // just in case this status is currently applied
+
+IF
+StatusApplied(_Character,"WW_TL_COMPATIBILITY_WEARING_NORMAL_ARMOR",_,_)
+THEN
+RealtimeObjectTimerLaunch(_Character,"WW_TL_Compatibility_QueueCheck_IncludeAC",250);
+
+IF
+StatusRemoved(_Character,"WW_TL_COMPATIBILITY_WEARING_NORMAL_ARMOR",_,_)
+THEN
+RealtimeObjectTimerLaunch(_Character,"WW_TL_Compatibility_QueueCheck_IncludeAC",250);
+
+//END_REGION
+
+//REGION Apply/remove transmog AC tags tags
+
+// Evaluate whether character needs tag indicating they use a different ability modifier for AC
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+IsTagged((GUIDSTRING)_Character,(TAG)WW_TL_ALT_AC_MOD_fd51851b-3d8d-4e2e-baf6-e8fd0c480e91,0)
+AND
+QRY_WW_TL_Compatibility_UsesAltACModifier(_Character)
+THEN
+SetTag(_Character,(TAG)WW_TL_ALT_AC_MOD_fd51851b-3d8d-4e2e-baf6-e8fd0c480e91);
+
+// Evaluate whether character no longer needs tag indicating they use a different ability modifier for AC
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+IsTagged((GUIDSTRING)_Character,(TAG)WW_TL_ALT_AC_MOD_fd51851b-3d8d-4e2e-baf6-e8fd0c480e91,1)
+AND
+NOT QRY_WW_TL_Compatibility_UsesAltACModifier(_Character)
+THEN
+ClearTag(_Character,(TAG)WW_TL_ALT_AC_MOD_fd51851b-3d8d-4e2e-baf6-e8fd0c480e91);
+
+// Evaluate whether character needs tag indicating they use a custom AC override
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+IsTagged((GUIDSTRING)_Character,(TAG)WW_TL_CUSTOM_AC_OVERRIDE_44ca0460-b271-4118-a5a9-4c8756905d72,0)
+AND
+QRY_WW_TL_Compatibility_OverridesAC(_Character)
+THEN
+SetTag(_Character,(TAG)WW_TL_CUSTOM_AC_OVERRIDE_44ca0460-b271-4118-a5a9-4c8756905d72);
+
+// Evaluate whether character no longer needs tag indicating they use a custom AC override
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+IsTagged((GUIDSTRING)_Character,(TAG)WW_TL_CUSTOM_AC_OVERRIDE_44ca0460-b271-4118-a5a9-4c8756905d72,1)
+AND
+NOT QRY_WW_TL_Compatibility_OverridesAC(_Character)
+THEN
+ClearTag(_Character,(TAG)WW_TL_CUSTOM_AC_OVERRIDE_44ca0460-b271-4118-a5a9-4c8756905d72);
+
+// Evaluate whether character needs tag indicating that wearing normal armor will not disable AC override
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+IsTagged((GUIDSTRING)_Character,(TAG)WW_TL_IGNORE_WEARING_ARMOR_900cc7cd-9dd5-42fe-b355-6fc56d61cdca,0)
+AND
+QRY_WW_TL_Compatibility_IgnoresOtherArmor(_Character)
+THEN
+SetTag(_Character,(TAG)WW_TL_IGNORE_WEARING_ARMOR_900cc7cd-9dd5-42fe-b355-6fc56d61cdca);
+
+// Evaluate whether character no longer needs tag indicating that wearing normal armor will not disable AC override
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+IsTagged((GUIDSTRING)_Character,(TAG)WW_TL_IGNORE_WEARING_ARMOR_900cc7cd-9dd5-42fe-b355-6fc56d61cdca,1)
+AND
+NOT QRY_WW_TL_Compatibility_IgnoresOtherArmor(_Character)
+THEN
+ClearTag(_Character,(TAG)WW_TL_IGNORE_WEARING_ARMOR_900cc7cd-9dd5-42fe-b355-6fc56d61cdca);
+
+//END_REGION
+
+//END_REGION
+
+//END_REGION
+
+//REGION Mystra's Spells by randomkilla - https://mod.io/g/baldursgate3/m/mystras-spells
+
+// Reset everything except Long Rest cooldowns from Catnap
+IF
+StatusApplied(_Character,"CATNAP_RESTORATION",_,_)
+AND
+DB_WW_TL_CoolingDown(_ItemTemplate,_Spell,_Cooldown)
+AND
+_Cooldown != "LONG"
+AND
+QRY_WW_TL_UsingStatsFromTemplate((CHARACTER)_Character,_ItemTemplate)
+THEN
+NOT DB_WW_TL_CoolingDown(_ItemTemplate,_Spell,_Cooldown);
+
+//END_REGION
+
+//REGION Arcane Vanguard class by Saethos - https://mod.io/g/baldursgate3/m/arcane-vanguard1
+
+QRY
+QRY_WW_TL_Compatibility_UsesAltACModifier((GUIDSTRING)_Character)
+AND
+QRY_WW_TL_Compatibility_ArcaneVanguardAltAC(_Character)
+THEN
+DB_NOOP(1);
+
+// To help limit this section to the Arcane Vanguard, which does not use a unique class tag
+// or unusual technical name for this passive, at least require one of the combinations of
+// existing class tags that are used by its various subclasses
+
+QRY
+QRY_WW_TL_Compatibility_ArcaneVanguardAltAC((GUIDSTRING)_Character)
+AND
+IsTagged(_Character,(TAG)WIZARD_6fe3ae27-dc6c-4fc9-9245-710c790c396c,1)
+AND
+IsTagged(_Character,(TAG)FIGHTER_1ae7017c-4884-4a43-bc4a-742fa0d201c0,1)
+AND
+HasPassive(_Character,"TacticalEvasion",1)
+THEN
+DB_NOOP(1);
+
+QRY
+QRY_WW_TL_Compatibility_ArcaneVanguardAltAC((GUIDSTRING)_Character)
+AND
+IsTagged(_Character,(TAG)WIZARD_NECROMANCY_90d7fbd5-1264-4bd6-93ba-67c2116e6ab0,1)
+AND
+HasPassive(_Character,"TacticalEvasion",1)
+THEN
+DB_NOOP(1);
+
+QRY
+QRY_WW_TL_Compatibility_ArcaneVanguardAltAC((GUIDSTRING)_Character)
+AND
+IsTagged(_Character,(TAG)DRUID_44ac4317-4d38-4d28-80e2-94024c6e42f0,1)
+AND
+HasPassive(_Character,"TacticalEvasion",1)
+THEN
+DB_NOOP(1);
+
+// Whenever any transmog is (un)equipped on an intelligence-based Arcane Vanguard,
+// check whether they need either of the INT-limiting passives
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+QRY_WW_TL_Compatibility_ArcaneVanguardAltAC((GUIDSTRING)_Character)
+AND
+QRY_WW_TL_GetACLimits(_Character)
+AND
+DB_QRYRTN_WW_TL_GetACLimits(_ACLimitCategory)
+THEN
+NOT DB_QRYRTN_WW_TL_GetACLimits(_ACLimitCategory);
+PROC_WW_TL_Compatibility_SetVanguardPassives(_Character,_ACLimitCategory);
+
+// clear passives if not wearing transmog armor that limits AC
+PROC
+PROC_WW_TL_Compatibility_SetVanguardPassives((GUIDSTRING)_Character,_ACLimitCategory)
+AND
+_ACLimitCategory <= 1
+THEN
+PROC_WW_TL_Compatibility_RemoveMutuallyExclusivePassive_ACLimiter(_Character);
+
+PROC
+PROC_WW_TL_Compatibility_SetVanguardPassives((GUIDSTRING)_Character,2)
+THEN
+DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ACLimiter(_Character,"WW_TL_UndoOverrideModifier_Int_Extra");
+
+PROC
+PROC_WW_TL_Compatibility_SetVanguardPassives((GUIDSTRING)_Character,3)
+THEN
+DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ACLimiter(_Character,"WW_TL_UndoOverrideModifier_Int_All");
+
+//END_REGION
+
+//REGION Mind Weaver class by zx10rx - https://mod.io/g/baldursgate3/m/mindweaver1
+
+// Arcane Shield spell is like Mage Armor and needs to apply the override AC tag
+QRY
+QRY_WW_TL_Compatibility_OverridesAC((GUIDSTRING)_Character)
+AND
+HasActiveStatus(_Character,"MINDWEAVER_ArcaneArmour_Boost",1)
+THEN
+DB_NOOP(1);
+
+//REGION Iceforged
+
+// Iceforged Mind Weavers only override AC if they don't have a shield equipped
+QRY
+QRY_WW_TL_Compatibility_OverridesAC((GUIDSTRING)_Character)
+AND
+HasPassive(_Character,"MINDWEAVER_Iceforged",1)
+AND
+NOT GetEquippedShield((CHARACTER)_Character,_)
+THEN
+DB_NOOP(1);
+
+// Register character to receive WW_TL_COMPATIBILITY_WEARING_NORMAL_ARMOR status when wearing non-transmog armor
+QRY
+QRY_WW_TL_Compatibility_NeedsStandardArmorTracker((GUIDSTRING)_Character)
+AND
+HasPassive(_Character,"MINDWEAVER_Iceforged",1)
+THEN
+DB_NOOP(1);
+
+// Whenever any transmog is (un)equipped on a Mind Weaver that uses Intelligence and has not equipped a shield or
+// normal armor, check whether they need the INT-limiting passive
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+HasPassive((GUIDSTRING)_Character,"MINDWEAVER_Iceforged",1)
+AND
+NOT GetEquippedShield((CHARACTER)_Character,_)
+AND
+HasActiveStatus((GUIDSTRING)_Character,"WW_TL_COMPATIBILITY_WEARING_NORMAL_ARMOR",0)
+AND
+QRY_WW_TL_GetACLimits(_Character,1)
+AND
+DB_QRYRTN_WW_TL_GetACLimits(_ACLimitCategory)
+THEN
+NOT DB_QRYRTN_WW_TL_GetACLimits(_ACLimitCategory);
+PROC_WW_TL_Compatibility_SetMindWeaverPassives_Iceforged(_Character,_ACLimitCategory);
+
+// clear passive if not wearing armor
+PROC
+PROC_WW_TL_Compatibility_SetMindWeaverPassives_Iceforged((GUIDSTRING)_Character,0)
+THEN
+PROC_WW_TL_Compatibility_RemoveMutuallyExclusivePassive_ACLimiter(_Character);
+
+// remove all of INT mod if wearing any transmog armor
+PROC
+PROC_WW_TL_Compatibility_SetMindWeaverPassives_Iceforged((GUIDSTRING)_Character,(INTEGER)_ACLimitCategory)
+AND
+_ACLimitCategory >= 1
+THEN
+DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ACLimiter(_Character,"WW_TL_UndoOverrideModifier_Int_All");
+
+// If shield equipped, make sure to remove AC limit passives no matter what
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ACLimiter((GUIDSTRING)_Character,_)
+AND
+HasPassive(_Character,"MINDWEAVER_Iceforged",1)
+AND
+GetEquippedShield((CHARACTER)_Character,_)
+THEN
+PROC_WW_TL_Compatibility_RemoveMutuallyExclusivePassive_ACLimiter((GUIDSTRING)_Character);
+
+// If normal armor equipped, make sure to remove AC limit passives no matter what
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ACLimiter((GUIDSTRING)_Character,_)
+AND
+HasPassive(_Character,"MINDWEAVER_Iceforged",1)
+AND
+HasActiveStatus(_Character,"WW_TL_COMPATIBILITY_WEARING_NORMAL_ARMOR",1)
+THEN
+PROC_WW_TL_Compatibility_RemoveMutuallyExclusivePassive_ACLimiter(_Character);
+
+//END_REGION
+
+//REGION Student of War
+
+QRY
+QRY_WW_TL_Compatibility_OverridesAC((GUIDSTRING)_Character)
+AND
+HasPassive((GUIDSTRING)_Character,"MINDWEAVER_StudentOfWar",1)
+THEN
+DB_NOOP(1);
+
+QRY
+QRY_WW_TL_Compatibility_IgnoresOtherArmor((GUIDSTRING)_Character)
+AND
+HasPassive((GUIDSTRING)_Character,"MINDWEAVER_StudentOfWar",1)
+THEN
+DB_NOOP(1);
+
+// Whenever any transmog is (un)equipped on a Mind Weaver that uses Intelligence,
+// check whether they need either of the INT-limiting passives
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+HasPassive((GUIDSTRING)_Character,"MINDWEAVER_StudentOfWar",1)
+AND
+QRY_WW_TL_GetACLimits((GUIDSTRING)_Character)
+AND
+DB_QRYRTN_WW_TL_GetACLimits(_ACLimitCategory)
+THEN
+NOT DB_QRYRTN_WW_TL_GetACLimits(_ACLimitCategory);
+PROC_WW_TL_Compatibility_SetMindWeaverPassives_SoW(_Character,_ACLimitCategory);
+
+// clear passives if not wearing armor
+PROC
+PROC_WW_TL_Compatibility_SetMindWeaverPassives_SoW((GUIDSTRING)_Character,0)
+THEN
+PROC_WW_TL_Compatibility_RemoveMutuallyExclusivePassive_ACLimiter(_Character);
+
+// limit INT mod to half if wearing light armor (or medium that acts like it)
+PROC
+PROC_WW_TL_Compatibility_SetMindWeaverPassives_SoW((GUIDSTRING)_Character,1)
+THEN
+DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ACLimiter(_Character,"WW_TL_UndoOverrideModifier_Int_EnforceHalf");
+
+// remove all of INT mod if wearing medium or heavy armor
+PROC
+PROC_WW_TL_Compatibility_SetMindWeaverPassives_SoW((GUIDSTRING)_Character,(INTEGER)_ACLimitCategory)
+AND
+_ACLimitCategory > 1
+THEN
+DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ACLimiter(_Character,"WW_TL_UndoOverrideModifier_Int_All");
+
+//END_REGION
+
+//REGION Mind Over Matter
+
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+HasPassive((GUIDSTRING)_Character,"MINDWEAVER_PsionicDefense",1)
+AND
+QRY_WW_TL_GetACLimits(_Character)
+AND
+DB_QRYRTN_WW_TL_GetACLimits(_ACLimitCategory)
+THEN
+NOT DB_QRYRTN_WW_TL_GetACLimits(_ACLimitCategory);
+DB_WW_TL_Compatibility_MindWeaverHasPsionicDefense(_Character);
+PROC_WW_TL_Compatibility_SetPsionicDefensePassives(_Character,_ACLimitCategory);
+
+PROC
+PROC_WW_TL_Compatibility_SetPsionicDefensePassives((GUIDSTRING)_Character,(INTEGER)_ACLimitCategory)
+AND
+_ACLimitCategory > 1
+AND
+HasPassive((GUIDSTRING)_Character,"WW_TL_UndoOverrideModifier_Int_RemoveHalf",0)
+THEN
+SetTag(_Character,(TAG)WW_TL_IGNORE_WEARING_ARMOR_900cc7cd-9dd5-42fe-b355-6fc56d61cdca);
+AddPassive(_Character,"WW_TL_UndoOverrideModifier_Int_RemoveHalf");
+
+PROC
+PROC_WW_TL_Compatibility_SetPsionicDefensePassives((GUIDSTRING)_Character,(INTEGER)_ACLimitCategory)
+AND
+_ACLimitCategory <= 1
+AND
+HasPassive((GUIDSTRING)_Character,"WW_TL_UndoOverrideModifier_Int_RemoveHalf",1)
+THEN
+ClearTag(_Character,(TAG)WW_TL_IGNORE_WEARING_ARMOR_900cc7cd-9dd5-42fe-b355-6fc56d61cdca);
+RemovePassive(_Character,"WW_TL_UndoOverrideModifier_Int_RemoveHalf");
+
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+DB_WW_TL_Compatibility_MindWeaverHasPsionicDefense((GUIDSTRING)_Character)
+AND
+HasPassive(_Character,"MINDWEAVER_PsionicDefense",0)
+THEN
+NOT DB_WW_TL_Compatibility_MindWeaverHasPsionicDefense(_Character);
+ClearTag(_Character,(TAG)WW_TL_IGNORE_WEARING_ARMOR_900cc7cd-9dd5-42fe-b355-6fc56d61cdca);
+RemovePassive(_Character,"WW_TL_UndoOverrideModifier_Int_RemoveHalf");
+
+//END_REGION
+
+//END_REGION
+
+//REGION Commoner class by TheWailingBard - https://mod.io/g/baldursgate3/m/laserllama-commoner-class
+
+QRY
+QRY_WW_TL_Compatibility_UsesAltACModifier((GUIDSTRING)_Character)
+AND
+QRY_WW_TL_Compatibility_CommonerOverrideActive(_Character)
+THEN
+DB_NOOP(1);
+
+QRY
+QRY_WW_TL_Compatibility_CommonerOverrideActive((GUIDSTRING)_Character)
+AND
+IsTagged(_Character,(TAG)COMMONER_aadb934b-1228-49ff-9e40-2dc08b1c332c,1)
+AND
+GetAbility((CHARACTER)_Character,"Constitution",_Con)
+AND
+GetAbility((CHARACTER)_Character,"Dexterity",_Dex)
+AND
+_Con > _Dex
+THEN
+DB_NOOP(1);
+
+// Whenever any transmog is (un)equipped on a Commoner, check whether they need CON-limiting passives
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+QRY_WW_TL_Compatibility_CommonerOverrideActive(_Character)
+AND
+QRY_WW_TL_GetACLimits(_Character)
+AND
+DB_QRYRTN_WW_TL_GetACLimits(_ACLimitCategory)
+THEN
+NOT DB_QRYRTN_WW_TL_GetACLimits(_ACLimitCategory);
+PROC_WW_TL_Compatibility_SetCommonerPassives(_Character,_ACLimitCategory);
+
+// clear passives if not wearing transmog armor that limits AC
+PROC
+PROC_WW_TL_Compatibility_SetCommonerPassives((GUIDSTRING)_Character,(INTEGER)_ACLimitCategory)
+AND
+_ACLimitCategory <= 1
+THEN
+PROC_WW_TL_Compatibility_RemoveMutuallyExclusivePassive_ACLimiter(_Character);
+
+PROC
+PROC_WW_TL_Compatibility_SetCommonerPassives((GUIDSTRING)_Character,2)
+THEN
+DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ACLimiter(_Character,"WW_TL_UndoOverrideModifier_Con_Extra");
+
+PROC
+PROC_WW_TL_Compatibility_SetCommonerPassives((GUIDSTRING)_Character,3)
+THEN
+DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ACLimiter(_Character,"WW_TL_UndoOverrideModifier_Con_All");
+
+//END_REGION
+
+//REGION The Guardian subclass by TheWailingBard - https://mod.io/g/baldursgate3/m/the-guardian-a-fighter-subclass
+
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+HasPassive((GUIDSTRING)_Character,"LLGuardian_WarriorSmith",1)
+AND
+QRY_WW_TL_GetACLimits(_Character,1)
+AND
+DB_QRYRTN_WW_TL_GetACLimits(_ACLimitCategory)
+THEN
+NOT DB_QRYRTN_WW_TL_GetACLimits(_ACLimitCategory);
+PROC_WW_TL_Compatibility_SetLLGuardianPassives(_Character,_ACLimitCategory);
+
+// Remove passive if not wearing transmog armor
+PROC
+PROC_WW_TL_Compatibility_SetLLGuardianPassives((GUIDSTRING)_Character,0)
+AND
+HasPassive(_Character,"WW_TL_Compatibility_ArmorBuff_Guardian",1)
+THEN
+RemovePassive(_Character,"WW_TL_Compatibility_ArmorBuff_Guardian");
+
+// Give passive if wearing transmog armor
+PROC
+PROC_WW_TL_Compatibility_SetLLGuardianPassives((GUIDSTRING)_Character,(INTEGER)_ACLimitCategory)
+AND
+_ACLimitCategory >= 1
+AND
+HasPassive(_Character,"WW_TL_Compatibility_ArmorBuff_Guardian",0)
+THEN
+AddPassive(_Character,"WW_TL_Compatibility_ArmorBuff_Guardian");
+
+// If have passive but no longer a Guardian, remove the passive
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+HasPassive(_Character,"WW_TL_Compatibility_ArmorBuff_Guardian",1)
+AND
+HasPassive(_Character,"LLGuardian_WarriorSmith",0)
+THEN
+RemovePassive(_Character,"WW_TL_Compatibility_ArmorBuff_Guardian");
+
+//END_REGION
+
+//REGION Warmage class by TheWailingBard - https://mod.io/g/baldursgate3/m/warmage-class
+
+//REGION Resistive fighting style
+
+// If the bonus should be activated normally, make sure to NOT undo it
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+HasPassive((GUIDSTRING)_Character,"MHWarmage_ArcaneFS_Resistive",1)
+AND
+HasActiveStatus(_Character,"MAGE_ARMOR",1)
+THEN
+RemovePassive(_Character,"WW_TL_Compatibility_ArmorDebuff_Warmage");
+
+// If the bonus is not activated by Mage Armor, check if wearing transmog on chest (which will always activate the passive even if using stats for clothes)
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+HasPassive((GUIDSTRING)_Character,"MHWarmage_ArcaneFS_Resistive",1)
+AND
+HasActiveStatus(_Character,"MAGE_ARMOR",0)
+AND
+QRY_WW_TL_GetACLimits(_Character)
+AND
+DB_QRYRTN_WW_TL_GetACLimits(_ACLimitCategory)
+THEN
+NOT DB_QRYRTN_WW_TL_GetACLimits(_ACLimitCategory);
+PROC_WW_TL_Compatibility_SetWarmagePassives_Resistive(_Character,_ACLimitCategory);
+
+// Don't undo the original passive if not wearing any transmog on chest (it will correctly not be active in this case)
+PROC
+PROC_WW_TL_Compatibility_SetWarmagePassives_Resistive((GUIDSTRING)_Character,0)
+AND
+NOT QRY_WW_TL_Compatibility_TransmogEquippedOnChest(_Character)
+THEN
+RemovePassive(_Character,"WW_TL_Compatibility_ArmorDebuff_Warmage");
+
+// Undo the original passive if wearing transmog clothes
+PROC
+PROC_WW_TL_Compatibility_SetWarmagePassives_Resistive((GUIDSTRING)_Character,0)
+AND
+QRY_WW_TL_Compatibility_TransmogEquippedOnChest(_Character)
+THEN
+AddPassive(_Character,"WW_TL_Compatibility_ArmorDebuff_Warmage");
+
+// Don't undo the original passive if wearing transmog light armor (the one time we _want_ it to be active)
+PROC
+PROC_WW_TL_Compatibility_SetWarmagePassives_Resistive((GUIDSTRING)_Character,1)
+THEN
+RemovePassive(_Character,"WW_TL_Compatibility_ArmorDebuff_Warmage");
+
+// Undo the original passive if wearing heavier transmog armor
+PROC
+PROC_WW_TL_Compatibility_SetWarmagePassives_Resistive((GUIDSTRING)_Character,_ACLimitCategory)
+AND
+_ACLimitCategory > 1
+THEN
+AddPassive(_Character,"WW_TL_Compatibility_ArmorDebuff_Warmage");
+
+// Make sure characters who no longer have Resistive don't keep its transmog debuff
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+HasPassive(_Character,"WW_TL_Compatibility_ArmorDebuff_Warmage",1)
+AND
+HasPassive(_Character,"MHWarmage_ArcaneFS_Resistive",0)
+THEN
+RemovePassive(_Character,"WW_TL_Compatibility_ArmorDebuff_Warmage");
+
+//END_REGION
+
+//REGION House of Lancers subclass and Cloak of Feathers trick
+
+QRY
+QRY_WW_TL_Compatibility_MHWarmage_UsesINT((GUIDSTRING)_Character)
+AND
+HasPassive(_Character,"MHWarmage_InterceptTechnique",1)
+THEN
+DB_NOOP(1);
+
+QRY
+QRY_WW_TL_Compatibility_MHWarmage_UsesINT((GUIDSTRING)_Character)
+AND
+HasPassive(_Character,"MHWarmage_Trick_CloakOfFeathers",1)
+THEN
+DB_NOOP(1);
+
+QRY
+QRY_WW_TL_Compatibility_OverridesAC((GUIDSTRING)_Character)
+AND
+QRY_WW_TL_Compatibility_MHWarmage_UsesINT(_Character)
+AND
+NOT GetEquippedShield((CHARACTER)_Character,_)
+THEN
+DB_NOOP(1);
+
+// Register character to receive WW_TL_COMPATIBILITY_WEARING_NORMAL_ARMOR status when wearing non-transmog armor
+QRY
+QRY_WW_TL_Compatibility_NeedsStandardArmorTracker((GUIDSTRING)_Character)
+AND
+QRY_WW_TL_Compatibility_MHWarmage_UsesINT(_Character)
+THEN
+DB_NOOP(1);
+
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+QRY_WW_TL_Compatibility_MHWarmage_UsesINT(_Character)
+AND
+HasActiveStatus(_Character,"WW_TL_COMPATIBILITY_WEARING_NORMAL_ARMOR",0)
+AND
+QRY_WW_TL_GetACLimits(_Character,1)
+AND
+DB_QRYRTN_WW_TL_GetACLimits(_ACLimitCategory)
+THEN
+NOT DB_QRYRTN_WW_TL_GetACLimits(_ACLimitCategory);
+PROC_WW_TL_Compatibility_SetWarmagePassives(_Character,_ACLimitCategory);
+
+// clear passives if not wearing transmog armor
+PROC
+PROC_WW_TL_Compatibility_SetWarmagePassives((GUIDSTRING)_Character,0)
+THEN
+PROC_WW_TL_Compatibility_RemoveMutuallyExclusivePassive_ACLimiter(_Character);
+
+// also clear passives if shield is equipped (which will disable the original override)
+PROC
+PROC_WW_TL_Compatibility_SetWarmagePassives((GUIDSTRING)_Character,_ACLimitCategory)
+AND
+_ACLimitCategory > 0
+AND
+GetEquippedShield((CHARACTER)_Character,_)
+THEN
+PROC_WW_TL_Compatibility_RemoveMutuallyExclusivePassive_ACLimiter((GUIDSTRING)_Character);
+
+// otherwise undo the INT bonus
+PROC
+PROC_WW_TL_Compatibility_SetWarmagePassives((GUIDSTRING)_Character,_ACLimitCategory)
+AND
+_ACLimitCategory > 0
+AND
+NOT GetEquippedShield((CHARACTER)_Character,_)
+THEN
+DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ACLimiter((GUIDSTRING)_Character,"WW_TL_UndoOverrideModifier_Int_All");
+
+// Make sure to remove passive if wearing normal armor
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+QRY_WW_TL_Compatibility_MHWarmage_UsesINT(_Character)
+AND
+HasActiveStatus(_Character,"WW_TL_COMPATIBILITY_WEARING_NORMAL_ARMOR",1)
+THEN
+PROC_WW_TL_Compatibility_RemoveMutuallyExclusivePassive_ACLimiter(_Character);
+
+//END_REGION
+
+//END_REGION
+
+//REGION Poverty Domain subclass by TheWailingBard - https://mod.io/g/baldursgate3/m/poverty-domain
+
+// This one's complicated:
+// IF NOT EQUIPPED any armor or certain types of weapons (only clothes transmog allowed), set override and alt AC tags but otherwise do nothing (actual override is active)
+// IF EQUIPPED only transmogrified armor, set override and alt AC tags, then set passives to undo WIS + CON, and finally add appropriate amount of DEX (actual override is active)
+//    * Add full DEX if wearing no transmog on chest and transmog armor on another slot
+//    * Add full DEX if wearing transmog clothes or light armor on chest
+//    * Add partial DEX if wearing transmog medium armor on chest
+// IF EQUIPPED any actual armor or certain types of weapons, use normal AC calculations (actual override is inactive)
+// IF DEX >= WIS + CON, need to also undo WIS + CON and add full DEX when wearing transmog clothes on chest (actual override is still active when it shouldn't be when equipped transmog)
+
+//REGION Helper queries for these requirements
+
+QRY
+QRY_WW_TL_Compatibility_IsPovertyDomainCleric_Active((GUIDSTRING)_Character)
+AND
+QRY_WW_TL_Compatibility_IsPovertyDomainCleric(_Character)
+AND
+QRY_WW_TL_Compatibility_PovertyDomainCleric_ActiveRequirements(_Character)
+THEN
+DB_NOOP(1);
+
+QRY
+QRY_WW_TL_Compatibility_IsPovertyDomainCleric((GUIDSTRING)_Character)
+AND
+IsTagged(_Character,(TAG)CLERIC_1671b4bf-4f47-4bb7-9cb9-80bb1f6009d5,1)
+AND
+HasPassive(_Character,"MantleOfPoverty",1)
+THEN
+DB_NOOP(1);
+
+QRY
+QRY_WW_TL_Compatibility_PovertyDomainCleric_ActiveRequirements((GUIDSTRING)_Character)
+AND
+HasActiveStatus(_Character,"WW_TL_COMPATIBILITY_WEARING_NORMAL_ARMOR",0)
+AND
+IsTagged(_Character,(TAG)WW_TL_COMPAT_POV_DOMAIN_WEAPON_TRACKER_14529ea9-64a7-4846-9773-0f446969402a,1)
+THEN
+DB_NOOP(1);
+
+QRY
+QRY_WW_TL_Compatibility_PovertyDomainCleric_CustomModGreater((GUIDSTRING)_Character)
+AND
+GetAbility((CHARACTER)_Character,"Dexterity",_Dex)
+AND
+IntegerSubtract(_Dex,10,_AdjustedDex)
+AND
+IntegerDivide(_AdjustedDex,2,_DexMod)
+AND
+GetAbility(_Character,"Wisdom",_Wis)
+AND
+IntegerSubtract(_Wis,10,_AdjustedWis)
+AND
+IntegerDivide(_AdjustedWis,2,_WisMod)
+AND
+GetAbility(_Character,"Constitution",_Con)
+AND
+IntegerSubtract(_Con,10,_AdjustedCon)
+AND
+IntegerDivide(_AdjustedCon,2,_ConMod)
+AND
+IntegerSum(_WisMod,_ConMod,_CustomMod)
+AND
+_CustomMod > _DexMod
+THEN
+DB_NOOP(1);
+
+//END_REGION
+
+//REGION Registers for special tracker statuses and new triggers for compatibility checks
+
+// Apply a special tracker to all Poverty Domain clerics to track weapons they have equipped
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+HasPassive((GUIDSTRING)_Character,"WW_TL_Compatibility_PovertyDomain_WeaponTracker",0)
+AND
+QRY_WW_TL_Compatibility_IsPovertyDomainCleric(_Character)
+THEN
+AddPassive(_Character,"WW_TL_Compatibility_PovertyDomain_WeaponTracker");
+
+// Evaluate whether character no longer needs this special tracker
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+HasPassive((GUIDSTRING)_Character,"WW_TL_Compatibility_PovertyDomain_WeaponTracker",1)
+AND
+NOT QRY_WW_TL_Compatibility_IsPovertyDomainCleric(_Character)
+THEN
+RemovePassive(_Character,"WW_TL_Compatibility_PovertyDomain_WeaponTracker");
+ClearTag(_Character,(TAG)WW_TL_COMPAT_POV_DOMAIN_WEAPON_TRACKER_14529ea9-64a7-4846-9773-0f446969402a); // just in case currently applied
+
+// Register character to receive WW_TL_COMPATIBILITY_WEARING_NORMAL_ARMOR status when wearing non-transmog armor
+QRY
+QRY_WW_TL_Compatibility_NeedsStandardArmorTracker((GUIDSTRING)_Character)
+AND
+QRY_WW_TL_Compatibility_IsPovertyDomainCleric(_Character)
+THEN
+DB_NOOP(1);
+
+// Add custom compatibility checks trigger for unique Poverty Domain condition
+IF
+TagSet(_Character,(TAG)WW_TL_COMPAT_POV_DOMAIN_WEAPON_TRACKER_14529ea9-64a7-4846-9773-0f446969402a)
+THEN
+RealtimeObjectTimerLaunch(_Character,"WW_TL_Compatibility_QueueCheck_IncludeAC",250);
+
+// Add custom compatibility checks trigger for unique Poverty Domain condition
+IF
+TagCleared(_Character,(TAG)WW_TL_COMPAT_POV_DOMAIN_WEAPON_TRACKER_14529ea9-64a7-4846-9773-0f446969402a)
+THEN
+RealtimeObjectTimerLaunch(_Character,"WW_TL_Compatibility_QueueCheck_IncludeAC",250);
+
+//END_REGION
+
+QRY
+QRY_WW_TL_Compatibility_UsesAltACModifier((GUIDSTRING)_Character)
+AND
+QRY_WW_TL_Compatibility_IsPovertyDomainCleric_Active(_Character)
+THEN
+DB_NOOP(1);
+
+QRY
+QRY_WW_TL_Compatibility_OverridesAC((GUIDSTRING)_Character)
+AND
+QRY_WW_TL_Compatibility_IsPovertyDomainCleric_Active(_Character)
+THEN
+DB_NOOP(1);
+
+// If no longer a Poverty Domain cleric but still has the transmog passives, remove them
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+DB_WW_TL_Compatibility_LLPovertyDomainHasPassives((GUIDSTRING)_Character)
+AND
+NOT QRY_WW_TL_Compatibility_IsPovertyDomainCleric(_Character)
+THEN
+PROC_WW_TL_Compatibility_RemovePassivesFromLLPovertyDomain(_Character);
+
+// If a Poverty Domain cleric is not currently 'active,' make sure to remove all transmog passives
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+QRY_WW_TL_Compatibility_IsPovertyDomainCleric(_Character)
+AND
+NOT QRY_WW_TL_Compatibility_PovertyDomainCleric_ActiveRequirements(_Character)
+THEN
+PROC_WW_TL_Compatibility_RemovePassivesFromLLPovertyDomain(_Character);
+
+// If a Poverty Domain cleric is 'active,' evaluate what transmog armor they're wearing to apply the correct passives
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+QRY_WW_TL_Compatibility_IsPovertyDomainCleric_Active((GUIDSTRING)_Character)
+AND
+QRY_WW_TL_GetACLimits(_Character,1) // check every slot for armor, not just chest
+AND
+DB_QRYRTN_WW_TL_GetACLimits(_OverallArmorCategory)
+THEN
+NOT DB_QRYRTN_WW_TL_GetACLimits(_OverallArmorCategory);
+PROC_WW_TL_Compatibility_SetLLPovertyDomainPassives(_Character,_OverallArmorCategory);
+
+// If not wearing any transmog or only wearing clothes without ability score override, then remove all passives
+PROC
+PROC_WW_TL_Compatibility_SetLLPovertyDomainPassives((GUIDSTRING)_Character,0)
+AND
+DB_WW_TL_Compatibility_LLPovertyDomainHasPassives(_Character)
+AND
+QRY_WW_TL_Compatibility_PovertyDomainCleric_CustomModGreater(_Character) // WIS + CON > DEX
+THEN
+PROC_WW_TL_Compatibility_RemovePassivesFromLLPovertyDomain(_Character);
+
+// If not wearing any transmog with ability score override, then remove all passives
+PROC
+PROC_WW_TL_Compatibility_SetLLPovertyDomainPassives((GUIDSTRING)_Character,0)
+AND
+NOT QRY_WW_TL_Compatibility_TransmogEquippedOnChest(_Character)
+AND
+NOT QRY_WW_TL_Compatibility_PovertyDomainCleric_CustomModGreater(_Character) // DEX >= WIS + CON
+THEN
+PROC_WW_TL_Compatibility_RemovePassivesFromLLPovertyDomain(_Character);
+
+// If specifically wearing transmog clothes on chest with ability score override, then need to enforce normal AC calculations
+PROC
+PROC_WW_TL_Compatibility_SetLLPovertyDomainPassives((GUIDSTRING)_Character,0)
+AND
+QRY_WW_TL_Compatibility_TransmogEquippedOnChest(_Character)
+AND
+NOT QRY_WW_TL_Compatibility_PovertyDomainCleric_CustomModGreater(_Character) // DEX >= WIS + CON
+THEN
+DB_WW_TL_Compatibility_LLPovertyDomainHasPassives(_Character);
+AddPassive(_Character,"WW_TL_UndoOverrideModifier_Wis_All");
+AddPassive(_Character,"WW_TL_UndoOverrideModifier_Con_All");
+PROC_WW_TL_Compatibility_SetLLPovertyDomainPassives_SetDex(_Character,0);
+
+// Wearing any transmog armor at all, anywhere, needs to undo WIS and CON and possibly add DEX
+// with the EXCEPTION OF when the wearer has DEX >= WIS + CON and is wearing normal equipment on the chest
+PROC
+PROC_WW_TL_Compatibility_SetLLPovertyDomainPassives((GUIDSTRING)_Character,(INTEGER)_OverallArmorCategory)
+AND
+_OverallArmorCategory > 0
+AND
+NOT QRY_WW_TL_Compatibility_PovertyDomainCleric_WearingArmorModifierException(_Character)
+THEN
+DB_WW_TL_Compatibility_LLPovertyDomainHasPassives(_Character);
+AddPassive(_Character,"WW_TL_UndoOverrideModifier_Wis_All");
+AddPassive(_Character,"WW_TL_UndoOverrideModifier_Con_All");
+PROC_WW_TL_Compatibility_SetLLPovertyDomainPassives_SetDex(_Character,_OverallArmorCategory);
+
+// In the case of the above exception, remove passives instead
+PROC
+PROC_WW_TL_Compatibility_SetLLPovertyDomainPassives((GUIDSTRING)_Character,(INTEGER)_OverallArmorCategory)
+AND
+_OverallArmorCategory > 0
+AND
+QRY_WW_TL_Compatibility_PovertyDomainCleric_WearingArmorModifierException(_Character)
+THEN
+PROC_WW_TL_Compatibility_RemovePassivesFromLLPovertyDomain(_Character);
+
+QRY
+QRY_WW_TL_Compatibility_PovertyDomainCleric_WearingArmorModifierException((GUIDSTRING)_Character)
+AND
+NOT QRY_WW_TL_Compatibility_TransmogEquippedOnChest(_Character)
+AND
+NOT QRY_WW_TL_Compatibility_PovertyDomainCleric_CustomModGreater(_Character) // DEX >= WIS + CON
+THEN
+DB_NOOP(1);
+
+// Also check specifically the chest slot to figure out how much DEX to add instead
+PROC
+PROC_WW_TL_Compatibility_SetLLPovertyDomainPassives_SetDex((GUIDSTRING)_Character,(INTEGER)_OverallArmorCategory)
+AND
+QRY_WW_TL_GetACLimits(_Character)
+AND
+DB_QRYRTN_WW_TL_GetACLimits(_ChestArmorCategory)
+THEN
+NOT DB_QRYRTN_WW_TL_GetACLimits(_ChestArmorCategory);
+PROC_WW_TL_Compatibility_SetLLPovertyDomainPassives_SetDex_Technical(_Character,_OverallArmorCategory,_ChestArmorCategory);
+
+// If wearing transmog clothes on chest and no armor anywhere else, and DEX >= WIS + CON, then add full DEX
+PROC
+PROC_WW_TL_Compatibility_SetLLPovertyDomainPassives_SetDex_Technical((GUIDSTRING)_Character,0,0)
+AND
+QRY_WW_TL_Compatibility_TransmogEquippedOnChest(_Character)
+AND
+NOT QRY_WW_TL_Compatibility_PovertyDomainCleric_CustomModGreater(_Character)
+THEN
+DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ArmorBuff(_Character,"WW_TL_Compatibility_ArmorBuff_PovertyDomain_Full");
+
+// If wearing any type of transmog armor anywhere and either nothing, clothes, or light armor on the chest, then add full DEX
+PROC
+PROC_WW_TL_Compatibility_SetLLPovertyDomainPassives_SetDex_Technical((GUIDSTRING)_Character,(INTEGER)_OverallArmorCategory,(INTEGER)_ChestArmorCategory)
+AND
+_OverallArmorCategory > 0
+AND
+_ChestArmorCategory < 2
+THEN
+DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ArmorBuff(_Character,"WW_TL_Compatibility_ArmorBuff_PovertyDomain_Full");
+
+// If wearing transmog medium armor on chest, add partial DEX
+PROC
+PROC_WW_TL_Compatibility_SetLLPovertyDomainPassives_SetDex_Technical((GUIDSTRING)_Character,_,2)
+THEN
+DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ArmorBuff(_Character,"WW_TL_Compatibility_ArmorBuff_PovertyDomain_Partial");
+
+// If wearing transmog heavy armor on chest, don't add DEX
+PROC
+PROC_WW_TL_Compatibility_SetLLPovertyDomainPassives_SetDex_Technical((GUIDSTRING)_Character,_,3)
+THEN
+PROC_WW_TL_Compatibility_RemoveMutuallyExclusivePassive_ArmorBuff(_Character);
+
+PROC
+PROC_WW_TL_Compatibility_RemovePassivesFromLLPovertyDomain((GUIDSTRING)_Character)
+THEN
+NOT DB_WW_TL_Compatibility_LLPovertyDomainHasPassives(_Character);
+RemovePassive(_Character,"WW_TL_UndoOverrideModifier_Wis_All");
+RemovePassive(_Character,"WW_TL_UndoOverrideModifier_Con_All");
+PROC_WW_TL_Compatibility_RemoveMutuallyExclusivePassive_ArmorBuff(_Character);
+
+//END_REGION
+
+//REGION Zephyr class by TheWailingBard - https://mod.io/g/baldursgate3/m/the-zephyr
+
+QRY
+QRY_WW_TL_Compatibility_OverridesAC((GUIDSTRING)_Character)
+AND
+QRY_WW_TL_Compatibility_IsSVZephyr(_Character)
+AND
+NOT GetEquippedShield((CHARACTER)_Character,_)
+THEN
+DB_NOOP(1);
+
+QRY
+QRY_WW_TL_Compatibility_IgnoresOtherArmor((GUIDSTRING)_Character)
+AND
+QRY_WW_TL_Compatibility_IsSVZephyr(_Character)
+THEN
+DB_NOOP(1);
+
+QRY
+QRY_WW_TL_Compatibility_IsSVZephyr((GUIDSTRING)_Character)
+AND
+HasPassive((GUIDSTRING)_Character,"SVZephyr_SinuousDefense",1)
+THEN
+DB_NOOP(1);
+
+QRY
+QRY_WW_TL_Compatibility_IsSVZephyr((GUIDSTRING)_Character)
+AND
+HasPassive((GUIDSTRING)_Character,"SVZephyr_SinuousDefense_2",1)
+THEN
+DB_NOOP(1);
+
+QRY
+QRY_WW_TL_Compatibility_IsSVZephyr((GUIDSTRING)_Character)
+AND
+HasPassive((GUIDSTRING)_Character,"SVZephyr_SinuousDefense_3",1)
+THEN
+DB_NOOP(1);
+
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+QRY_WW_TL_Compatibility_IsSVZephyr((GUIDSTRING)_Character)
+AND
+GetEquippedShield((CHARACTER)_Character,_)
+THEN
+PROC_WW_TL_Compatibility_RemoveMutuallyExclusivePassive_ACLimiter((GUIDSTRING)_Character);
+
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+QRY_WW_TL_Compatibility_IsSVZephyr((GUIDSTRING)_Character)
+AND
+NOT GetEquippedShield((CHARACTER)_Character,_)
+AND
+QRY_WW_TL_GetACLimits((GUIDSTRING)_Character)
+AND
+DB_QRYRTN_WW_TL_GetACLimits(_ACLimitCategory)
+THEN
+NOT DB_QRYRTN_WW_TL_GetACLimits(_ACLimitCategory);
+PROC_WW_TL_Compatibility_SetZephyrPassives(_Character,_ACLimitCategory);
+
+// if no transmog equipped on chest
+PROC
+PROC_WW_TL_Compatibility_SetZephyrPassives((GUIDSTRING)_Character,0)
+AND
+NOT QRY_WW_TL_Compatibility_TransmogEquippedOnChest(_Character)
+THEN
+PROC_WW_TL_Compatibility_RemoveMutuallyExclusivePassive_ACLimiter(_Character);
+
+// if transmog clothes are equipped on chest
+PROC
+PROC_WW_TL_Compatibility_SetZephyrPassives((GUIDSTRING)_Character,0)
+AND
+QRY_WW_TL_Compatibility_TransmogEquippedOnChest(_Character)
+THEN
+DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ACLimiter(_Character,"WW_TL_Compatibility_ArmorDebuff_Zephyr_Partial");
+PROC_WW_TL_Compatibility_ApplyZephyrACAdjustmentStatus(_Character);
+
+// if transmog light armor is equipped on chest
+PROC
+PROC_WW_TL_Compatibility_SetZephyrPassives((GUIDSTRING)_Character,1)
+THEN
+DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ACLimiter(_Character,"WW_TL_Compatibility_ArmorDebuff_Zephyr_Partial");
+PROC_WW_TL_Compatibility_ApplyZephyrACAdjustmentStatus(_Character);
+
+// armor AC less than the Zephyr's increased basline should not stack, and vice versa
+PROC
+PROC_WW_TL_Compatibility_ApplyZephyrACAdjustmentStatus((GUIDSTRING)_Character)
+AND
+DB_WW_TL_EquippedTransmogrifications((GUIDSTRING)_Character,_Armor)
+AND
+DB_WW_TL_TransmogrifiedArmors((GUIDSTRING)_Armor,_,_OriginalTemplateForStats,_)
+AND
+DB_WW_TL_ArmorComponents(_OriginalTemplateForStats,_,_,_,_ArmorAC,_,_,_)
+AND
+DB_WW_TL_Compatibility_ZephyrACBonuses(_Passive,_PassiveAC)
+AND
+HasPassive(_Character,_Passive,1)
+AND
+IntegerMin(_ArmorAC,_PassiveAC,_LowerAC)
+AND
+IntegerSubtract(_LowerAC,10,_DuplicateBonus)
+AND
+_DuplicateBonus > 0
+AND
+IntegerToString(_DuplicateBonus,_DuplicateBonusString)
+AND
+Concatenate("WW_TL_COMPATIBILITY_ZEPHYR_REDUCE_AC_",_DuplicateBonusString,_ReductionStatus)
+THEN
+DB_WW_TL_Compatibility_ZephyrHasACAdjustmentStatus(_Character);
+ApplyStatus(_Character,_ReductionStatus,-1.0);
+
+PROC
+PROC_WW_TL_Compatibility_SetZephyrPassives((GUIDSTRING)_Character,_ACLimitCategory)
+AND
+_ACLimitCategory >= 2
+THEN
+DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ACLimiter(_Character,"WW_TL_Compatibility_ArmorDebuff_Zephyr_Full");
+
+// Make sure that any Zephyr adjustment statuses are removed if the character no longer needs them
+IF
+DB_WW_TL_Compatibility_ZephyrHasACAdjustmentStatus(_Character)
+AND
+NOT DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ACLimiter(_Character,"WW_TL_Compatibility_ArmorDebuff_Zephyr_Partial")
+THEN
+PROC_WW_TL_Compatibility_ClearZephyrACAdjustmentStatuses(_Character);
+
+PROC
+PROC_WW_TL_Compatibility_ClearZephyrACAdjustmentStatuses((GUIDSTRING)_Character)
+THEN
+NOT DB_WW_TL_Compatibility_ZephyrHasACAdjustmentStatus(_Character);
+
+PROC
+PROC_WW_TL_Compatibility_ClearZephyrACAdjustmentStatuses((GUIDSTRING)_Character)
+AND
+DB_WW_TL_Compatibility_ZephyrACAdjustmentStatuses(_Status)
+THEN
+RemoveStatus(_Character,_Status);
+
+//END_REGION
+
+//REGION Way of Steel subclass by TheWailingBard - https://mod.io/g/baldursgate3/m/way-of-steel
+
+// The earliest relevant Way of Steel passive you can get
+QRY
+QRY_WW_TL_Compatibility_HasWayOfSteelPassive((GUIDSTRING)_Character)
+AND
+HasPassive(_Character,"SMRSteel_IronDiscipline_1",1)
+THEN
+DB_NOOP(1);
+
+// The second relevant passive you can get that replaces the previous one
+QRY
+QRY_WW_TL_Compatibility_HasWayOfSteelPassive((GUIDSTRING)_Character)
+AND
+HasPassive(_Character,"SMRSteel_IronDiscipline_2",1)
+THEN
+DB_NOOP(1);
+
+// Earliest relevant passive you can get that will not be replaced at higher levels
+QRY
+QRY_WW_TL_Compatibility_HasWayOfSteelPassive((GUIDSTRING)_Character)
+AND
+HasPassive(_Character,"SMRSteel_AwakenedSteel",1)
+THEN
+DB_NOOP(1);
+
+// Register character to receive WW_TL_COMPATIBILITY_WEARING_NORMAL_ARMOR status when wearing non-transmog armor
+QRY
+QRY_WW_TL_Compatibility_NeedsStandardArmorTracker((GUIDSTRING)_Character)
+AND
+QRY_WW_TL_Compatibility_HasWayOfSteelPassive(_Character)
+THEN
+DB_NOOP(1);
+
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+QRY_WW_TL_Compatibility_HasWayOfSteelPassive((GUIDSTRING)_Character)
+AND
+HasActiveStatus(_Character,"WW_TL_COMPATIBILITY_WEARING_NORMAL_ARMOR",0)
+AND
+QRY_WW_TL_GetACLimits(_Character,1) // check every slot, not just the chest
+AND
+DB_QRYRTN_WW_TL_GetACLimits(_ACLimitCategory)
+THEN
+NOT DB_QRYRTN_WW_TL_GetACLimits(_ACLimitCategory);
+PROC_WW_TL_Compatibility_SetWayOfSteelPassive(_Character,_ACLimitCategory);
+
+// Always need to give the passive that handles this subclass' version of Unarmoured Movement with transmog armor
+PROC
+PROC_WW_TL_Compatibility_SetWayOfSteelPassive((GUIDSTRING)_Character,(INTEGER)_ACLimitCategory)
+AND
+_ACLimitCategory > 0
+AND
+NOT DB_WW_TL_Compatibility_HasWayOfSteelPassive(_Character)
+THEN
+DB_WW_TL_Compatibility_HasWayOfSteelPassive(_Character);
+AddPassive(_Character,"WW_TL_Compatibility_ArmorBuff_WayOfSteel_4");
+
+// If has Awakened Steel passive, need another passive for transmog armor to work
+PROC
+PROC_WW_TL_Compatibility_SetWayOfSteelPassive((GUIDSTRING)_Character,(INTEGER)_ACLimitCategory)
+AND
+_ACLimitCategory > 0
+AND
+HasPassive(_Character,"SMRSteel_AwakenedSteel",1)
+THEN
+AddPassive(_Character,"WW_TL_Compatibility_ArmorBuff_WayOfSteel");
+
+// Also potentially give one of a couple passives for Iron Fist to work correctly with transmog armor
+PROC
+PROC_WW_TL_Compatibility_SetWayOfSteelPassive((GUIDSTRING)_Character,(INTEGER)_ACLimitCategory)
+AND
+_ACLimitCategory > 0
+THEN
+PROC_WW_TL_Compatibility_SetWayOfSteelPassive_Conditional(_Character);
+
+PROC
+PROC_WW_TL_Compatibility_SetWayOfSteelPassive_Conditional((GUIDSTRING)_Character)
+AND
+HasPassive(_Character,"SMRSteel_IronFist_Unarmed",1)
+THEN
+DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ArmorBuff(_Character,"WW_TL_Compatibility_ArmorBuff_WayOfSteel_2");
+
+PROC
+PROC_WW_TL_Compatibility_SetWayOfSteelPassive_Conditional((GUIDSTRING)_Character)
+AND
+HasPassive(_Character,"SMRSteel_IronFist_Unarmed_2",1)
+THEN
+DB_WW_TL_Compatibility_HasMutuallyExclusivePassive_ArmorBuff(_Character,"WW_TL_Compatibility_ArmorBuff_WayOfSteel_3");
+
+// Remove passive if not wearing transmog armor
+PROC
+PROC_WW_TL_Compatibility_SetWayOfSteelPassive((GUIDSTRING)_Character,0)
+AND
+DB_WW_TL_Compatibility_HasWayOfSteelPassive(_Character)
+THEN
+PROC_WW_TL_Compatibility_RemoveWayOfSteelPassive(_Character);
+
+// Remove passive if also wearing normal armor that will trigger original Way of Steel passive that does this
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+DB_WW_TL_Compatibility_HasWayOfSteelPassive((GUIDSTRING)_Character)
+AND
+HasActiveStatus(_Character,"WW_TL_COMPATIBILITY_WEARING_NORMAL_ARMOR",1)
+THEN
+PROC_WW_TL_Compatibility_RemoveWayOfSteelPassive(_Character);
+
+// Remove passive if no longer a Way of Steel monk
+PROC
+PROC_WW_TL_CompatibilityCheck((CHARACTER)_Character)
+AND
+DB_WW_TL_Compatibility_HasWayOfSteelPassive((GUIDSTRING)_Character)
+AND
+NOT QRY_WW_TL_Compatibility_HasWayOfSteelPassive(_Character)
+THEN
+PROC_WW_TL_Compatibility_RemoveWayOfSteelPassive(_Character);
+
+PROC
+PROC_WW_TL_Compatibility_RemoveWayOfSteelPassive((GUIDSTRING)_Character)
+THEN
+NOT DB_WW_TL_Compatibility_HasWayOfSteelPassive(_Character);
+RemovePassive(_Character,"WW_TL_Compatibility_ArmorBuff_WayOfSteel");
+RemovePassive(_Character,"WW_TL_Compatibility_ArmorBuff_WayOfSteel_4");
+PROC_WW_TL_Compatibility_RemoveMutuallyExclusivePassive_ArmorBuff(_Character);
+
+//END_REGION
+EXITSECTION
+
+ENDEXITSECTION
