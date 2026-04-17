@@ -147,7 +147,7 @@
       <fields>
         <field name="UUID" type="IdTableFieldDefinition" value="e4aa1493-66c6-4db4-878e-4abd1cc01789" />
         <field name="Name" type="NameTableFieldDefinition" value="WW_TL_ArmorDebuff" />
-        <field name="Boosts" type="StringTableFieldDefinition" value="IF(HasPassive('DraconicResilience',context.Source)):AC(-3);IF(HasPassive('MAG_OfDefense_Gloves_Passive',context.Source) and not HasShieldEquipped(context.Source)):AC(-2);IF(HasPassive('MAG_Barbarian_Boots_BoneSpike_Defense_Passive',context.Source) and not HasShieldEquipped(context.Source)):AC(-1);IF(HasPassive('MAG_Barbarian_Boots_BoneSpike_Defense_Passive',context.Source) and not HasShieldEquipped(context.Source)):RollBonus(SavingThrow, -1);IF(HasPassive('UnarmoredMovement_1',context.Source) and not HasShieldEquipped(context.Source)):ActionResource(Movement, -3, 0);IF(HasPassive('UnarmoredMovement_2',context.Source) and not HasShieldEquipped(context.Source)):ActionResource(Movement, -4.5, 0);IF(HasPassive('UnarmoredMovement_3',context.Source) and not HasShieldEquipped(context.Source)):ActionResource(Movement, -6, 0);IF(HasPassive('UnarmoredMovement_DifficultTerrain',context.Source) and not HasShieldEquipped(context.Source)):JumpMaxDistanceBonus(-6);" />
+        <field name="Boosts" type="StringTableFieldDefinition" value="IF(HasPassive('DraconicResilience',context.Source)):AC(-3);IF(HasPassive('MAG_OfDefense_Gloves_Passive',context.Source) and not HasShieldEquipped(context.Source)):AC(-2);IF(HasPassive('MAG_Barbarian_Boots_BoneSpike_Defense_Passive',context.Source) and not HasShieldEquipped(context.Source)):AC(-1);IF(HasPassive('MAG_Barbarian_Boots_BoneSpike_Defense_Passive',context.Source) and not HasShieldEquipped(context.Source)):RollBonus(SavingThrow, -1);IF(HasPassive('UnarmoredMovement_DifficultTerrain',context.Source) and not HasShieldEquipped(context.Source)):JumpMaxDistanceBonus(-6);" />
         <field name="DisplayName" type="TranslatedStringTableFieldDefinition" handle="hc81bdb92gb598g1751g9302g0cc4872aa860" version="4" />
         <field name="Properties" type="EnumerationListTableFieldDefinition" value="IsHidden" enumeration_type_name="PassiveFlags" version="1" />
         <field name="StatsFunctorContext" type="EnumerationListTableFieldDefinition" value="OnStatusApplied;OnCreate" enumeration_type_name="StatsFunctorContext" version="1" />
@@ -155,6 +155,17 @@
         <field name="BoostConditions" type="StringTableFieldDefinition" value="not WearingArmor(context.Source);" />
         <field name="BoostContext" type="EnumerationListTableFieldDefinition" value="OnEquip;OnCreate" enumeration_type_name="StatsFunctorContext" version="1" />
         <field name="Conditions" type="StringTableFieldDefinition" value="context.HasContextFlag(StatsFunctorContext.OnCreate) or (not HasStatus('WW_TL_DISABLE_REMOVE_UNARMORED_STATUSES') and not StatusId('WW_TL_REMOVE_UNARMORED_STATUSES') and not StatusId('WW_TL_REEVALUATE_OVERRIDES') and not WW_TL_IsPerformanceStatus());" />
+      </fields>
+    </stat_object>
+    <stat_object is_substat="false">
+      <fields>
+        <field name="UUID" type="IdTableFieldDefinition" value="1ff8759c-c7ea-4b03-bf85-7adfb37fc180" />
+        <field name="Name" type="NameTableFieldDefinition" value="WW_TL_ArmorDebuff_Speed" />
+        <field name="DisplayName" type="TranslatedStringTableFieldDefinition" handle="hf609a525g4aa7g21d4g842dg13f7aa09726b" version="2" />
+        <field name="Properties" type="EnumerationListTableFieldDefinition" value="IsHidden" enumeration_type_name="PassiveFlags" version="1" />
+        <field name="BoostContext" type="EnumerationListTableFieldDefinition" value="OnEquip;OnCreate" enumeration_type_name="StatsFunctorContext" version="1" />
+        <field name="BoostConditions" type="StringTableFieldDefinition" value="not WearingArmor(context.Source) and not HasShieldEquipped(context.Source) and (HasPassive('UnarmoredMovement_1',context.Source) or HasPassive('UnarmoredMovement_2',context.Source) or HasPassive('UnarmoredMovement_3',context.Source));" />
+        <field name="Boosts" type="StringTableFieldDefinition" value="IF(HasPassive('UnarmoredMovement_1',context.Source) and not HasShieldEquipped(context.Source)):ActionResource(Movement, -3, 0);IF(HasPassive('UnarmoredMovement_2',context.Source) and not HasShieldEquipped(context.Source)):ActionResource(Movement, -4.5, 0);IF(HasPassive('UnarmoredMovement_3',context.Source) and not HasShieldEquipped(context.Source)):ActionResource(Movement, -6, 0);" />
       </fields>
     </stat_object>
     <stat_object is_substat="false">

@@ -1,7 +1,7 @@
 Version 1
 SubGoalCombiner SGC_AND
 INITSECTION
-DB_WW_TL_InitVer(8);
+DB_WW_TL_InitVer(9);
 
 // Runtime DBs:
 // DB_WW_TL_TransmogrifiedArmors((GUIDSTRING)_Item,(INTEGER)_Heaviness,(GUIDSTRING)_OriginalTemplateForStats,(STRING)_StatsBoost)
@@ -692,6 +692,9 @@ DB_WW_TL_ArmorComponents(EPI_Camp_Shoes_Wyll_Blade_c3f02e6c-d519-40d1-b686-a241a
 DB_WW_TL_ArmorComponents(EPI_Camp_Shoes_Wyll_Duke_4aa0dbb1-f51a-45bc-8a58-814ac5063035,EPI_Camp_Shoes_Wyll_Duke_WW_TL_5f7cdbee-d584-4628-b943-339d1c2e20f9,"NULL",-1,0,"Boots",0,0);
 // Item added in v1.0.5.3
 DB_WW_TL_ArmorComponents(ARM_Boots_Metal_689e8d3e-b79b-417b-8cd2-9d08b2f5e618,ARM_Boots_Metal_WW_TL_8a525698-5669-4643-80d1-cb9c71723bde,"WW_TL_ARM_Boots_Metal",2,0,"Boots",0,1);
+// Items added in v1.0.6.33
+DB_WW_TL_ArmorComponents(ARM_Helmet_Metal_H_8e433135-fc4e-4a23-9434-c0ae9e64d7dc,ARM_Helmet_Metal_H_WW_TL_8efdc780-03f3-4ac0-a077-52f7a2afd291,"WW_TL_ARM_Helmet_Metal",2,0,"Helmet",0,0);
+DB_WW_TL_ArmorComponents(UNI_Halsin_Gloves_eb99ce71-8ef2-4ff6-a94a-a7b9cff3d45b,UNI_Halsin_Gloves_WW_TL_f19f2c96-fcd8-42de-8c80-13640112135c,"NULL",0,0,"Gloves",0,0);
 
 // (STRING)_StatsBoostSource,(STRING)_Spell,(STRING)_Cooldown
 DB_WW_TL_ArmorSpells("WW_TL_MAG_Infernal_Plate_Armor","Shout_MAG_Infernal_Fly","LONG");
@@ -1066,7 +1069,7 @@ PROC_WW_TL_CheckForUpdate()
 AND
 DB_WW_TL_InitVer(_Ver)
 AND
-_Ver < 8
+_Ver < 9
 THEN
 PROC_WW_TL_UpdateModVersion(_Ver);
 
@@ -1171,6 +1174,15 @@ PROC_WW_TL_UpdateModVersion(7)
 THEN
 DB_WW_TL_StatusesIgnoredForAC("WW_TL_REEVALUATE_OVERRIDES");
 DB_WW_TL_StatusesIgnoredForAC("WW_TL_REMOVE_UNARMORED_STATUSES");
+
+// v8 -> v9
+// Add new items
+
+PROC
+PROC_WW_TL_UpdateModVersion(8)
+THEN
+DB_WW_TL_ArmorComponents(ARM_Helmet_Metal_H_8e433135-fc4e-4a23-9434-c0ae9e64d7dc,ARM_Helmet_Metal_H_WW_TL_8efdc780-03f3-4ac0-a077-52f7a2afd291,"WW_TL_ARM_Helmet_Metal",2,0,"Helmet",0,0);
+DB_WW_TL_ArmorComponents(UNI_Halsin_Gloves_eb99ce71-8ef2-4ff6-a94a-a7b9cff3d45b,UNI_Halsin_Gloves_WW_TL_f19f2c96-fcd8-42de-8c80-13640112135c,"NULL",0,0,"Gloves",0,0);
 
 // Loop back around in case there's more than one version to upgrade
 PROC

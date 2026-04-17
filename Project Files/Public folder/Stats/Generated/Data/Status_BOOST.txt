@@ -365,7 +365,7 @@ using "WW_TL_ARMOR_BEHAVIOUR"
 data "StackId" ""
 data "StackPriority" ""
 data "StackType" ""
-data "Passives" "WW_TL_ArmorBuff;WW_TL_ArmorDebuff;WW_TL_Undo_UnarmoredBarbarian;WW_TL_Undo_UnarmoredMonk"
+data "Passives" "WW_TL_ArmorBuff;WW_TL_ArmorDebuff;WW_TL_ArmorDebuff_Speed;WW_TL_Undo_UnarmoredBarbarian;WW_TL_Undo_UnarmoredMonk;"
 data "StatusPropertyFlags" "IgnoreResting;DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead"
 
 new entry "WW_TL_RAGE_ARMOUR_MESSAGE"

@@ -474,7 +474,7 @@
         <field name="UUID" type="IdTableFieldDefinition" value="050d8d4d-7552-4312-8012-68100a42c235" />
         <field name="Name" type="NameTableFieldDefinition" value="WW_TL_WEARING_ARMOR" />
         <field name="Using" type="BaseClassTableFieldDefinition" value="23fb3846-85bc-4c7e-a85c-435456c50255" />
-        <field name="Passives" type="StringTableFieldDefinition" value="WW_TL_ArmorBuff;WW_TL_ArmorDebuff;WW_TL_Undo_UnarmoredBarbarian;WW_TL_Undo_UnarmoredMonk" />
+        <field name="Passives" type="StringTableFieldDefinition" value="WW_TL_ArmorBuff;WW_TL_ArmorDebuff;WW_TL_ArmorDebuff_Speed;WW_TL_Undo_UnarmoredBarbarian;WW_TL_Undo_UnarmoredMonk;" />
         <field name="StackId" type="StringTableFieldDefinition" clear_inherited_value="true" value="" />
         <field name="StackPriority" type="IntegerTableFieldDefinition" clear_inherited_value="true" value="" />
         <field name="StackType" type="EnumerationTableFieldDefinition" clear_inherited_value="true" value="" enumeration_type_name="StatusStackType" version="1" />
